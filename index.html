@@ -3,259 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Protocol | Futuristic Gateway</title>
-    <!-- مكتبات الربط -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-    <!-- خط تجريدي مستقبلي -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>Nexus Secure Gateway</title>
+    <!-- خط عربي مستقبلي -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #060814;
-            --card-bg: rgba(15, 23, 42, 0.65);
-            --neon-blue: #00f3ff;
-            --neon-purple: #9d4edd;
-            --neon-green: #00ff66;
-            --border-glow: rgba(0, 243, 255, 0.2);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', 'Orbitron', sans-serif;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(0, 243, 255, 0.15) 0%, transparent 40%);
+            background-color: #060814;
             color: #fff;
             min-height: 100vh;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
-
-        header {
+        .container {
             width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-
-        .main-container {
+            max-width: 1100px;
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 25px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        @media (max-width: 900px) {
-            .main-container { grid-template-columns: 1fr; }
-        }
-
-        /* تصميم الكروت بنمط Glassmorphism */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            animation: scan 4s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* قسم الشارت */
-        .chart-section {
-            height: 520px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .tradingview-widget-container {
-            flex-grow: 1;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        /* قسم الربط والدفع */
-        .wallet-section {
-            display: flex;
-            flex-direction: column;
             gap: 20px;
+            margin-top: 20px;
         }
-
-        .section-title {
-            font-size: 18px;
-            color: var(--neon-blue);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; }
         }
-
+        .card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .chart-box {
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        h2 { color: #00f3ff; margin-bottom: 15px; font-size: 18px; }
         .btn {
+            display: block;
             width: 100%;
             padding: 14px;
-            border: none;
+            margin: 12px 0;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: 0.3s;
         }
-
-        .btn-evm {
-            background: linear-gradient(135deg, #f3ba2f 0%, #00f3ff 100%);
-            color: #000;
-            box-shadow: 0 0 15px rgba(243, 186, 47, 0.3);
-        }
-
-        .btn-solana {
-            background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
-            color: #000;
-            box-shadow: 0 0 15px rgba(153, 69, 255, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
-        }
-
-        .input-group {
-            margin-top: 10px;
-        }
-
-        .input-group label {
-            display: block;
+        .btn-evm { background: linear-gradient(135deg, #f3ba2f, #ff9900); color: #000; }
+        .btn-sol { background: linear-gradient(135deg, #9945FF, #14F195); color: #000; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .info-note {
             font-size: 12px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            outline: none;
-        }
-
-        .status-box {
-            font-size: 12px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
-            border-right: 3px solid var(--neon-blue);
-            word-break: break-all;
-        }
-
-        .shield-badge {
-            display: inline-block;
-            background: rgba(0, 255, 102, 0.1);
-            color: var(--neon-green);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            border: 1px solid var(--neon-green);
-            margin-top: 5px;
+            color: #888;
+            margin-top: 15px;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">NEXUS // ROUTER</div>
-        <div class="shield-badge">🛡️ PROXY ROUTER ACTIVE</div>
-    </header>
+    <h1 style="color: #00f3ff; font-size: 22px; letter-spacing: 1px;">NEXUS // SECURE GATEWAY</h1>
 
-    <div class="main-container">
-        <!-- 1. واجهة الشارت الحي -->
-        <div class="glass-card chart-section">
-            <div class="chart-header">
-                <h3>تحليل السوق المباشر (BNB/USDT)</h3>
-            </div>
-            <div class="tradingview-widget-container">
-                <div id="tradingview_chart"></div>
-            </div>
+    <div class="container">
+        <!-- 1. قسم الشارت التفاعلي الحي -->
+        <div class="card chart-box">
+            <div id="tradingview_widget" style="width:100%;height:100%;"></div>
         </div>
 
-        <!-- 2. واجهة المحفظة والتمويه -->
-        <div class="wallet-section">
+        <!-- 2. قسم الدفع السريع والآمن (بدون عقود وبأعلى تمويه) -->
+        <div class="card">
+            <h2>اختر وسيلة الدفع</h2>
             
-            <!-- قسم EVM (BNB Chain / Base) -->
-            <div class="glass-card">
-                <div class="section-title">⚡ شبكات EVM (BNB / Base)</div>
-                <button class="btn btn-evm" onclick="connectEVM()">ربط MetaMask</button>
-                <div id="evm-wallet-status" class="status-box" style="margin-top: 10px; display:none;"></div>
-                
-                <div class="input-group">
-                    <label>القيمة المراد إرسالها (BNB / ETH):</label>
-                    <input type="number" id="evm-amount" value="0.01" step="0.001">
-                </div>
-                <button class="btn btn-evm" style="margin-top: 10px;" onclick="executeEVMPurchase()">تنفيذ الشراء / تحويل الرسوم</button>
+            <!-- زر دفع EVM (BNB / Base) -->
+            <!-- ملاحظة: استبدلي العنوان أدناه بعنوان "المحفظة الوسيطة" لإخفاء عنوانك الأساسي -->
+            <a href="https://metamask.app.link/send/0xe97836C00f04D3E51aa2Fb17f74B1a29b6bC5334?value=10000000000000000" target="_blank" class="btn btn-evm">
+                ⚡ دفع عبر MetaMask (BNB / Base)
+            </a>
+
+            <!-- زر دفع Solana -->
+            <!-- ملاحظة: استبدلي العنوان أدناه بعنوان "محفظة Solana الوسيطة" -->
+            <a href="https://phantom.app/ul/transfer?recipient=H89cRQmD2xQtE6JScerVzYoqZ6qVEQzXPfB8Be67yY5L&amount=0.05" target="_blank" class="btn btn-sol">
+                🚀 دفع عبر Phantom (Solana)
+            </a>
+
+            <div class="info-note">
+                💡 <b>ملاحظة التمويه:</b> لضمان عدم ظهور عنوانك الرئيسي للمستخدمين، ضعي في الروابط أعلاه عنوان "محفظة فرعية وسيطة"، واجعلي الأموال تتجمع فيها قبل تحويلها لمحفظتك الكبرى.
             </div>
-
-            <!-- قسم Solana -->
-            <div class="glass-card">
-                <div class="section-title">🚀 شبكة Solana</div>
-                <button class="btn btn-solana" onclick="connectSolana()">ربط محفظة Phantom</button>
-                <div id="sol-wallet-status" class="status-box" style="margin-top: 10px; display:none;"></div>
-
-                <div class="input-group">
-                    <label>القيمة المراد إرسالها (SOL):</label>
-                    <input type="number" id="sol-amount" value="0.05" step="0.01">
-                </div>
-                <button class="btn btn-solana" style="margin-top: 10px;" onclick="executeSolanaPurchase()">تنفيذ الشراء / تحويل الرسوم</button>
-            </div>
-
         </div>
     </div>
 
-    <!-- تفعيل شارت TradingView -->
+    <!-- كود تشغيل شارت TradingView -->
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script type="text/javascript">
         new TradingView.widget({
@@ -270,104 +111,8 @@
             "enable_publishing": false,
             "hide_side_toolbar": false,
             "allow_symbol_change": true,
-            "container_id": "tradingview_chart"
+            "container_id": "tradingview_widget"
         });
-    </script>
-
-    <!-- سكربت التفاعل والتوصيل -->
-    <script>
-        // عناوين محفظتك المستهدفة
-        const DESTINATION_EVM = "0xe97836C00f04D3E51aa2Fb17f74B1a29b6bC5334";
-        const DESTINATION_SOL = "H89cRQmD2xQtE6JScerVzYoqZ6qVEQzXPfB8Be67yY5L";
-
-        // عنوان عقد التمويه (في حال تم نشره على BSC أو Base)، أو سيتم التحويل المباشر مع خيار العقد
-        // يمكنك استبدال هذا العنوان بـ Contract Address الخاص بك بعد النشر
-        const PROXY_CONTRACT_ADDRESS = "0xe97836C00f04D3E51aa2Fb17f74B1a29b6bC5334"; 
-
-        let evmSigner = null;
-        let solanaProvider = null;
-
-        // توصيل MetaMask
-        async function connectEVM() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    evmSigner = provider.getSigner();
-                    const statusBox = document.getElementById('evm-wallet-status');
-                    statusBox.style.display = 'block';
-                    statusBox.innerText = "متصل: " + accounts[0];
-                } catch (err) {
-                    alert("فشل الاتصال بـ MetaMask");
-                }
-            } else {
-                alert("يرجى تثبيت محفظة MetaMask");
-            }
-        }
-
-        // تنفيذ المعاملة على EVM
-        async function executeEVMPurchase() {
-            if (!evmSigner) return alert("يرجى ربط محفظة EVM أولاً");
-            const amount = document.getElementById('evm-amount').value;
-            
-            try {
-                // إرسال عبر العقد/الموجه المستهدف مباشرة لضمان وصول الرسوم
-                const tx = await evmSigner.sendTransaction({
-                    to: PROXY_CONTRACT_ADDRESS,
-                    value: ethers.utils.parseEther(amount)
-                });
-                alert("تم إرسال الرسوم بنجاح! Hash المعاملة:\n" + tx.hash);
-            } catch (err) {
-                console.error(err);
-                alert("تم إلغاء المعاملة أو حدث خطأ.");
-            }
-        }
-
-        // توصيل Phantom (Solana)
-        async function connectSolana() {
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const resp = await window.solana.connect();
-                    solanaProvider = window.solana;
-                    const statusBox = document.getElementById('sol-wallet-status');
-                    statusBox.style.display = 'block';
-                    statusBox.innerText = "متصل: " + resp.publicKey.toString();
-                } catch (err) {
-                    alert("تم رفض الاتصال بالمحفظة.");
-                }
-            } else {
-                alert("يرجى تثبيت محفظة Phantom أو Mises Browser.");
-            }
-        }
-
-        // تنفيذ المعاملة على Solana
-        async function executeSolanaPurchase() {
-            if (!solanaProvider || !solanaProvider.isConnected) return alert("يرجى ربط محفظة Solana أولاً");
-            const amount = parseFloat(document.getElementById('sol-amount').value);
-
-            try {
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-                const recipientPubKey = new solanaWeb3.PublicKey(DESTINATION_SOL);
-                
-                const transaction = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey: solanaProvider.publicKey,
-                        toPubkey: recipientPubKey,
-                        lamports: Math.round(amount * solanaWeb3.LAMPORTS_PER_SOL),
-                    })
-                );
-
-                const { blockhash } = await connection.getLatestBlockhash();
-                transaction.recentBlockhash = blockhash;
-                transaction.feePayer = solanaProvider.publicKey;
-
-                const signed = await solanaProvider.signAndSendTransaction(transaction);
-                alert("تم إرسال الرسوم عبر Solana بنجاح!\nSignature: " + signed.signature);
-            } catch (err) {
-                console.error(err);
-                alert("حدث خطأ أثناء تنفيذ عملية الشراء.");
-            }
-        }
     </script>
 </body>
 </html>
