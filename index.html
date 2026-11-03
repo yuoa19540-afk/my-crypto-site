@@ -3,408 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billionaire Debt Relief | المنصة العالمية لسداد الديون اللامركزية</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Billionaire Debt Relief | Quantum Next-Gen</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        brand: {
-                            50: '#fffbeb',
-                            100: '#fef3c7',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                            700: '#b45309',
-                            900: '#78350f',
-                        }
-                    },
-                    fontFamily: {
-                        cairo: ['Cairo', 'sans-serif']
+                        quantum: { 900: '#07090e', 800: '#0f1420', 700: '#171e2e', accent: '#f59e0b' }
                     }
                 }
             }
         }
     </script>
-    <!-- Ethers.js v6 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <!-- Google Fonts (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; }
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
+        .liquid-glass {
+            background: rgba(15, 20, 32, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
+        .glow-gold {
+            box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.03); }
+        }
+        .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-quantum-900 text-gray-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black overflow-x-hidden">
 
-    <!-- Header / Global Navbar -->
-    <header class="glass-panel sticky top-0 z-50 border-b border-slate-800/80">
+    <!-- Background Ambient Glows -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <!-- Quantum Header -->
+    <header class="w-full border-b border-white/5 bg-quantum-900/80 backdrop-blur-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-2xl tracking-tighter">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200 flex items-center justify-center font-black text-black text-xl shadow-lg glow-gold">
                     B
                 </div>
                 <div>
-                    <h1 class="font-black text-lg tracking-wide bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-200 bg-clip-text text-transparent">Billionaire Debt Relief</h1>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <p class="text-[11px] text-slate-400 font-medium">BNB Smart Chain Mainnet</p>
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <h1 class="font-extrabold text-lg tracking-tight text-white">Billionaire Protocol</h1>
+                        <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full">v3.0 Quantum</span>
+                    </div>
+                    <div class="flex items-center space-x-2 space-x-reverse mt-0.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-xs text-gray-400 font-medium">BSC Mainnet • Secured Escrow</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-3">
-                <button onclick="openPostModal()" class="hidden sm:flex items-center gap-2 bg-slate-900 hover:bg-slate-850 text-amber-400 border border-amber-500/30 text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    إدراج فاتورة
+
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button class="hidden sm:flex items-center space-x-2 space-x-reverse px-4 py-2 rounded-xl liquid-glass text-xs font-semibold text-gray-300 hover:text-white transition-all">
+                    <span>🌍 Global Node</span>
                 </button>
-                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-[1.02] transition-all duration-200 flex items-center gap-2 text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.076 13.308-5.076 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.122 13.878a3 3 0 00-4.244 0 1 1 0 01-1.414-1.414 5 5 0 017.072 0 1 1 0 01-1.414 1.414zM9 16a1 1 0 102 0 1 1 0 00-2 0z" clip-rule="evenodd" />
-                    </svg>
-                    <span id="walletAddressText">ربط المحفظة</span>
+                <button class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-extrabold text-sm shadow-xl glow-gold transition-all transform active:scale-95 flex items-center space-x-2 space-x-reverse">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span>ربط المحفظة الذكية</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
-        
-        <!-- Hero Section -->
-        <div class="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 mb-12 border border-amber-500/20 shadow-2xl">
-            <div class="absolute -left-20 -top-20 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -right-20 -bottom-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Main Workspace -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 z-10">
+
+        <!-- Hero Banner: Immersive Storytelling -->
+        <section class="relative overflow-hidden rounded-3xl liquid-glass p-8 sm:p-12 border border-white/10 shadow-2xl">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
-            <div class="relative z-10 max-w-2xl">
-                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold px-3 py-1.5 rounded-full inline-block mb-4">منصة إنسانية لامركزية بالكامل</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">نصل بين أهل الخير وأصحاب الديون لفك كربهم بشفافية تامة</h2>
-                <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">نظام حجز آمن (Escrow) يحفظ حقوق المتبرع والمستفيد، مع تدقيق وتوثيق رسمي للفواتير لضمان وصول المساعدات لمستحقيها.</p>
+            <div class="max-w-3xl relative z-10 space-y-6">
+                <div class="inline-flex items-center space-x-2 space-x-reverse px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-bold tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span>منصة إنسانية لامركزية بالكامل (Autonomous Escrow)</span>
+                </div>
                 
-                <div class="flex flex-wrap gap-4">
-                    <button onclick="openPostModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:scale-105 transition text-sm flex items-center gap-2">
-                        <span>إدراج فاتورة جديدة</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                    الجسر الموثوق بين صناع الأثر وأصحاب الديون لفك الكرب بشفافية مطلقة
+                </h2>
+                
+                <p class="text-gray-400 text-base sm:text-lg leading-relaxed font-normal">
+                    نظام حجز آمن بالكامل (<span class="text-amber-400 font-semibold">Smart Escrow</span>) يضمن توثيق الفواتير، تدقيق الحالات، وإيصال الدعم لمستحقيه دون وسيط بشري.
+                </p>
+
+                <div class="pt-4 flex flex-wrap gap-4">
+                    <button class="px-7 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm shadow-xl glow-gold transition-all transform hover:-translate-y-1 flex items-center space-x-3 space-x-reverse">
+                        <span>إدراج فاتورة جديدة فوراً</span>
+                        <svg class="w-5 h-5 transform rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                    <button class="px-7 py-4 rounded-2xl liquid-glass hover:bg-white/10 text-white font-bold text-sm transition-all border border-white/10">
+                        استعراض العقود والتدقيق
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Global Stats Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <div class="glass-panel rounded-2xl p-6 shadow-xl relative">
-                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">إجمالي الفواتير المسجلة</p>
-                <p id="totalBillsCount" class="text-3xl font-black text-amber-400">0</p>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 shadow-xl relative">
-                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">رسوم الإدراج الرمزية</p>
-                <p class="text-3xl font-black text-blue-400">0.0001 <span class="text-sm font-normal text-slate-400">BNB</span></p>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 shadow-xl relative sm:col-span-2 lg:col-span-1 flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">حالة العقد الذكي</p>
-                    <p class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> آمن ومحمي (Active)
-                    </p>
+        <!-- Quantum Stats & Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Metric 1 -->
+            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-500/30 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">إجمالي الفواتير المسجلة</span>
+                    <span class="p-2 rounded-xl bg-white/5 text-amber-400 group-hover:scale-110 transition-transform">📊</span>
                 </div>
-                <a href="https://bscscan.com/address/0xCC0FB5E82d449C046dd8EE111241d4c5eF191815" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 px-3 rounded-xl border border-slate-700 transition">
-                    عرض على BscScan ↗
-                </a>
+                <div class="mt-6 flex items-baseline justify-between">
+                    <span class="text-5xl font-black text-white tracking-tighter">0</span>
+                    <span class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">متزامن لحظياً</span>
+                </div>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-500/30 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">رسوم الإدراج الرمزية</span>
+                    <span class="p-2 rounded-xl bg-white/5 text-amber-400 group-hover:scale-110 transition-transform">⚡</span>
+                </div>
+                <div class="mt-6 flex items-baseline justify-between">
+                    <div class="flex items-baseline space-x-1.5 space-x-reverse">
+                        <span class="text-4xl font-black text-white tracking-tighter">0.0001</span>
+                        <span class="text-xs font-extrabold text-amber-400">BNB</span>
+                    </div>
+                    <span class="text-xs text-gray-400 font-medium bg-white/5 px-2.5 py-1 rounded-lg">رسوم الغاز الأساسية</span>
+                </div>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-emerald-500/30 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">حالة العقد الذكي</span>
+                    <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">🛡️</span>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5 space-x-reverse">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-lg shadow-emerald-400/50 animate-pulse"></span>
+                        <span class="text-sm font-extrabold text-emerald-400">محمي وآمن (Active)</span>
+                    </div>
+                    <a href="https://bscscan.com" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4 flex items-center space-x-1 space-x-reverse">
+                        <span>BscScan</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <!-- Section Header -->
-        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
-            <div>
-                <h3 class="text-xl font-extrabold text-white">قائمة فواتير الدين المتاحة</h3>
-                <p class="text-xs text-slate-400 mt-0.5">اختر الفاتورة التي ترغب في دعمها ومساهمة تفريج كربتها</p>
+        <!-- Invoices Vault Section -->
+        <section class="liquid-glass rounded-3xl p-8 space-y-6 border border-white/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                <div>
+                    <h3 class="text-xl font-extrabold text-white tracking-tight">قائمة فواتير الدين المتاحة</h3>
+                    <p class="text-sm text-gray-400 mt-1">اختر الحالة التي ترغب في دعمها ومساهمة تفريج كربتها عبر العقد الذكي</p>
+                </div>
+                <button class="inline-flex items-center justify-center space-x-2 space-x-reverse px-5 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-200 text-sm font-bold transition-all border border-white/10">
+                    <svg class="w-4 h-4 text-amber-400 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    <span>تحديث العقد مباشر</span>
+                </button>
             </div>
-            <button onclick="loadBills()" class="mt-4 sm:mt-0 text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 px-4 py-2.5 rounded-xl border border-slate-800 transition flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                تحديث القائمة
-            </button>
-        </div>
 
-        <!-- Bills Grid -->
-        <div id="billsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="col-span-full text-center py-24 text-slate-500 glass-panel rounded-3xl border border-slate-800/60">
-                <div class="inline-block w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-4"></div>
-                <p class="text-sm font-medium">جاري مزامنة الفواتير من العقد الذكي...</p>
+            <!-- Empty Vault State -->
+            <div class="rounded-2xl border border-dashed border-white/10 bg-quantum-800/40 p-16 text-center flex flex-col items-center justify-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-amber-400 text-2xl shadow-inner mb-1">
+                    📂
+                </div>
+                <h4 class="text-white font-bold text-base">لا توجد فواتير مسجلة في العقد حتى الآن</h4>
+                <p class="text-xs text-gray-400 max-w-md leading-relaxed">العقد الذكي يعمل بكفاءة وجاهز لاستقبال أولى الطلبات الموثقة عبر شبكة BNB Smart Chain.</p>
             </div>
-        </div>
+        </section>
 
     </main>
 
-    <!-- Modal: Post New Bill -->
-    <div id="postModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-panel border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-bold text-white">إدراج فاتورة دين جديدة</h3>
-                <button onclick="closePostModal()" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition">✕</button>
-            </div>
-            <form id="postBillForm" onsubmit="submitBill(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">وصف الفاتورة / عنوان السند</label>
-                    <input type="text" id="billTitle" required placeholder="مثال: دين علاج مستحق / إيجار مسكن..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">إجمالي المبلغ المطلوب (BNB)</label>
-                    <input type="number" step="0.0001" id="billAmount" required placeholder="0.5" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">المدة الزمنية (بالأيام - أقصى 90 يوم)</label>
-                    <input type="number" id="billDuration" required value="30" min="1" max="90" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 leading-relaxed">
-                    رسوم إدراج الفاتورة الرمزية هي <strong>0.0001 BNB</strong> تُدفع مرة واحدة لضمان جدية الطلب.
-                </div>
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePostModal()" class="w-1/2 bg-slate-900 hover:bg-slate-850 text-slate-300 font-bold py-3 rounded-xl transition text-xs border border-slate-800">إلغاء</button>
-                    <button type="submit" class="w-1/2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg text-xs hover:scale-[1.02]">تأكيد النشر</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Footer -->
-    <footer class="border-t border-slate-950 bg-slate-950 text-center py-8 text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>Billionaire Debt Relief Protocol &copy; 2026 - جميع الحقوق محفوظة</p>
-            <p class="font-mono text-slate-600 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-900">Contract: 0xCC0FB5E82d449C046dd8EE111241d4c5eF191815</p>
-        </div>
+    <footer class="w-full border-t border-white/5 bg-quantum-900 py-6 text-center text-xs text-gray-500">
+        <p>© 2026 Billionaire Protocol. Powered by Next-Gen Quantum Web3 Engine.</p>
     </footer>
 
-    <!-- JavaScript logic -->
-    <script>
-        const CONTRACT_ADDRESS = "0xCC0FB5E82d449C046dd8EE111241d4c5eF191815";
-        const CONTRACT_ABI = [
-          { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillCancelled", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "newDeadline", "type": "uint256" }], "name": "BillExtended", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }], "name": "BillFullySettled", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "debtor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "indexed": false, "internalType": "string", "name": "title", "type": "string" }], "name": "BillPosted", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillVerified", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "ContributionMade", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "ContributionRefunded", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "debtor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "DebtorWithdrawn", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "FeesWithdrawn", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "uint256", "name": "newFee", "type": "uint256" }], "name": "ListingFeeUpdated", "type": "event" },
-          { "inputs": [], "name": "accumulatedFees", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "cancelBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "address", "name": "", "type": "address" }], "name": "contributions", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "debtorBalances", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }, { "internalType": "uint256", "name": "additionalDays", "type": "uint256" }], "name": "extendDeadline", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [], "name": "listingFee", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "payable", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "refundContribution", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "_newFee", "type": "uint256" }], "name": "setListingFee", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "userBills", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "verifyBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [], "name": "withdrawDebtorFunds", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-          { "inputs": [], "name": "withdrawFees", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
-        ];
-
-        let provider, signer, contract, userAccount = null;
-
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    provider = new ethers.BrowserProvider(window.ethereum);
-                    await provider.send("eth_requestAccounts", []);
-                    signer = await provider.getSigner();
-                    userAccount = await signer.getAddress();
-                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-
-                    const shortAddr = userAccount.substring(0, 6) + "..." + userAccount.substring(userAccount.length - 4);
-                    document.getElementById("walletAddressText").innerText = shortAddr;
-                    const btn = document.getElementById("connectWalletBtn");
-                    btn.className = "bg-gradient-to-r from-emerald-600 to-emerald-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 text-sm flex items-center gap-2";
-                    
-                    loadBills();
-                } catch (error) {
-                    console.error(error);
-                    alert("فشل ربط المحفظة!");
-                }
-            } else {
-                alert("يرجى استخدام متصفح يدعم محافظ Web3 مثل MetaMask!");
-            }
-        }
-
-        async function loadBills() {
-            const grid = document.getElementById("billsGrid");
-            grid.innerHTML = `<div class="col-span-full text-center py-24 text-slate-400 glass-panel rounded-3xl"><div class="inline-block w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-4"></div><p class="text-sm">جاري جلب الفواتير من شبكة BNB Chain...</p></div>`;
-
-            try {
-                const readProvider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
-                const readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
-
-                const nextId = await readContract.nextBillId();
-                document.getElementById("totalBillsCount").innerText = nextId.toString();
-
-                if (nextId == 0n) {
-                    grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500 glass-panel rounded-3xl border border-slate-800">لا توجد فواتير مسجلة في العقد حتى الآن.</div>`;
-                    return;
-                }
-
-                grid.innerHTML = "";
-                for (let i = 0n; i < nextId; i++) {
-                    const bill = await readContract.bills(i);
-                    renderBillCard(bill);
-                }
-            } catch (err) {
-                console.error(err);
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-red-400 glass-panel rounded-3xl border border-red-500/20">حدث خطأ أثناء الاتصال بالشبكة وجلب الفواتير.</div>`;
-            }
-        }
-
-        function renderBillCard(bill) {
-            const grid = document.getElementById("billsGrid");
-            const id = bill[0].toString();
-            const debtor = bill[1];
-            const title = bill[2];
-            const totalAmount = ethers.formatEther(bill[3]);
-            const amountPaid = ethers.formatEther(bill[4]);
-            const deadline = Number(bill[5]) * 1000;
-            const isSettled = bill[6];
-            const isVerified = bill[7];
-            const isCancelled = bill[8];
-
-            const progress = Math.min((Number(amountPaid) / Number(totalAmount)) * 100, 100);
-            const deadlineDate = new Date(deadline).toLocaleDateString('ar-SA');
-
-            let statusBadge = '';
-            if (isSettled) {
-                statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-bold">مكتمل السداد</span>`;
-            } else if (isCancelled) {
-                statusBadge = `<span class="bg-red-500/15 text-red-400 border border-red-500/20 text-xs px-3 py-1 rounded-full font-bold">ملغاة</span>`;
-            } else if (!isVerified) {
-                statusBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-bold">قيد المراجعة</span>`;
-            } else {
-                statusBadge = `<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">نشطة للتبرع</span>`;
-            }
-
-            const card = document.createElement("div");
-            card.className = "glass-panel rounded-3xl p-6 shadow-xl flex flex-col justify-between border border-slate-800/80 hover:border-slate-700 transition duration-300";
-            card.innerHTML = `
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-mono text-slate-500 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">فاتورة #${id}</span>
-                        ${statusBadge}
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-2 leading-snug">${title}</h3>
-                    <p class="text-xs text-slate-400 mb-6 font-mono truncate bg-slate-900/60 p-2 rounded-lg border border-slate-800/50">المستفيد: ${debtor}</p>
-                    
-                    <div class="space-y-2 mb-6">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-slate-400 text-xs">المبلغ المجمع:</span>
-                            <span class="font-extrabold text-amber-400 font-mono">${amountPaid} / ${totalAmount} BNB</span>
-                        </div>
-                        <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-900">
-                            <div class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full rounded-full transition-all duration-500" style="width: ${progress}%"></div>
-                        </div>
-                        <div class="flex justify-between text-[11px] text-slate-500 pt-1 font-medium">
-                            <span>الموعد: ${deadlineDate}</span>
-                            <span class="font-mono">${progress.toFixed(1)}%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pt-4 border-t border-slate-800/60 flex gap-2">
-                    ${(!isSettled && !isCancelled && isVerified) ? `
-                        <button onclick="contribute(${id})" class="flex-1 bg-gradient-to-r from-amber-500 to-yellow-400 hover:scale-[1.02] text-slate-950 font-extrabold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-amber-500/10">
-                            تبرع الآن
-                        </button>
-                    ` : ''}
-                    ${(!isSettled && !isCancelled && !isVerified) ? `
-                        <button disabled class="flex-1 bg-slate-900 text-slate-500 font-bold py-3 px-4 rounded-xl text-xs cursor-not-allowed border border-slate-800">
-                            بانتظار تدقيق الإدارة
-                        </button>
-                    ` : ''}
-                    ${(isSettled || isCancelled) ? `
-                        <div class="w-full text-center py-2 text-xs text-slate-500 font-medium">انتهت هذه الفاتورة</div>
-                    ` : ''}
-                </div>
-            `;
-            grid.appendChild(card);
-        }
-
-        function openPostModal() {
-            if (!userAccount) {
-                alert("يرجى ربط المحفظة أولاً لإدراج فاتورة جديدة!");
-                connectWallet();
-                return;
-            }
-            document.getElementById("postModal").classList.remove("hidden");
-        }
-
-        function closePostModal() {
-            document.getElementById("postModal").classList.add("hidden");
-        }
-
-        async function submitBill(event) {
-            event.preventDefault();
-            if (!contract) return alert("يرجى ربط المحفظة!");
-
-            const title = document.getElementById("billTitle").value;
-            const amount = document.getElementById("billAmount").value;
-            const duration = document.getElementById("billDuration").value;
-
-            try {
-                const parsedAmount = ethers.parseEther(amount);
-                const listingFee = await contract.listingFee();
-
-                const tx = await contract.postBill(title, parsedAmount, duration, { value: listingFee });
-                alert("جاري إرسال المعاملة إلى شبكة BNB Chain... يرجى الانتظار.");
-                await tx.wait();
-                alert("تم إدراج الفاتورة بنجاح وتنتظر المراجعة!");
-                closePostModal();
-                loadBills();
-            } catch (err) {
-                console.error(err);
-                alert("فشلت المعاملة: " + (err.reason || err.message));
-            }
-        }
-
-        async function contribute(billId) {
-            if (!contract) {
-                alert("يرجى ربط المحفظة أولاً!");
-                connectWallet();
-                return;
-            }
-
-            const amountStr = prompt("أدخل مبلغ التبرع بـ BNB (مثال: 0.05):");
-            if (!amountStr || isNaN(amountStr) || Number(amountStr) <= 0) return;
-
-            try {
-                const parsedValue = ethers.parseEther(amountStr);
-                const tx = await contract.contributeToBill(billId, { value: parsedValue });
-                alert("جاري تنفيذ التبرع على البلوكشين...");
-                await tx.wait();
-                alert("شكراً لك! تم التبرع بنجاح وتحديث السجل.");
-                loadBills();
-            } catch (err) {
-                console.error(err);
-                alert("فشل التبرع: " + (err.reason || err.message));
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadBills();
-        });
-    </script>
 </body>
 </html>
