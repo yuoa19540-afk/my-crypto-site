@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billionaire Debt Relief | X-Stream Feed</title>
+    <title>Billionaire Protocol | Apex Quantum Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -13,129 +13,177 @@
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        xblack: '#000000',
-                        xsurface: '#16181c',
-                        xborder: '#2f3336',
-                        xhov: '#1d1f23'
+                        void: '#030508',
+                        surface: '#0a0e17',
+                        card: '#111827',
+                        gold: '#fbbf24'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #000000; color: #e7e9ea; }
+        .quantum-glass {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.7) 0%, rgba(10, 14, 23, 0.8) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .gold-glow {
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
+        }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .floating { animation: float-slow 6s ease-in-out infinite; }
     </style>
 </head>
-<body class="min-h-screen flex justify-center antialiased selection:bg-amber-500 selection:text-black">
+<body class="bg-void text-gray-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-black overflow-x-hidden">
 
-    <!-- Main Container Layout (X Style) -->
-    <div class="w-full max-w-2xl border-x border-xborder min-h-screen flex flex-col">
+    <!-- Ambient Core Gradients -->
+    <div class="fixed top-[-10%] left-[20%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[140px] pointer-events-none"></div>
 
-        <!-- Top Sticky Header -->
-        <header class="sticky top-0 z-50 bg-black/85 backdrop-blur-md border-b border-xborder px-4 py-3 flex items-center justify-between">
+    <!-- Top Navigation Bar -->
+    <header class="w-full border-b border-white/5 bg-void/90 backdrop-blur-2xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center font-black text-black text-base shadow-md">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-black text-2xl shadow-lg gold-glow">
                     B
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-base text-white tracking-tight leading-snug">Billionaire Feed</h1>
-                    <p class="text-xs text-gray-500">BSC Mainnet • الحائط المباشر</p>
-                </div>
-            </div>
-            <button class="px-4 py-2 rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-all shadow-lg">
-                ربط المحفظة
-            </button>
-        </header>
-
-        <!-- Compose / Post Box (تغريدة جديدة / إدراج فاتورة) -->
-        <div class="border-b border-xborder p-4 bg-black space-y-3">
-            <div class="flex space-x-3 space-x-reverse">
-                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-amber-400 font-bold text-sm border border-xborder flex-shrink-0">
-                    YOU
-                </div>
-                <div class="flex-grow space-y-2">
-                    <textarea placeholder="أنشر فاتورتك أو تفاصيل الدين هنا ليراها العالم والمتبرعون..." rows="3" class="w-full bg-transparent text-white placeholder-gray-500 text-sm focus:outline-none resize-none"></textarea>
-                    
-                    <div class="flex items-center justify-between pt-2 border-t border-xborder/60">
-                        <div class="flex items-center space-x-2 space-x-reverse text-amber-400 text-xs">
-                            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 font-semibold">رسوم العقد: 0.0001 BNB</span>
-                        </div>
-                        <button class="px-5 py-2 rounded-full bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition-all shadow-md">
-                            نشر الحالة
-                        </button>
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <span class="font-extrabold text-lg tracking-tight text-white">Billionaire Protocol</span>
+                        <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-400/10 text-amber-400 border border-amber-400/20 rounded-full">APEX 3.0</span>
+                    </div>
+                    <div class="flex items-center space-x-2 space-x-reverse mt-0.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-xs text-gray-400 font-medium tracking-wide">BSC Mainnet • Escrow Active</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Feed Tabs / Filters -->
-        <div class="flex border-b border-xborder text-sm font-semibold text-gray-400">
-            <div class="flex-1 py-3.5 text-center text-white border-b-2 border-amber-500 cursor-pointer bg-xhov/30">الكل (الرئيسية)</div>
-            <div class="flex-1 py-3.5 text-center hover:text-white cursor-pointer transition-colors">الفواتير النشطة</div>
-            <div class="flex-1 py-3.5 text-center hover:text-white cursor-pointer transition-colors">تم سدادها ✓</div>
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-extrabold text-sm shadow-xl gold-glow transition-all transform active:scale-95 flex items-center space-x-2 space-x-reverse">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span>ربط المحفظة الذكية</span>
+                </button>
+            </div>
         </div>
+    </header>
 
-        <!-- Timeline Feed (Tweets / Invoices Stream) -->
-        <div class="flex-grow divide-y divide-xborder">
+    <!-- Main Core Layout -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 z-10">
+
+        <!-- Hero Mission Banner -->
+        <section class="relative overflow-hidden rounded-3xl quantum-glass p-8 sm:p-12 floating">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl pointer-events-none"></div>
             
-            <!-- Post Item Example (Card) -->
-            <article class="p-4 hover:bg-xhov/40 transition-colors cursor-pointer space-y-3">
-                <div class="flex items-start justify-between">
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm">
-                            0x
-                        </div>
-                        <div>
-                            <div class="flex items-center space-x-1 space-x-reverse">
-                                <span class="font-bold text-sm text-white">مستفيد موثق</span>
-                                <span class="text-amber-500 text-xs">✔</span>
-                            </div>
-                            <span class="text-xs text-gray-500 font-mono">0x4F82...9B12 • منذ دقيقتين</span>
-                        </div>
-                    </div>
-                    <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">نشط في العقد</span>
+            <div class="max-w-3xl relative z-10 space-y-6">
+                <div class="inline-flex items-center space-x-2 space-x-reverse px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-400 text-xs font-bold tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span>منصة إنسانية لامركزية بالكامل (Autonomous Escrow Engine)</span>
                 </div>
-
-                <!-- Post Content -->
-                <p class="text-sm text-gray-200 leading-relaxed pr-13">
-                    تم إدراج فاتورة دين رسمية جديدة عبر عقد Billionaire Debt Relief على شبكة BSC. نأمل من أهل الخير المساهمة في تفريج الكربة. الشفافية مطلقة عبر الحجز الآمن (Escrow).
+                
+                <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    الربط الفوري والشفاف بين أصحاب الحاجات ومصادر الدعم بلا وسطاء
+                </h2>
+                
+                <p class="text-gray-400 text-base sm:text-lg leading-relaxed font-normal">
+                    نظام حجز آمن ومبرمج (<span class="text-amber-400 font-semibold">Smart Escrow</span>) يضمن توثيق الفواتير والتحقق الذاتي من وصول الدعم لمستحقيه على سلسلة الحواسب اللامركزية.
                 </p>
 
-                <!-- Post Stats / Interactive Bar (X Style) -->
-                <div class="flex items-center justify-between text-gray-500 text-xs pt-2 pr-13 max-w-md">
-                    <button class="flex items-center space-x-1.5 space-x-reverse hover:text-amber-400 transition-colors">
-                        <span>💬</span>
-                        <span>0 ردود</span>
+                <div class="pt-4 flex flex-wrap gap-4">
+                    <button class="px-7 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-black font-extrabold text-sm shadow-xl gold-glow transition-all transform hover:-translate-y-1 flex items-center space-x-3 space-x-reverse">
+                        <span>إدراج فاتورة دين جديدة</span>
+                        <svg class="w-5 h-5 transform rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </button>
-                    <button class="flex items-center space-x-1.5 space-x-reverse hover:text-emerald-400 transition-colors">
-                        <span>🔄</span>
-                        <span>مشاركة</span>
-                    </button>
-                    <button class="flex items-center space-x-1.5 space-x-reverse hover:text-rose-500 transition-colors">
-                        <span>❤️</span>
-                        <span>دعم (0 BNB)</span>
-                    </button>
-                    <button class="flex items-center space-x-1.5 space-x-reverse hover:text-amber-400 transition-colors">
-                        <span>🔗</span>
-                        <span>BscScan</span>
+                    <button class="px-7 py-4 rounded-2xl quantum-glass hover:bg-white/5 text-white font-bold text-sm transition-all border border-white/10">
+                        فحص سجل العقود الحية
                     </button>
                 </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- Empty State if Feed is clear -->
-            <div class="p-16 text-center space-y-2">
-                <p class="text-gray-400 font-medium text-sm">لا توجد تغريدات أو فواتير أخرى حالياً في الـ Feed.</p>
-                <p class="text-xs text-gray-600">كن أول من يكتب تغريدته أو يدرج حالته على الشبكة.</p>
+        <!-- Realtime Telemetry Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Telemetry Item 1 -->
+            <div class="quantum-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-400/40 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">إجمالي الفواتير المسجلة</span>
+                    <span class="p-2 rounded-xl bg-white/5 text-amber-400 group-hover:scale-110 transition-transform">📊</span>
+                </div>
+                <div class="mt-6 flex items-baseline justify-between">
+                    <span class="text-5xl font-black text-white tracking-tighter">0</span>
+                    <span class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20">مزامنة حية</span>
+                </div>
             </div>
 
+            <!-- Telemetry Item 2 -->
+            <div class="quantum-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-400/40 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">رسوم الإدراج الرمزية</span>
+                    <span class="p-2 rounded-xl bg-white/5 text-amber-400 group-hover:scale-110 transition-transform">⚡</span>
+                </div>
+                <div class="mt-6 flex items-baseline justify-between">
+                    <div class="flex items-baseline space-x-1.5 space-x-reverse">
+                        <span class="text-4xl font-black text-white tracking-tighter">0.0001</span>
+                        <span class="text-xs font-extrabold text-amber-400">BNB</span>
+                    </div>
+                    <span class="text-xs text-gray-400 font-medium bg-white/5 px-3 py-1 rounded-lg">رسوم الشبكة</span>
+                </div>
+            </div>
+
+            <!-- Telemetry Item 3 -->
+            <div class="quantum-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-emerald-500/40 group">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-400 text-sm font-semibold">حالة العقد الذكي</span>
+                    <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">🛡️</span>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5 space-x-reverse">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-lg shadow-emerald-400/50 animate-ping"></span>
+                        <span class="text-sm font-extrabold text-emerald-400">نشط وآمن بالكامل</span>
+                    </div>
+                    <a href="https://bscscan.com" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4 flex items-center space-x-1 space-x-reverse">
+                        <span>BscScan</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- Footer Info -->
-        <footer class="p-4 border-t border-xborder text-center text-xs text-gray-600">
-            <p>X-Stream Decentralized Engine • BNB Chain</p>
-        </footer>
+        <!-- Invoices Vault Terminal -->
+        <section class="quantum-glass rounded-3xl p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                <div>
+                    <h3 class="text-xl font-extrabold text-white tracking-tight">قائمة فواتير الدين المتاحة</h3>
+                    <p class="text-sm text-gray-400 mt-1">قائمة الحالات المسجلة على العقد بانتظار المساهمة والتفريج</p>
+                </div>
+                <button class="inline-flex items-center justify-center space-x-2 space-x-reverse px-5 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-200 text-sm font-bold transition-all border border-white/10">
+                    <svg class="w-4 h-4 text-amber-400 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    <span>تحديث البيانات المباشرة</span>
+                </button>
+            </div>
 
-    </div>
+            <!-- Empty Terminal Vault State -->
+            <div class="rounded-2xl border border-dashed border-white/10 bg-black/40 p-16 text-center flex flex-col items-center justify-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-amber-400 text-2xl shadow-inner mb-1">
+                    💠
+                </div>
+                <h4 class="text-white font-bold text-base">لا توجد فواتير مسجلة في العقد حتى الآن</h4>
+                <p class="text-xs text-gray-400 max-w-md leading-relaxed">البروتوكول يعمل بكفاءة تامة وجاهز لمعالجة العقود الذكية الواردة على الشبكة لحظياً.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-white/5 bg-void py-6 text-center text-xs text-gray-500">
+        <p>© 2026 Billionaire Protocol. Powered by Apex Quantum Architecture.</p>
+    </footer>
 
 </body>
 </html>
