@@ -3,273 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Launcher | Pump Interface</title>
-    <!-- مكتبات جافاسكريبت للتعامل مع البلوكتشين والمحافظ -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Courier+Prime&display=swap" rel="stylesheet">
-    
+    <title>Billionaire Debt Relief | منصة سداد الديون اللامركزية</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ethers.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #0f141c;
-            --card-bg: #161c27;
-            --accent-green: #00ff66;
-            --accent-purple: #9945FF;
-            --accent-yellow: #f3ba2f;
-            --text-main: #ffffff;
-            --text-muted: #8a99ad;
-            --border-color: #222d42;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; padding: 15px; }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .logo { font-family: 'Courier Prime', monospace; font-size: 20px; font-weight: bold; color: var(--accent-green); letter-spacing: 1px; }
-
-        .wallet-btn {
-            background: var(--accent-green);
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .wallet-btn:hover { opacity: 0.85; transform: scale(1.02); }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-        @media(max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
-
-        .panel {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        h3 { font-size: 16px; color: var(--text-muted); margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-
-        /* جدول الأصول المكتشفة في المحفظة */
-        .assets-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        .assets-table th, .assets-table td {
-            padding: 12px;
-            text-align: right;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-        .assets-table th { color: var(--text-muted); font-weight: normal; }
-
-        .action-box {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
-        }
-        input:focus { border-color: var(--accent-green); }
-
-        .btn-action {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-evm { background: var(--accent-yellow); color: #000; }
-        .btn-sol { background: var(--accent-purple); color: #fff; }
-        .btn-action:hover { opacity: 0.9; }
-
-        .status-text {
-            font-size: 12px;
-            color: var(--accent-green);
-            word-break: break-all;
-            margin-top: 5px;
-            font-family: 'Courier Prime', monospace;
-        }
+        body { font-family: 'Cairo', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-    <header>
-        <div class="logo">PUMP.TERMINAL // V2</div>
-        <div>
-            <button class="wallet-btn" onclick="connectWallets()">🔗 ربط المحافظ والكشف الآلي</button>
+    <!-- Header / Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+                    B
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wide bg-gradient-to-r from-amber-400 to-yellow-200 bg-clip-text text-transparent">Billionaire Debt Relief</h1>
+                    <p class="text-xs text-slate-400">منصة إنسانية لامركزية آمنة على BNB Chain</p>
+                </div>
+            </div>
+            <div>
+                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/10 hover:shadow-amber-500/30 hover:scale-[1.02] transition-all duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.076 13.308-5.076 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.122 13.878a3 3 0 00-4.244 0 1 1 0 01-1.414-1.414 5 5 0 017.072 0 1 1 0 01-1.414 1.414zM9 16a1 1 0 102 0 1 1 0 00-2 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span id="walletAddressText">ربط المحفظة</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <div class="main-grid">
-        <!-- القسم الأيسر: الشارت أو الأصول المكتشفة تلقائياً -->
-        <div class="panel">
-            <h3>📊 الأصول والعملات المكتشفة في محفظتك</h3>
-            <div id="wallet-info" style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">لم يتم ربط المحفظة بعد. اضغط على زر الربط في الأعلى.</div>
-            
-            <table class="assets-table">
-                <thead>
-                    <tr>
-                        <th>العملة / الشبكة</th>
-                        <th>العنوان التعريفي</th>
-                        <th>الرصيد المتاح</th>
-                    </tr>
-                </thead>
-                <tbody id="assets-list">
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: var(--text-muted);">بانتظار الاتصال بالمحفظة...</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+        
+        <!-- Hero Banner / Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-amber-500/15 rounded-full blur-xl"></div>
+                <h3 class="text-slate-400 text-sm font-medium mb-1">إجمالي الفواتير المسجلة</h3>
+                <p id="totalBillsCount" class="text-3xl font-extrabold text-amber-400">0</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
+                <h3 class="text-slate-400 text-sm font-medium mb-1">رسوم الإدراج الرمزية</h3>
+                <p class="text-3xl font-extrabold text-blue-400">0.0001 BNB</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-center">
+                <button onclick="openPostModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    إدراج فاتورة دين جديدة
+                </button>
+            </div>
         </div>
 
-        <!-- القسم الأيمن: لوحة الدفع السريع الموجهة لعناوينك -->
-        <div class="panel">
-            <h3>⚡ بوابة الدفع والرسوم الفورية</h3>
-            
-            <div class="action-box">
-                <label style="font-size: 13px; color: var(--text-muted);">قيمة التحويل / الرسوم (BNB / ETH):</label>
-                <input type="number" id="evm-amount" value="0.01" step="0.001">
-                <button class="btn-action btn-evm" onclick="payEVM()">إرسال الرسوم (BNB / Base)</button>
-                <div id="evm-status" class="status-text"></div>
-            </div>
+        <!-- Section Title & Tabs -->
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-6 border-b border-slate-800 pb-4">
+            <h2 class="text-2xl font-bold tracking-tight text-white mb-4 sm:mb-0">قائمة فواتير الدين المتاحة</h2>
+            <button onclick="loadBills()" class="text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 px-4 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                تحديث القائمة
+            </button>
+        </div>
 
-            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
-
-            <div class="action-box">
-                <label style="font-size: 13px; color: var(--text-muted);">قيمة التحويل / الرسوم (SOL):</label>
-                <input type="number" id="sol-amount" value="0.05" step="0.01">
-                <button class="btn-action btn-sol" onclick="paySolana()">إرسال الرسوم (Solana)</button>
-                <div id="sol-status" class="status-text"></div>
+        <!-- Bills Grid Container -->
+        <div id="billsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- سيتم تعبئة الفواتير ديناميكياً هنا عبر الجافاسكريبت -->
+            <div class="col-span-full text-center py-20 text-slate-500 bg-slate-900/30 rounded-2xl border border-slate-800/60">
+                <p class="text-lg">جاري تحميل الفواتير من العقد الذكي...</p>
             </div>
+        </div>
+
+    </main>
+
+    <!-- Modal: Post Bill -->
+    <div id="postModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <h3 class="text-xl font-bold text-white mb-4 flex items-center justify-between">
+                <span>إدراج فاتورة دين جديدة</span>
+                <button onclick="closePostModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
+            </h3>
+            <form id="postBillForm" onsubmit="submitBill(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">عنوان الفاتورة / الوصف</label>
+                    <input type="text" id="billTitle" required placeholder="مثال: فاتورة علاج أو دين مستحق..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">إجمالي المبلغ المطلوب (BNB)</label>
+                    <input type="number" step="0.0001" id="billAmount" required placeholder="0.5" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">المدة بالأيام (أقصى حد 90 يوم)</label>
+                    <input type="number" id="billDuration" required value="30" min="1" max="90" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                </div>
+                <p class="text-xs text-amber-400/80 bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+                    ملاحظة: يتطلب إدراج الفاتورة دفع رسوم إدراج رمزية قدرها <strong>0.0001 BNB</strong> فقط.
+                </p>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closePostModal()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl transition text-sm">إلغاء</button>
+                    <button type="submit" class="w-1/2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg text-sm">نشر الفاتورة</button>
+                </div>
+            </form>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 text-center py-6 text-xs text-slate-500">
+        <p>Billionaire Debt Relief Protocol &copy; 2026 - جميع الحقوق محفوظة</p>
+        <p class="mt-1 font-mono text-slate-600">Contract: 0xCC0FB5E82d449C046dd8EE111241d4c5eF191815</p>
+    </footer>
+
+    <!-- JavaScript logic -->
     <script>
-        // عناوينك المستهدفة لتلقي الرسوم مباشرة
-        const TARGET_EVM = "0xe97836C00f04D3E51aa2Fb17f74B1a29b6bC5334";
-        const TARGET_SOL = "H89cRQmD2xQtE6JScerVzYoqZ6qVEQzXPfB8Be67yY5L";
+        const CONTRACT_ADDRESS = "0xCC0FB5E82d449C046dd8EE111241d4c5eF191815";
+        const CONTRACT_ABI = [
+          { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillCancelled", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "newDeadline", "type": "uint256" }], "name": "BillExtended", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }], "name": "BillFullySettled", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "debtor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "indexed": false, "internalType": "string", "name": "title", "type": "string" }], "name": "BillPosted", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillVerified", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "ContributionMade", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "ContributionRefunded", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "debtor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "DebtorWithdrawn", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "FeesWithdrawn", "type": "event" },
+          { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "uint256", "name": "newFee", "type": "uint256" }], "name": "ListingFeeUpdated", "type": "event" },
+          { "inputs": [], "name": "accumulatedFees", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "cancelBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "address", "name": "", "type": "address" }], "name": "contributions", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "debtorBalances", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }, { "internalType": "uint256", "name": "additionalDays", "type": "uint256" }], "name": "extendDeadline", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [], "name": "listingFee", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "payable", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "refundContribution", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "_newFee", "type": "uint256" }], "name": "setListingFee", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "userBills", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "verifyBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [], "name": "withdrawDebtorFunds", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+          { "inputs": [], "name": "withdrawFees", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
+        ];
 
-        let evmSigner = null;
-        let solanaProvider = null;
+        let provider;
+        let signer;
+        let contract;
+        let userAccount = null;
 
-        async function connectWallets() {
-            let infoHTML = "";
-            let tableHTML = "";
-
-            // 1. فحص وفعل ربط EVM (MetaMask) والتعرف على الأرصدة
-            if (typeof window.ethereum !== 'undefined') {
+        async function connectWallet() {
+            if (window.ethereum) {
                 try {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    evmSigner = provider.getSigner();
-                    const evmAddress = accounts[0];
-                    const balanceWei = await provider.getBalance(evmAddress);
-                    const balanceEth = ethers.utils.formatEther(balanceWei);
-
-                    infoHTML += `✅ متصل EVM: ${evmAddress.substring(0,6)}...<br>`;
-                    tableHTML += `<tr><td>BNB / ETH (EVM)</td><td style="font-size:11px">${evmAddress.substring(0,10)}...</td><td><b>${parseFloat(balanceEth).toFixed(4)}</b></td></tr>`;
-                } catch (e) {
-                    console.log("EVM connection skipped or failed");
-                }
-            }
-
-            // 2. فحص وفعل ربط Solana (Phantom) والتعرف على الأرصدة
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const resp = await window.solana.connect();
-                    solanaProvider = window.solana;
-                    const solAddress = resp.publicKey.toString();
+                    provider = new ethers.BrowserProvider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    signer = await provider.getSigner();
+                    userAccount = await signer.getAddress();
                     
-                    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-                    const balanceLamports = await connection.getBalance(resp.publicKey);
-                    const balanceSol = balanceLamports / solanaWeb3.LAMPORTS_PER_SOL;
+                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
-                    infoHTML += `🚀 متصل Solana: ${solAddress.substring(0,6)}...`;
-                    tableHTML += `<tr><td>SOL (Solana)</td><td style="font-size:11px">${solAddress.substring(0,10)}...</td><td><b>${balanceSol.toFixed(4)} SOL</b></td></tr>`;
-                } catch (e) {
-                    console.log("Solana connection skipped or failed");
+                    const shortAddr = userAccount.substring(0, 6) + "..." + userAccount.substring(userAccount.length - 4);
+                    document.getElementById("walletAddressText").innerText = shortAddr;
+                    document.getElementById("connectWalletBtn").classList.replace("from-amber-500", "from-emerald-600");
+                    document.getElementById("connectWalletBtn").classList.replace("to-yellow-400", "to-emerald-400");
+                    
+                    loadBills();
+                } catch (error) {
+                    console.error(error);
+                    alert("فشل ربط المحفظة!");
                 }
-            }
-
-            if (tableHTML === "") {
-                alert("لم يتم العثور على محفظة نشطة أو تم رفض الاتصال.");
             } else {
-                document.getElementById('wallet-info').innerHTML = infoHTML;
-                document.getElementById('assets-list').innerHTML = tableHTML;
+                alert("يرجى تثبيت محفظة متوافقة مثل MetaMask أو Trust Wallet!");
             }
         }
 
-        // تنفيذ إرسال الرسوم لعنوان EVM الخاص بك
-        async function payEVM() {
-            if (!evmSigner) return alert("يرجى ربط محفظة MetaMask أولاً!");
-            const amount = document.getElementById('evm-amount').value;
+        async function loadBills() {
+            const grid = document.getElementById("billsGrid");
+            grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-400">جاري جلب الفواتير من البلوكشين...</div>`;
+
             try {
-                const tx = await evmSigner.sendTransaction({
-                    to: TARGET_EVM,
-                    value: ethers.utils.parseEther(amount)
-                });
-                document.getElementById('evm-status').innerText = "تم بنجاح! الهاش: " + tx.hash.substring(0,15) + "...";
+                // استخدام Read-only provider إذا لم يتم ربط المحفظة
+                const readProvider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+                const readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+
+                const nextId = await readContract.nextBillId();
+                document.getElementById("totalBillsCount").innerText = nextId.toString();
+
+                if (nextId == 0n) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500 bg-slate-900/30 rounded-2xl border border-slate-800">لا توجد فواتير مسجلة حتى الآن.</div>`;
+                    return;
+                }
+
+                grid.innerHTML = "";
+                for (let i = 0n; i < nextId; i++) {
+                    const bill = await readContract.bills(i);
+                    renderBillCard(bill);
+                }
             } catch (err) {
-                alert("تم إلغاء العملية أو حدث خطأ.");
+                console.error(err);
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-red-400">حدث خطأ أثناء جلب الفواتير من الشبكة.</div>`;
             }
         }
 
-        // تنفيذ إرسال الرسوم لعنوان Solana الخاص بك
-        async function paySolana() {
-            if (!solanaProvider || !solanaProvider.isConnected) return alert("يرجى ربط محفظة Solana أولاً!");
-            const amount = parseFloat(document.getElementById('sol-amount').value);
+        function renderBillCard(bill) {
+            const grid = document.getElementById("billsGrid");
+            const id = bill[0].toString();
+            const debtor = bill[1];
+            const title = bill[2];
+            const totalAmount = ethers.formatEther(bill[3]);
+            const amountPaid = ethers.formatEther(bill[4]);
+            const deadline = Number(bill[5]) * 1000;
+            const isSettled = bill[6];
+            const isVerified = bill[7];
+            const isCancelled = bill[8];
+
+            const progress = (Number(amountPaid) / Number(totalAmount)) * 100;
+            const deadlineDate = new Date(deadline).toLocaleDateString('ar-SA');
+
+            let statusBadge = '';
+            if (isSettled) {
+                statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">مكتمل السداد</span>`;
+            } else if (isCancelled) {
+                statusBadge = `<span class="bg-red-500/15 text-red-400 border border-red-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">ملغاة</span>`;
+            } else if (!isVerified) {
+                statusBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">قيد المراجعة</span>`;
+            } else {
+                statusBadge = `<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">نشطة للتبرع</span>`;
+            }
+
+            const card = document.createElement("div");
+            card.className = "bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between hover:border-slate-700 transition";
+            card.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-mono text-slate-500">فاتورة #${id}</span>
+                        ${statusBadge}
+                    </div>
+                    <h3 class="font-bold text-lg text-white mb-2 line-clamp-2">${title}</h3>
+                    <p class="text-xs text-slate-400 mb-4 font-mono truncate">المستفيد: ${debtor}</p>
+                    
+                    <div class="space-y-2 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">تم جمع:</span>
+                            <span class="font-bold text-amber-400">${amountPaid} / ${totalAmount} BNB</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                            <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-500 pt-1">
+                            <span>الموعد النهائي: ${deadlineDate}</span>
+                            <span>${progress.toFixed(1)}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800/80 flex gap-2">
+                    ${(!isSettled && !isCancelled && isVerified) ? `
+                        <button onclick="contribute(${id})" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md">
+                            تبرع الآن
+                        </button>
+                    ` : ''}
+                    ${(!isSettled && !isCancelled && !isVerified) ? `
+                        <button disabled class="flex-1 bg-slate-800 text-slate-500 font-bold py-2.5 px-4 rounded-xl text-xs cursor-not-allowed">
+                            بانتظار التحقق
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            grid.appendChild(card);
+        }
+
+        function openPostModal() {
+            if (!userAccount) {
+                alert("يرجى ربط المحفظة أولاً لإدراج فاتورة جديدة!");
+                connectWallet();
+                return;
+            }
+            document.getElementById("postModal").classList.remove("hidden");
+        }
+
+        function closePostModal() {
+            document.getElementById("postModal").classList.add("hidden");
+        }
+
+        async function submitBill(event) {
+            event.preventDefault();
+            if (!contract) {
+                alert("يرجى ربط المحفظة أولاً!");
+                return;
+            }
+
+            const title = document.getElementById("billTitle").value;
+            const amount = document.getElementById("billAmount").value;
+            const duration = document.getElementById("billDuration").value;
+
             try {
-                const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
-                const recipientPubKey = new solanaWeb3.PublicKey(TARGET_SOL);
-                
-                const transaction = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey: solanaProvider.publicKey,
-                        toPubkey: recipientPubKey,
-                        lamports: Math.round(amount * solanaWeb3.LAMPORTS_PER_SOL),
-                    })
-                );
+                const parsedAmount = ethers.parseEther(amount);
+                const listingFee = await contract.listingFee();
 
-                const { blockhash } = await connection.getLatestBlockhash();
-                transaction.recentBlockhash = blockhash;
-                transaction.feePayer = solanaProvider.publicKey;
-
-                const signed = await solanaProvider.signAndSendTransaction(transaction);
-                document.getElementById('sol-status').innerText = "تم بنجاح! التوقيع: " + signed.signature.substring(0,15) + "...";
+                const tx = await contract.postBill(title, parsedAmount, duration, { value: listingFee });
+                alert("جاري إرسال المعاملة... يرجى الانتظار حتى التأكيد.");
+                await tx.wait();
+                alert("تم إدراج الفاتورة بنجاح!");
+                closePostModal();
+                loadBills();
             } catch (err) {
-                alert("حدث خطأ أثناء إرسال المعاملة.");
+                console.error(err);
+                alert("فشلت عملية النشر: " + (err.reason || err.message));
             }
         }
+
+        async function contribute(billId) {
+            if (!contract) {
+                alert("يرجى ربط المحفظة أولاً!");
+                connectWallet();
+                return;
+            }
+
+            const amountStr = prompt("أدخل مبلغ التبرع بـ BNB (مثال: 0.05):");
+            if (!amountStr || isNaN(amountStr) || Number(amountStr) <= 0) return;
+
+            try {
+                const parsedValue = ethers.parseEther(amountStr);
+                const tx = await contract.contributeToBill(billId, { value: parsedValue });
+                alert("جاري تنفيذ التبرع... يرجى الانتظار.");
+                await tx.wait();
+                alert("شكراً لك! تم التبرع بنجاح.");
+                loadBills();
+            } catch (err) {
+                console.error(err);
+                alert("فشل التبرع: " + (err.reason || err.message));
+            }
+        }
+
+        // تحميل الفواتير تلقائياً عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            loadBills();
+        });
     </script>
 </body>
 </html>
