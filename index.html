@@ -1,36 +1,73 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billionaire Debt Relief | منصة سداد الديون اللامركزية</title>
+    <title>Billionaire Debt Relief | المنصة العالمية لسداد الديون اللامركزية</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ethers.js CDN -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            900: '#78350f',
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Ethers.js v6 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
     <!-- Google Fonts (Cairo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Header / Navbar -->
-    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+    <!-- Header / Global Navbar -->
+    <header class="glass-panel sticky top-0 z-50 border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-xl">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-2xl tracking-tighter">
                     B
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-lg tracking-wide bg-gradient-to-r from-amber-400 to-yellow-200 bg-clip-text text-transparent">Billionaire Debt Relief</h1>
-                    <p class="text-xs text-slate-400">منصة إنسانية لامركزية آمنة على BNB Chain</p>
+                    <h1 class="font-black text-lg tracking-wide bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-200 bg-clip-text text-transparent">Billionaire Debt Relief</h1>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <p class="text-[11px] text-slate-400 font-medium">BNB Smart Chain Mainnet</p>
+                    </div>
                 </div>
             </div>
-            <div>
-                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/10 hover:shadow-amber-500/30 hover:scale-[1.02] transition-all duration-200 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            
+            <div class="flex items-center gap-3">
+                <button onclick="openPostModal()" class="hidden sm:flex items-center gap-2 bg-slate-900 hover:bg-slate-850 text-amber-400 border border-amber-500/30 text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    إدراج فاتورة
+                </button>
+                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-[1.02] transition-all duration-200 flex items-center gap-2 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.076 13.308-5.076 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.122 13.878a3 3 0 00-4.244 0 1 1 0 01-1.414-1.414 5 5 0 017.072 0 1 1 0 01-1.414 1.414zM9 16a1 1 0 102 0 1 1 0 00-2 0z" clip-rule="evenodd" />
                     </svg>
                     <span id="walletAddressText">ربط المحفظة</span>
@@ -40,34 +77,57 @@
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
         
-        <!-- Hero Banner / Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-amber-500/15 rounded-full blur-xl"></div>
-                <h3 class="text-slate-400 text-sm font-medium mb-1">إجمالي الفواتير المسجلة</h3>
-                <p id="totalBillsCount" class="text-3xl font-extrabold text-amber-400">0</p>
-            </div>
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"></div>
-                <h3 class="text-slate-400 text-sm font-medium mb-1">رسوم الإدراج الرمزية</h3>
-                <p class="text-3xl font-extrabold text-blue-400">0.0001 BNB</p>
-            </div>
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-center">
-                <button onclick="openPostModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    إدراج فاتورة دين جديدة
-                </button>
+        <!-- Hero Section -->
+        <div class="relative rounded-3xl overflow-hidden glass-panel p-8 sm:p-12 mb-12 border border-amber-500/20 shadow-2xl">
+            <div class="absolute -left-20 -top-20 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -right-20 -bottom-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-2xl">
+                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold px-3 py-1.5 rounded-full inline-block mb-4">منصة إنسانية لامركزية بالكامل</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">نصل بين أهل الخير وأصحاب الديون لفك كربهم بشفافية تامة</h2>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">نظام حجز آمن (Escrow) يحفظ حقوق المتبرع والمستفيد، مع تدقيق وتوثيق رسمي للفواتير لضمان وصول المساعدات لمستحقيها.</p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="openPostModal()" class="bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:scale-105 transition text-sm flex items-center gap-2">
+                        <span>إدراج فاتورة جديدة</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Section Title & Tabs -->
-        <div class="flex flex-col sm:flex-row items-center justify-between mb-6 border-b border-slate-800 pb-4">
-            <h2 class="text-2xl font-bold tracking-tight text-white mb-4 sm:mb-0">قائمة فواتير الدين المتاحة</h2>
-            <button onclick="loadBills()" class="text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 px-4 py-2 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+        <!-- Global Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="glass-panel rounded-2xl p-6 shadow-xl relative">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">إجمالي الفواتير المسجلة</p>
+                <p id="totalBillsCount" class="text-3xl font-black text-amber-400">0</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 shadow-xl relative">
+                <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">رسوم الإدراج الرمزية</p>
+                <p class="text-3xl font-black text-blue-400">0.0001 <span class="text-sm font-normal text-slate-400">BNB</span></p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 shadow-xl relative sm:col-span-2 lg:col-span-1 flex items-center justify-between">
+                <div>
+                    <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">حالة العقد الذكي</p>
+                    <p class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> آمن ومحمي (Active)
+                    </p>
+                </div>
+                <a href="https://bscscan.com/address/0xCC0FB5E82d449C046dd8EE111241d4c5eF191815" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 px-3 rounded-xl border border-slate-700 transition">
+                    عرض على BscScan ↗
+                </a>
+            </div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
+            <div>
+                <h3 class="text-xl font-extrabold text-white">قائمة فواتير الدين المتاحة</h3>
+                <p class="text-xs text-slate-400 mt-0.5">اختر الفاتورة التي ترغب في دعمها ومساهمة تفريج كربتها</p>
+            </div>
+            <button onclick="loadBills()" class="mt-4 sm:mt-0 text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 px-4 py-2.5 rounded-xl border border-slate-800 transition flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
@@ -75,51 +135,53 @@
             </button>
         </div>
 
-        <!-- Bills Grid Container -->
+        <!-- Bills Grid -->
         <div id="billsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- سيتم تعبئة الفواتير ديناميكياً هنا عبر الجافاسكريبت -->
-            <div class="col-span-full text-center py-20 text-slate-500 bg-slate-900/30 rounded-2xl border border-slate-800/60">
-                <p class="text-lg">جاري تحميل الفواتير من العقد الذكي...</p>
+            <div class="col-span-full text-center py-24 text-slate-500 glass-panel rounded-3xl border border-slate-800/60">
+                <div class="inline-block w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-4"></div>
+                <p class="text-sm font-medium">جاري مزامنة الفواتير من العقد الذكي...</p>
             </div>
         </div>
 
     </main>
 
-    <!-- Modal: Post Bill -->
-    <div id="postModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <h3 class="text-xl font-bold text-white mb-4 flex items-center justify-between">
-                <span>إدراج فاتورة دين جديدة</span>
-                <button onclick="closePostModal()" class="text-slate-400 hover:text-white text-sm">✕</button>
-            </h3>
+    <!-- Modal: Post New Bill -->
+    <div id="postModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-panel border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold text-white">إدراج فاتورة دين جديدة</h3>
+                <button onclick="closePostModal()" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition">✕</button>
+            </div>
             <form id="postBillForm" onsubmit="submitBill(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">عنوان الفاتورة / الوصف</label>
-                    <input type="text" id="billTitle" required placeholder="مثال: فاتورة علاج أو دين مستحق..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">وصف الفاتورة / عنوان السند</label>
+                    <input type="text" id="billTitle" required placeholder="مثال: دين علاج مستحق / إيجار مسكن..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">إجمالي المبلغ المطلوب (BNB)</label>
-                    <input type="number" step="0.0001" id="billAmount" required placeholder="0.5" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">إجمالي المبلغ المطلوب (BNB)</label>
+                    <input type="number" step="0.0001" id="billAmount" required placeholder="0.5" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">المدة بالأيام (أقصى حد 90 يوم)</label>
-                    <input type="number" id="billDuration" required value="30" min="1" max="90" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5">المدة الزمنية (بالأيام - أقصى 90 يوم)</label>
+                    <input type="number" id="billDuration" required value="30" min="1" max="90" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
                 </div>
-                <p class="text-xs text-amber-400/80 bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
-                    ملاحظة: يتطلب إدراج الفاتورة دفع رسوم إدراج رمزية قدرها <strong>0.0001 BNB</strong> فقط.
-                </p>
+                <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 leading-relaxed">
+                    رسوم إدراج الفاتورة الرمزية هي <strong>0.0001 BNB</strong> تُدفع مرة واحدة لضمان جدية الطلب.
+                </div>
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePostModal()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl transition text-sm">إلغاء</button>
-                    <button type="submit" class="w-1/2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg text-sm">نشر الفاتورة</button>
+                    <button type="button" onclick="closePostModal()" class="w-1/2 bg-slate-900 hover:bg-slate-850 text-slate-300 font-bold py-3 rounded-xl transition text-xs border border-slate-800">إلغاء</button>
+                    <button type="submit" class="w-1/2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg text-xs hover:scale-[1.02]">تأكيد النشر</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-900 bg-slate-950 text-center py-6 text-xs text-slate-500">
-        <p>Billionaire Debt Relief Protocol &copy; 2026 - جميع الحقوق محفوظة</p>
-        <p class="mt-1 font-mono text-slate-600">Contract: 0xCC0FB5E82d449C046dd8EE111241d4c5eF191815</p>
+    <footer class="border-t border-slate-950 bg-slate-950 text-center py-8 text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>Billionaire Debt Relief Protocol &copy; 2026 - جميع الحقوق محفوظة</p>
+            <p class="font-mono text-slate-600 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-900">Contract: 0xCC0FB5E82d449C046dd8EE111241d4c5eF191815</p>
+        </div>
     </footer>
 
     <!-- JavaScript logic -->
@@ -156,10 +218,7 @@
           { "inputs": [], "name": "withdrawFees", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
         ];
 
-        let provider;
-        let signer;
-        let contract;
-        let userAccount = null;
+        let provider, signer, contract, userAccount = null;
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -168,13 +227,12 @@
                     await provider.send("eth_requestAccounts", []);
                     signer = await provider.getSigner();
                     userAccount = await signer.getAddress();
-                    
                     contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
                     const shortAddr = userAccount.substring(0, 6) + "..." + userAccount.substring(userAccount.length - 4);
                     document.getElementById("walletAddressText").innerText = shortAddr;
-                    document.getElementById("connectWalletBtn").classList.replace("from-amber-500", "from-emerald-600");
-                    document.getElementById("connectWalletBtn").classList.replace("to-yellow-400", "to-emerald-400");
+                    const btn = document.getElementById("connectWalletBtn");
+                    btn.className = "bg-gradient-to-r from-emerald-600 to-emerald-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 text-sm flex items-center gap-2";
                     
                     loadBills();
                 } catch (error) {
@@ -182,16 +240,15 @@
                     alert("فشل ربط المحفظة!");
                 }
             } else {
-                alert("يرجى تثبيت محفظة متوافقة مثل MetaMask أو Trust Wallet!");
+                alert("يرجى استخدام متصفح يدعم محافظ Web3 مثل MetaMask!");
             }
         }
 
         async function loadBills() {
             const grid = document.getElementById("billsGrid");
-            grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-400">جاري جلب الفواتير من البلوكشين...</div>`;
+            grid.innerHTML = `<div class="col-span-full text-center py-24 text-slate-400 glass-panel rounded-3xl"><div class="inline-block w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mb-4"></div><p class="text-sm">جاري جلب الفواتير من شبكة BNB Chain...</p></div>`;
 
             try {
-                // استخدام Read-only provider إذا لم يتم ربط المحفظة
                 const readProvider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
                 const readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
 
@@ -199,7 +256,7 @@
                 document.getElementById("totalBillsCount").innerText = nextId.toString();
 
                 if (nextId == 0n) {
-                    grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500 bg-slate-900/30 rounded-2xl border border-slate-800">لا توجد فواتير مسجلة حتى الآن.</div>`;
+                    grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-500 glass-panel rounded-3xl border border-slate-800">لا توجد فواتير مسجلة في العقد حتى الآن.</div>`;
                     return;
                 }
 
@@ -210,7 +267,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-red-400">حدث خطأ أثناء جلب الفواتير من الشبكة.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-red-400 glass-panel rounded-3xl border border-red-500/20">حدث خطأ أثناء الاتصال بالشبكة وجلب الفواتير.</div>`;
             }
         }
 
@@ -226,56 +283,59 @@
             const isVerified = bill[7];
             const isCancelled = bill[8];
 
-            const progress = (Number(amountPaid) / Number(totalAmount)) * 100;
+            const progress = Math.min((Number(amountPaid) / Number(totalAmount)) * 100, 100);
             const deadlineDate = new Date(deadline).toLocaleDateString('ar-SA');
 
             let statusBadge = '';
             if (isSettled) {
-                statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">مكتمل السداد</span>`;
+                statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-bold">مكتمل السداد</span>`;
             } else if (isCancelled) {
-                statusBadge = `<span class="bg-red-500/15 text-red-400 border border-red-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">ملغاة</span>`;
+                statusBadge = `<span class="bg-red-500/15 text-red-400 border border-red-500/20 text-xs px-3 py-1 rounded-full font-bold">ملغاة</span>`;
             } else if (!isVerified) {
-                statusBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">قيد المراجعة</span>`;
+                statusBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-bold">قيد المراجعة</span>`;
             } else {
-                statusBadge = `<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-full font-semibold">نشطة للتبرع</span>`;
+                statusBadge = `<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-3 py-1 rounded-full font-bold">نشطة للتبرع</span>`;
             }
 
             const card = document.createElement("div");
-            card.className = "bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between hover:border-slate-700 transition";
+            card.className = "glass-panel rounded-3xl p-6 shadow-xl flex flex-col justify-between border border-slate-800/80 hover:border-slate-700 transition duration-300";
             card.innerHTML = `
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-mono text-slate-500">فاتورة #${id}</span>
+                        <span class="text-xs font-mono text-slate-500 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">فاتورة #${id}</span>
                         ${statusBadge}
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2 line-clamp-2">${title}</h3>
-                    <p class="text-xs text-slate-400 mb-4 font-mono truncate">المستفيد: ${debtor}</p>
+                    <h3 class="font-bold text-lg text-white mb-2 leading-snug">${title}</h3>
+                    <p class="text-xs text-slate-400 mb-6 font-mono truncate bg-slate-900/60 p-2 rounded-lg border border-slate-800/50">المستفيد: ${debtor}</p>
                     
                     <div class="space-y-2 mb-6">
                         <div class="flex justify-between text-sm">
-                            <span class="text-slate-400">تم جمع:</span>
-                            <span class="font-bold text-amber-400">${amountPaid} / ${totalAmount} BNB</span>
+                            <span class="text-slate-400 text-xs">المبلغ المجمع:</span>
+                            <span class="font-extrabold text-amber-400 font-mono">${amountPaid} / ${totalAmount} BNB</span>
                         </div>
-                        <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
-                            <div class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                        <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-900">
+                            <div class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full rounded-full transition-all duration-500" style="width: ${progress}%"></div>
                         </div>
-                        <div class="flex justify-between text-xs text-slate-500 pt-1">
-                            <span>الموعد النهائي: ${deadlineDate}</span>
-                            <span>${progress.toFixed(1)}%</span>
+                        <div class="flex justify-between text-[11px] text-slate-500 pt-1 font-medium">
+                            <span>الموعد: ${deadlineDate}</span>
+                            <span class="font-mono">${progress.toFixed(1)}%</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-800/80 flex gap-2">
+                <div class="pt-4 border-t border-slate-800/60 flex gap-2">
                     ${(!isSettled && !isCancelled && isVerified) ? `
-                        <button onclick="contribute(${id})" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md">
+                        <button onclick="contribute(${id})" class="flex-1 bg-gradient-to-r from-amber-500 to-yellow-400 hover:scale-[1.02] text-slate-950 font-extrabold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-amber-500/10">
                             تبرع الآن
                         </button>
                     ` : ''}
                     ${(!isSettled && !isCancelled && !isVerified) ? `
-                        <button disabled class="flex-1 bg-slate-800 text-slate-500 font-bold py-2.5 px-4 rounded-xl text-xs cursor-not-allowed">
-                            بانتظار التحقق
+                        <button disabled class="flex-1 bg-slate-900 text-slate-500 font-bold py-3 px-4 rounded-xl text-xs cursor-not-allowed border border-slate-800">
+                            بانتظار تدقيق الإدارة
                         </button>
+                    ` : ''}
+                    ${(isSettled || isCancelled) ? `
+                        <div class="w-full text-center py-2 text-xs text-slate-500 font-medium">انتهت هذه الفاتورة</div>
                     ` : ''}
                 </div>
             `;
@@ -297,10 +357,7 @@
 
         async function submitBill(event) {
             event.preventDefault();
-            if (!contract) {
-                alert("يرجى ربط المحفظة أولاً!");
-                return;
-            }
+            if (!contract) return alert("يرجى ربط المحفظة!");
 
             const title = document.getElementById("billTitle").value;
             const amount = document.getElementById("billAmount").value;
@@ -311,14 +368,14 @@
                 const listingFee = await contract.listingFee();
 
                 const tx = await contract.postBill(title, parsedAmount, duration, { value: listingFee });
-                alert("جاري إرسال المعاملة... يرجى الانتظار حتى التأكيد.");
+                alert("جاري إرسال المعاملة إلى شبكة BNB Chain... يرجى الانتظار.");
                 await tx.wait();
-                alert("تم إدراج الفاتورة بنجاح!");
+                alert("تم إدراج الفاتورة بنجاح وتنتظر المراجعة!");
                 closePostModal();
                 loadBills();
             } catch (err) {
                 console.error(err);
-                alert("فشلت عملية النشر: " + (err.reason || err.message));
+                alert("فشلت المعاملة: " + (err.reason || err.message));
             }
         }
 
@@ -335,9 +392,9 @@
             try {
                 const parsedValue = ethers.parseEther(amountStr);
                 const tx = await contract.contributeToBill(billId, { value: parsedValue });
-                alert("جاري تنفيذ التبرع... يرجى الانتظار.");
+                alert("جاري تنفيذ التبرع على البلوكشين...");
                 await tx.wait();
-                alert("شكراً لك! تم التبرع بنجاح.");
+                alert("شكراً لك! تم التبرع بنجاح وتحديث السجل.");
                 loadBills();
             } catch (err) {
                 console.error(err);
@@ -345,7 +402,6 @@
             }
         }
 
-        // تحميل الفواتير تلقائياً عند فتح الصفحة
         window.addEventListener('DOMContentLoaded', () => {
             loadBills();
         });
