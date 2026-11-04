@@ -1,449 +1,217 @@
+```html
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark" id="htmlRoot">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Billionaire Debt Relief | Quantum Next-Gen</title>
-    <!-- Tailwind CSS CDN -->
+    <title>منصة السيادة المالية العالمية | Elon Sovereign Matrix</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ethers.js v6 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Tajawal & Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
                     colors: {
-                        quantum: { 900: '#07090e', 800: '#0f1420', 700: '#171e2e', accent: '#f59e0b' }
+                        luxgold: {
+                            100: '#fcf6db',
+                            400: '#e5c158',
+                            500: '#d4af37',
+                            600: '#aa820a',
+                            900: '#423103',
+                        },
+                        obsidian: {
+                            800: '#111827',
+                            900: '#090d16',
+                            950: '#03050a'
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        .liquid-glass {
-            background: rgba(15, 20, 32, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        body { font-family: 'Tajawal', sans-serif; background-color: #03050a; color: #f1f5f9; }
+        .glass-panel {
+            background: rgba(15, 22, 36, 0.75);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
         }
-        .glow-gold {
-            box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
+        .gold-glow {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.12);
         }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #e5c158 50%, #aa820a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-btn-gradient {
+            background: linear-gradient(135deg, #e5c158 0%, #d4af37 50%, #aa820a 100%);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #03050a; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-quantum-900 text-gray-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black overflow-x-hidden">
+<body class="min-h-screen selection:bg-luxgold-500 selection:text-black">
 
-    <!-- Ambient Glows -->
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-    <!-- Header -->
-    <header class="w-full border-b border-white/5 bg-quantum-900/80 backdrop-blur-xl sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200 flex items-center justify-center font-black text-black text-xl shadow-lg glow-gold">
-                    B
-                </div>
-                <div>
-                    <div class="flex items-center space-x-2 space-x-reverse">
-                        <h1 class="font-extrabold text-lg tracking-tight text-white" data-i18n="brandTitle">Billionaire Protocol</h1>
-                        <span class="px-2 py-0.5 text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full">v3.0 Quantum</span>
-                    </div>
-                    <div class="flex items-center space-x-2 space-x-reverse mt-0.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                        <span class="text-xs text-gray-400 font-medium" data-i18n="bscNetwork">BSC Mainnet • Secured Escrow</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <!-- Language Selector -->
-                <select id="langSwitch" onchange="switchLanguage(this.value)" class="bg-quantum-800 text-gray-300 text-xs font-bold px-3 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-amber-500 cursor-pointer">
-                    <option value="en">English (EN)</option>
-                    <option value="ar">العربية (AR)</option>
-                </select>
-
-                <!-- Connect Wallet Button -->
-                <button id="connectWalletBtn" onclick="connectWallet()" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-extrabold text-sm shadow-xl glow-gold transition-all transform active:scale-95 flex items-center space-x-2 space-x-reverse">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    <span id="walletBtnText" data-i18n="connectWallet">Connect Wallet</span>
-                </button>
-            </div>
+    <!-- Top Titanium Ticker Bar -->
+    <div class="bg-obsidian-950 border-b border-gray-800/80 py-2 px-6 text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div class="flex items-center space-x-3 space-x-reverse overflow-hidden">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold bg-luxgold-500/20 text-luxgold-400 border border-luxgold-500/30 shrink-0">
+                <i class="fa-solid fa-satellite-dish ml-1.5 animate-pulse"></i> بروتوكول البث الكمومي للسيادة
+            </span>
+            <span class="truncate text-gray-300 font-mono text-[11px]" id="tickerMessage">جارٍ مزامنة بروتوكول ZK-Proof مع السجلات القضائية: تم تسوية فاتورة طبية طارئة بمبلغ $34,500 بنجاح.</span>
         </div>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-8 z-10">
-
-        <!-- Hero Banner -->
-        <section class="relative overflow-hidden rounded-3xl liquid-glass p-8 sm:p-12 border border-white/10 shadow-2xl">
-            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="max-w-3xl relative z-10 space-y-6">
-                <div class="inline-flex items-center space-x-2 space-x-reverse px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-amber-400 text-xs font-bold tracking-wide">
-                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                    <span data-i18n="heroBadge">Autonomous Escrow Protocol</span>
-                </div>
-                
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight" data-i18n="heroTitle">
-                    The Trusted Bridge Between Donors and Debtors for Total Transparency
-                </h2>
-                
-                <p class="text-gray-400 text-base sm:text-lg leading-relaxed font-normal" data-i18n="heroDesc">
-                    A fully secured smart escrow system ensuring instant visibility, auditing, and direct fund delivery without human intermediaries.
-                </p>
-
-                <div class="pt-4 flex flex-wrap gap-4">
-                    <button onclick="openPostModal()" class="px-7 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-sm shadow-xl glow-gold transition-all transform hover:-translate-y-1 flex items-center space-x-3 space-x-reverse">
-                        <span data-i18n="postBillBtn">Post New Bill</span>
-                        <svg class="w-5 h-5 transform rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-500/30 group">
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-400 text-sm font-semibold" data-i18n="stat1Title">Total Registered Bills</span>
-                    <span class="p-2 rounded-xl bg-white/5 text-amber-400">📊</span>
-                </div>
-                <div class="mt-6 flex items-baseline justify-between">
-                    <span id="totalBillsCount" class="text-5xl font-black text-white tracking-tighter">0</span>
-                    <span class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20" data-i18n="realtime">Real-time</span>
-                </div>
-            </div>
-
-            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-amber-500/30 group">
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-400 text-sm font-semibold" data-i18n="stat2Title">Symbolic Listing Fee</span>
-                    <span class="p-2 rounded-xl bg-white/5 text-amber-400">⚡</span>
-                </div>
-                <div class="mt-6 flex items-baseline justify-between">
-                    <div class="flex items-baseline space-x-1.5 space-x-reverse">
-                        <span class="text-4xl font-black text-white tracking-tighter">0.0001</span>
-                        <span class="text-xs font-extrabold text-amber-400">BNB</span>
-                    </div>
-                    <span class="text-xs text-gray-400 font-medium bg-white/5 px-2.5 py-1 rounded-lg" data-i18n="gasFee">Base Gas Fee</span>
-                </div>
-            </div>
-
-            <div class="liquid-glass rounded-3xl p-6 flex flex-col justify-between transition-all hover:border-emerald-500/30 group">
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-400 text-sm font-semibold" data-i18n="stat3Title">Smart Contract Status</span>
-                    <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">🛡️</span>
-                </div>
-                <div class="mt-6 flex items-center justify-between">
-                    <div class="flex items-center space-x-2.5 space-x-reverse">
-                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-lg shadow-emerald-400/50 animate-pulse"></span>
-                        <span class="text-sm font-extrabold text-emerald-400" data-i18n="activeStatus">Active & Secured</span>
-                    </div>
-                    <a href="https://bscscan.com/address/0xCC0FB5E82d449C046dd8EE111241d4c5eF191815" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4 flex items-center space-x-1 space-x-reverse">
-                        <span>BscScan</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Invoices Vault Section -->
-        <section class="liquid-glass rounded-3xl p-8 space-y-6 border border-white/10">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
-                <div>
-                    <h3 class="text-xl font-extrabold text-white tracking-tight" data-i18n="vaultTitle">Available Debt Invoices</h3>
-                    <p class="text-sm text-gray-400 mt-1" data-i18n="vaultSubtitle">Select a case to support and contribute instantly via the smart contract</p>
-                </div>
-                <button onclick="loadBills()" class="inline-flex items-center justify-center space-x-2 space-x-reverse px-5 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-200 text-sm font-bold transition-all border border-white/10">
-                    <span data-i18n="refreshBtn">Refresh Vault</span>
-                </button>
-            </div>
-
-            <!-- Bills Grid Container -->
-            <div id="billsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full rounded-2xl border border-dashed border-white/10 bg-quantum-800/40 p-16 text-center flex flex-col items-center justify-center space-y-4">
-                    <div class="w-12 h-12 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin mb-2"></div>
-                    <p class="text-sm text-gray-400" data-i18n="loadingBills">Syncing invoices from blockchain...</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Modal: Post Bill -->
-    <div id="postModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="liquid-glass border border-white/10 rounded-3xl max-w-md w-full p-8 shadow-2xl relative space-y-6">
-            <div class="flex items-center justify-between">
-                <h3 class="text-xl font-bold text-white" data-i18n="modalTitle">Post New Debt Bill</h3>
-                <button onclick="closePostModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition">✕</button>
-            </div>
-            <form id="postBillForm" onsubmit="submitBill(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1.5" data-i18n="billTitleLabel">Bill Title / Description</label>
-                    <input type="text" id="billTitleInput" required placeholder="e.g., Medical treatment debt..." class="w-full bg-quantum-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1.5" data-i18n="totalAmountLabel">Total Amount Required (BNB)</label>
-                    <input type="number" step="0.0001" id="billAmountInput" required placeholder="0.5" class="w-full bg-quantum-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1.5" data-i18n="durationLabel">Duration (Max 90 Days)</label>
-                    <input type="number" id="billDurationInput" required value="30" min="1" max="90" class="w-full bg-quantum-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500 transition">
-                </div>
-                <p class="text-xs text-amber-400 bg-amber-500/10 p-3.5 rounded-xl border border-amber-500/20" data-i18n="feeNotice">
-                    Note: Posting a bill requires a symbolic listing fee of <strong>0.0001 BNB</strong>.
-                </p>
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePostModal()" class="w-1/2 bg-white/5 hover:bg-white/10 text-gray-300 font-bold py-3 rounded-xl transition text-xs border border-white/10" data-i18n="cancelBtn">Cancel</button>
-                    <button type="submit" class="w-1/2 bg-gradient-to-r from-amber-500 to-amber-400 text-black font-extrabold py-3 rounded-xl transition shadow-lg text-xs" data-i18n="confirmPostBtn">Confirm Post</button>
-                </div>
-            </form>
+        <div class="flex items-center space-x-6 space-x-reverse font-mono text-[11px] shrink-0">
+            <span>السيولة السيادية النشطة: <strong class="text-luxgold-400 font-bold" id="liveGlobalLiquidity">$412,850,000</strong></span>
+            <span class="hidden md:inline">دقة التحقق الآلي: <strong class="text-emerald-400">99.98%</strong></span>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full border-t border-white/5 bg-quantum-900 py-6 text-center text-xs text-gray-500">
-        <p>© 2026 Billionaire Protocol. Smart Contract: <span class="font-mono text-amber-400">0xCC0FB5E82d449C046dd8EE111241d4c5eF191815</span></p>
-    </footer>
-
-    <!-- Script Logic for Translation and Blockchain Integration -->
-    <script>
-        const CONTRACT_ADDRESS = "0xCC0FB5E82d449C046dd8EE111241d4c5eF191815";
-        const CONTRACT_ABI = [
-          { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillCancelled", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "newDeadline", "type": "uint256" }], "name": "BillExtended", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }], "name": "BillFullySettled", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "debtor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "indexed": false, "internalType": "string", "name": "title", "type": "string" }], "name": "BillPosted", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "BillVerified", "type": "event" },
-          { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "billId", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "ContributionMade", "type": "event" },
-          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
-          { "inputs": [], "name": "listingFee", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "payable", "type": "function" }
-        ];
-
-        // Multi-language Dictionary
-        const translations = {
-            en: {
-                brandTitle: "Billionaire Protocol",
-                bscNetwork: "BSC Mainnet • Secured Escrow",
-                connectWallet: "Connect Smart Wallet",
-                heroBadge: "Autonomous Escrow Protocol",
-                heroTitle: "The Trusted Bridge Between Donors and Debtors for Total Transparency",
-                heroDesc: "A fully secured smart escrow system ensuring instant visibility, auditing, and direct fund delivery without human intermediaries.",
-                postBillBtn: "Post New Bill",
-                stat1Title: "Total Registered Bills",
-                realtime: "Real-time",
-                stat2Title: "Symbolic Listing Fee",
-                gasFee: "Base Gas Fee",
-                stat3Title: "Smart Contract Status",
-                activeStatus: "Active & Secured",
-                vaultTitle: "Available Debt Invoices",
-                vaultSubtitle: "Select a case to support and contribute instantly via the smart contract",
-                refreshBtn: "Refresh Vault",
-                loadingBills: "Syncing invoices from blockchain...",
-                modalTitle: "Post New Debt Bill",
-                billTitleLabel: "Bill Title / Description",
-                totalAmountLabel: "Total Amount Required (BNB)",
-                durationLabel: "Duration (Max 90 Days)",
-                feeNotice: "Note: Posting a bill requires a symbolic listing fee of <strong>0.0001 BNB</strong>.",
-                cancelBtn: "Cancel",
-                confirmPostBtn: "Confirm Post",
-                contributeBtn: "Contribute Now",
-                activeBadge: "Active",
-                settledBadge: "Settled",
-                cancelledBadge: "Cancelled"
-            },
-            ar: {
-                brandTitle: "بروتوكول الملياردير",
-                bscNetwork: "الشبكة الرئيسية • عقد آمن ومحمي",
-                connectWallet: "ربط المحفظة الذكية",
-                heroBadge: "منصة إنسانية لامركزية بالكامل",
-                heroTitle: "الجسر الموثوق بين صناع الأثر وأصحاب الديون لفك الكرب بشفافية مطلقة",
-                heroDesc: "نظام حجز آمن بالكامل يضمن الظهور الفوري، التدقيق، وإيصال الدعم لمستحقيه دون وسيط بشري.",
-                postBillBtn: "إدراج فاتورة جديدة فوراً",
-                stat1Title: "إجمالي الفواتير المسجلة",
-                realtime: "متزامن لحظياً",
-                stat2Title: "رسوم الإدراج الرمزية",
-                gasFee: "رسوم الغاز الأساسية",
-                stat3Title: "حالة العقد الذكي",
-                activeStatus: "محمي وآمن (Active)",
-                vaultTitle: "قائمة فواتير الدين المتاحة",
-                vaultSubtitle: "اختر الحالة التي ترغب في دعمها والمساهمة الفورية في تفريج كربتها عبر العقد الذكي",
-                refreshBtn: "تحديث العقد مباشر",
-                loadingBills: "جاري مزامنة الفواتير من البلوكشين...",
-                modalTitle: "إدراج فاتورة دين جديدة",
-                billTitleLabel: "عنوان الفاتورة / الوصف",
-                totalAmountLabel: "إجمالي المبلغ المطلوب (BNB)",
-                durationLabel: "المدة الزمنية (أقصى 90 يوم)",
-                feeNotice: "ملاحظة: يتطلب إدراج الفاتورة دفع رسوم إدراج رمزية قدرها <strong>0.0001 BNB</strong>.",
-                cancelBtn: "إلغاء",
-                confirmPostBtn: "تأكيد النشر",
-                contributeBtn: "تبرع الآن",
-                activeBadge: "نشطة للتبرع",
-                settledBadge: "مكتمل السداد",
-                cancelledBadge: "ملغاة"
-            }
-        };
-
-        function switchLanguage(lang) {
-            const root = document.getElementById('htmlRoot');
-            root.setAttribute('lang', lang);
-            root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
-                }
-            });
-            loadBills(); // إعادة تحميل الكروت لتحديث النصوص داخلها باللغة المختارة
-        }
-
-        let provider, signer, contract, userAccount = null;
-
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    provider = new ethers.BrowserProvider(window.ethereum);
-                    await provider.send("eth_requestAccounts", []);
-                    signer = await provider.getSigner();
-                    userAccount = await signer.getAddress();
-                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-
-                    const shortAddr = userAccount.substring(0, 6) + "..." + userAccount.substring(userAccount.length - 4);
-                    document.getElementById("walletBtnText").innerText = shortAddr;
-                    loadBills();
-                } catch (error) {
-                    console.error(error);
-                    alert("Wallet connection failed!");
-                }
-            } else {
-                alert("Please install a Web3 wallet like MetaMask!");
-            }
-        }
-
-        async function loadBills() {
-            const grid = document.getElementById("billsGrid");
-            const currentLang = document.getElementById('htmlRoot').getAttribute('lang');
-            try {
-                const readProvider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
-                const readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
-
-                const nextId = await readContract.nextBillId();
-                document.getElementById("totalBillsCount").innerText = nextId.toString();
-
-                if (nextId == 0n) {
-                    const emptyText = currentLang === 'ar' ? "لا توجد فواتير مسجلة في العقد حتى الآن." : "No invoices registered in the contract yet.";
-                    grid.innerHTML = `<div class="col-span-full rounded-2xl border border-dashed border-white/10 bg-quantum-800/40 p-16 text-center text-gray-400">${emptyText}</div>`;
-                    return;
-                }
-
-                grid.innerHTML = "";
-                for (let i = 0n; i < nextId; i++) {
-                    const bill = await readContract.bills(i);
-                    renderBillCard(bill, currentLang);
-                }
-            } catch (err) {
-                console.error(err);
-                grid.innerHTML = `<div class="col-span-full text-center py-16 text-red-400">Error loading blockchain data.</div>`;
-            }
-        }
-
-        function renderBillCard(bill, lang) {
-            const grid = document.getElementById("billsGrid");
-            const id = bill[0].toString();
-            const debtor = bill[1];
-            const title = bill[2];
-            const totalAmount = ethers.formatEther(bill[3]);
-            const amountPaid = ethers.formatEther(bill[4]);
-            const isSettled = bill[6];
-            const isCancelled = bill[8];
-
-            const progress = Math.min((Number(amountPaid) / Number(totalAmount)) * 100, 100);
-            
-            // تعديل ذكي: تظهر الفاتورة مباشرة وجاهزة للتبرع فور نشرها دون اشتراط مراجعة يدوية
-            let statusBadge = isSettled ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-full font-bold">${translations[lang].settledBadge}</span>` :
-                              isCancelled ? `<span class="bg-red-500/15 text-red-400 border border-red-500/20 text-xs px-2.5 py-1 rounded-full font-bold">${translations[lang].cancelledBadge}</span>` :
-                              `<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-full font-bold">${translations[lang].activeBadge}</span>`;
-
-            const card = document.createElement("div");
-            card.className = "liquid-glass rounded-3xl p-6 flex flex-col justify-between border border-white/10 hover:border-amber-500/30 transition";
-            card.innerHTML = `
+    <!-- Master Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-11 h-11 rounded-2xl gold-btn-gradient flex items-center justify-center shadow-2xl shadow-luxgold-500/20">
+                    <i class="fa-solid fa-atom text-obsidian-950 text-xl font-black"></i>
+                </div>
                 <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-mono text-gray-400 bg-white/5 px-2.5 py-1 rounded-lg">Bill #${id}</span>
-                        ${statusBadge}
+                    <h1 class="text-base sm:text-lg font-black tracking-widest gold-gradient-text">إيليـون سـيـادي</h1>
+                    <p class="text-[9px] text-gray-400 uppercase tracking-widest hidden sm:block">Sovereign Debt Matrix & AI Protocol</p>
+                </div>
+            </div>
+
+            <!-- Page Navigation Tabs -->
+            <nav class="hidden lg:flex items-center space-x-1 space-x-reverse bg-obsidian-900/90 p-1.5 rounded-2xl border border-gray-800">
+                <button onclick="switchTab('feed')" id="nav-feed" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center bg-luxgold-500 text-obsidian-950">
+                    <i class="fa-solid fa-layer-group ml-1.5"></i> سوق الديون
+                </button>
+                <button onclick="switchTab('matrix')" id="nav-matrix" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-brain ml-1.5 text-purple-400"></i> مصفوفة المليارديرات
+                </button>
+                <button onclick="switchTab('radar')" id="nav-radar" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-earth-americas ml-1.5 text-blue-400"></i> رادار التكافل الجغرافي
+                </button>
+                <button onclick="switchTab('analytics')" id="nav-analytics" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-chart-line ml-1.5 text-emerald-400"></i> محاكي الأثر الكمومي
+                </button>
+                <button onclick="switchTab('register')" id="nav-register" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-file-shield ml-1.5 text-luxgold-400"></i> إدراج فاتورة ZK
+                </button>
+            </nav>
+
+            <!-- Quick Action & System Status -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button onclick="switchTab('register')" class="lg:hidden px-3.5 py-2 rounded-xl text-xs font-bold gold-btn-gradient text-obsidian-950 flex items-center gap-1">
+                    <i class="fa-solid fa-plus"></i> <span>فاتورة</span>
+                </button>
+                <div class="hidden sm:flex items-center space-x-3 space-x-reverse border-r border-gray-800 pr-3">
+                    <div class="text-left font-mono text-[10px]">
+                        <span class="text-gray-400 block">بروتوكول الأمان</span>
+                        <span class="text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-lock text-[9px]"></i> ZK-SNARK Active</span>
                     </div>
-                    <h4 class="font-bold text-lg text-white mb-2">${title}</h4>
-                    <p class="text-xs text-gray-400 mb-6 font-mono truncate bg-white/5 p-2 rounded-lg">Debtor: ${debtor}</p>
-                    
-                    <div class="space-y-2 mb-6">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-400 text-xs">Progress:</span>
-                            <span class="font-extrabold text-amber-400 font-mono">${amountPaid} / ${totalAmount} BNB</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="lg:hidden flex overflow-x-auto gap-2 px-4 py-2.5 bg-obsidian-950 border-t border-gray-800/80 text-xs font-bold no-scrollbar">
+            <button onclick="switchTab('feed')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-gray-800 text-gray-300 whitespace-nowrap">سوق الديون</button>
+            <button onclick="switchTab('matrix')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-gray-800 text-gray-300 whitespace-nowrap">مصفوفة الثروة</button>
+            <button onclick="switchTab('radar')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-gray-800 text-gray-300 whitespace-nowrap">الرادار الجغرافي</button>
+            <button onclick="switchTab('analytics')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-gray-800 text-gray-300 whitespace-nowrap">محاكي الأثر</button>
+            <button onclick="switchTab('register')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-gray-800 text-luxgold-400 whitespace-nowrap">+ إدراج فاتورة</button>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= SECTION 1: GLOBAL DEBT FEED ================= -->
+        <div id="section-feed" class="space-y-6">
+            <!-- Hero Intelligence Banner -->
+            <div class="relative overflow-hidden rounded-3xl glass-panel p-6 sm:p-10 border border-luxgold-500/30 gold-glow">
+                <div class="absolute -left-20 -top-20 w-80 h-80 bg-luxgold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-3xl">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-luxgold-500/10 text-luxgold-400 mb-4 border border-luxgold-500/20">
+                        <i class="fa-solid fa-microchip ml-1.5"></i> نظام خوارزميات المطابقة الذكية للثروات الكبرى v4.2
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-black mb-4 leading-tight">
+                        إبراء الذمم المالية عبر <span class="gold-gradient-text">شبكة رؤوس الأموال السيادية</span>
+                    </h2>
+                    <p class="text-gray-300 text-xs sm:text-base mb-6 leading-relaxed">
+                        نظام رقمي مشفر يتيح لأي شخص إدراج ديونه وفواتيره الرسمية مع تحقق نانو قضائي موثق، ليتم ربطها ومطابقتها فلياً بمحافظ المليارديرات والشركات العالمية لسدادها نيابة عنه.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-gray-800/80 font-mono">
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">إجمالي الديون المسجلة</span>
+                            <span class="text-base sm:text-lg font-black text-white">$32,850,000</span>
                         </div>
-                        <div class="w-full bg-quantum-900 rounded-full h-2.5 overflow-hidden border border-white/10">
-                            <div class="bg-gradient-to-r from-amber-500 to-amber-300 h-full rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">تم سدادها بالكامل</span>
+                            <span class="text-base sm:text-lg font-black text-emerald-400" id="totalPaidStat">$19,420,000</span>
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">معدل سرعة الإبراء</span>
+                            <span class="text-base sm:text-lg font-black text-luxgold-400">3.1 ساعة</span>
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">التشفير القضائي</span>
+                            <span class="text-base sm:text-lg font-black text-purple-400">Zero-Knowledge</span>
                         </div>
                     </div>
                 </div>
-                <div>
-                    ${(!isSettled && !isCancelled) ? `
-                        <button onclick="contribute(${id})" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-extrabold py-3 rounded-xl text-xs transition shadow-lg">${translations[lang].contributeBtn}</button>
-                    ` : ''}
+            </div>
+
+            <!-- Filters & Search Toolbar -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 glass-panel p-4 rounded-2xl border border-gray-800">
+                <div class="relative w-full md:w-96">
+                    <i class="fa-solid fa-magnifying-glass absolute right-4 top-3.5 text-gray-400"></i>
+                    <input type="text" id="searchInput" oninput="filterDebts()" placeholder="ابحث برقم الفاتورة المشفر، القطاع، أو تفاصيل الدين..." class="w-full bg-obsidian-950 border border-gray-800 rounded-xl px-4 py-2.5 pr-11 text-xs text-gray-200 focus:outline-none focus:border-luxgold-500 transition">
                 </div>
-            `;
-            grid.appendChild(card);
-        }
+                <div class="flex items-center space-x-3 space-x-reverse w-full md:w-auto">
+                    <select id="categoryFilter" onchange="filterDebts()" class="w-full md:w-auto bg-obsidian-950 border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-gray-300 focus:outline-none focus:border-luxgold-500">
+                        <option value="all">كافة القطاعات السيادية</option>
+                        <option value="judicial">أحكام قضائية وتعثر تجاري</option>
+                        <option value="medical">فواتير طبية وعلاجية حرجة</option>
+                        <option value="housing">إيجارات وإخلاء سكني</option>
+                        <option value="education">ديون أكاديمية وتعليمية</option>
+                    </select>
+                </div>
+            </div>
 
-        function openPostModal() {
-            if (!userAccount) { alert("Please connect your wallet first!"); connectWallet(); return; }
-            document.getElementById("postModal").classList.remove("hidden");
-        }
-        function closePostModal() { document.getElementById("postModal").classList.add("hidden"); }
+            <!-- Debt Cards Grid -->
+            <div id="debtGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
 
-        async function submitBill(event) {
-            event.preventDefault();
-            if (!contract) return alert("Wallet not connected!");
-            try {
-                const title = document.getElementById("billTitleInput").value;
-                const amount = document.getElementById("billAmountInput").value;
-                const duration = document.getElementById("billDurationInput").value;
+        <!-- ================= SECTION 2: BILLIONAIRE MATRIX ================= -->
+        <div id="section-matrix" class="hidden space-y-6">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-luxgold-500/30">
+                <div class="flex items-center space-x-4 space-x-reverse mb-6">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center text-xl sm:text-2xl font-black shrink-0">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-black gold-gradient-text">مصفوفة الربط الذكي بالمليارديرات</h3>
+                        <p class="text-xs text-gray-400 mt-1">توزيع الديون السيادية على المحافظ الاستثمارية الكبرى تلقائياً بناءً على مؤشرات الأثر ومؤشر سرعة الاستجابة</p>
+                    </div>
+                </div>
 
-                const listingFee = await contract.listingFee();
-                const tx = await contract.postBill(title, ethers.parseEther(amount), duration, { value: listingFee });
-                alert("Sending transaction...");
-                await tx.wait();
-                alert("Bill posted successfully and is now active for contributions!");
-                closePostModal();
-                loadBills();
-            } catch (err) {
-                alert("Transaction failed: " + (err.reason || err.message));
-            }
-        }
-
-        async function contribute(billId) {
-            if (!contract) { connectWallet(); return; }
-            const amountStr = prompt("Enter contribution amount in BNB (e.g. 0.05):");
-            if (!amountStr || isNaN(amountStr)) return;
-            try {
-                const tx = await contract.contributeToBill(billId, { value: ethers.parseEther(amountStr) });
-                alert("Processing contribution...");
-                await tx.wait();
-                alert("Thank you! Contribution successful.");
-                loadBills();
-            } catch (err) {
-                alert("Contribution failed: " + (err.reason || err.message));
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', loadBills);
-    </script>
-</body>
-</html>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="glass-panel p-6 rounded-2xl border border-gray-800 space-y-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-white">إيلون ماسك (Tesla / SpaceX Pool)</span>
+                            <span class="px-2.5 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-400 font-bold">نشط فوري</span>
+                        </div>
+                        <p class="text-xs text-gray-400">مخصص لتغطية الأحكام القضائية وديون الغرامات
+```
