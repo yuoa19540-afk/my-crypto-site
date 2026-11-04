@@ -188,7 +188,7 @@
                         <label class="block text-xs font-bold text-gray-300 mb-2" data-i18n="refLinkLabel">Your Personal Referral Link</label>
                         <div class="flex gap-2">
                             <input type="text" id="referralLinkInput" readonly class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-gold-400 focus:outline-none" value="Connect wallet first to generate link">
-                            <button onclick="copyReferralLink()" class="bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold px-6 py-3 rounded-xl transition-all text-xs whitespace-nowrap shadow-md">
+                            <button onclick="justCopyLink()" class="bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold px-6 py-3 rounded-xl transition-all text-xs whitespace-nowrap shadow-md">
                                 <i class="fa-solid fa-copy ml-1"></i> <span data-i18n="copyBtn">Copy Link</span>
                             </button>
                         </div>
@@ -231,14 +231,14 @@
                 <p class="text-xs text-gray-400" data-i18n="modalSub">Verification & Referral Requirements for Instant Launch</p>
             </div>
 
-            <!-- شرط المشاركة الإلزامي الفعلي -->
+            <!-- شرط المشاركة الحقيقية الإلزامي -->
             <div id="refCheckBanner" class="p-5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs space-y-3">
                 <div class="flex items-center justify-between font-bold text-amber-400">
                     <span><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="conditionTitle">Activation Requirement:</span></span>
                     <span id="refStatusBadge" class="bg-amber-500/20 px-2.5 py-1 rounded text-[10px]" data-i18n="pendingShare">Awaiting Link Share</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed" data-i18n="conditionDesc">
-                    You must share your enterprise referral link via social media or external platform to unlock the posting form, then refresh the page.
+                    Copying the link does NOT unlock the form. You must click the button below to execute a real share via social media or external platform.
                 </p>
                 <button type="button" onclick="triggerRealShare()" class="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 text-navy-950 font-extrabold py-3 rounded-xl transition text-center shadow-md flex items-center justify-center gap-2">
                     <i class="fa-solid fa-share-nodes"></i>
@@ -345,13 +345,13 @@
                 refLinkLabel: "Your Personal Referral Link",
                 copyBtn: "Copy Link",
                 charterTitle: "Approved Publishing Charter:",
-                charterDesc: "To ensure absolute system integrity, sharing your referral link externally is strictly required prior to posting any new claim.",
+                charterDesc: "To ensure absolute system integrity, sharing your referral link externally via the share button is strictly required prior to posting any new claim.",
                 footerRights: "Smart Clearance Network © 2026 - All Corporate Rights Reserved.",
                 modalHeader: "Post New Solidarity Claim",
                 modalSub: "Verification & Referral Requirements for Instant Launch",
                 conditionTitle: "Activation Requirement:",
-                pendingShare: "Awaiting Link Share",
-                conditionDesc: "You must share your enterprise referral link via social media or external platform to unlock the posting form, then refresh the page.",
+                pendingShare: "Awaiting Real Share",
+                conditionDesc: "Copying the link does not unlock the form. You must use the share button below to distribute your link and unlock the posting form.",
                 shareNowBtn: "Share Referral Link Now",
                 labelTitle: "Bill Title or Solidarity Description",
                 labelAmount: "Amount Required",
@@ -360,7 +360,7 @@
                 labelImage: "Upload Claim Proof Image or Document (Optional)",
                 convertedBnb: "Contract Value Equivalent (BNB):",
                 submitPostBtn: "Submit and Publish Bill via Smart Contract",
-                verifiedSuccess: "Referral shared successfully! Form is now unlocked.",
+                verifiedSuccess: "Real share verified successfully! Form is now unlocked.",
                 walletConnected: "Enterprise wallet connected successfully!"
             },
             ar: {
@@ -392,13 +392,13 @@
                 refLinkLabel: "رابط الإحالة التضامني الشخصي",
                 copyBtn: "نسخ الرابط",
                 charterTitle: "ميثاق النشر والانتشار المعتمد:",
-                charterDesc: "لضمان خلو المنظومة من العمليات الوهمية، يُشترط حصرياً لإنشاء أي فاتورة جديدة أن يتم مشاركة رابط الإحالة عبر منصات التواصل الاجتماعي ومحفظتك متصلة لتوثيق الرمز.",
+                charterDesc: "لضمان خلو المنظومة من العمليات الوهمية، يُشترط حصرياً لإنشاء أي فاتورة جديدة أن يتم مشاركة رابط الإحالة عبر زر المشاركة الفعلي.",
                 footerRights: "منظومة التكافل والتسوية المالية الذكية © 2026 - جميع الحقوق المؤسسية محفوظة.",
                 modalHeader: "إدراج مطالبة تضامنية جديدة",
                 modalSub: "متطلبات التوثيق ومشاركة الإحالة للبدء الفوري",
                 conditionTitle: "شرط تفعيل نافذة الإنشاء:",
-                pendingShare: "بانتظار مشاركة الرابط",
-                conditionDesc: "يجب عليك مشاركة رابط إحالتك المؤسسي عبر وسائل التواصل أو منصة خارجية لتفعيل نموذج النشر، ثم تحديث الصفحة بعد إتمام المشاركة.",
+                pendingShare: "بانتظار المشاركة الحقيقية",
+                conditionDesc: "نسخ الرابط وحدّه لا يفتح النموذج. يجب عليك النضغط على زر 'مشاركة رابط الإحالة الآن' أدناه وإتمام المشاركة الخارجية لتفعيل نموذج النشر.",
                 shareNowBtn: "مشاركة رابط الإحالة الآن",
                 labelTitle: "عنوان الفاتورة أو الوصف التضامني",
                 labelAmount: "المبلغ المطلوب",
@@ -407,7 +407,7 @@
                 labelImage: "تحميل صورة إثبات المطالبة أو المستند (اختياري)",
                 convertedBnb: "ما يقابله للتدوين بالعقد (BNB):",
                 submitPostBtn: "إرسال ونشر الفاتورة فوراً عبر العقد الذكي",
-                verifiedSuccess: "تم توثيق مشاركة الإحالة بنجاح! نموذج النشر متاح الآن.",
+                verifiedSuccess: "تم توثيق المشاركة الحقيقية بنجاح! نموذج النشر متاح الآن.",
                 walletConnected: "تم ربط المحفظة المؤسسية بنجاح!"
             }
         };
@@ -586,6 +586,15 @@
             grid.innerHTML += cardHtml;
         }
 
+        // زر النسخ العادي ينسخ فقط دون فتح الفورم نهائياً
+        function justCopyLink() {
+            if (!userAccount) { alert('Connect wallet first.'); connectWallet(); return; }
+            const link = window.location.origin + window.location.pathname + "?ref=" + userAccount;
+            navigator.clipboard.writeText(link);
+            triggerToast(currentLang === 'ar' ? 'تم نسخ الرابط (ملاحظة: يتطلب النشر استخدام زر المشاركة الحقيقي).' : 'Link copied! (Note: Publishing requires using the real share button).');
+        }
+
+        // زر المشاركة الحقيقي الإلزامي لفتح الفورم
         async function triggerRealShare() {
             if (!userAccount) {
                 alert(currentLang === 'ar' ? "يرجى ربط المحفظة أولاً لتوليد رابط الإحالة!" : "Please connect your wallet first!");
@@ -609,7 +618,7 @@
             } else {
                 navigator.clipboard.writeText(shareLink);
                 localStorage.setItem('smart_clearance_shared', 'true');
-                alert(currentLang === 'ar' ? "تم نسخ رابط الإحالة ومشاركته! يرجى تحديث الصفحة (Refresh) لتفعيل النموذج بالكامل." : "Referral link copied! Please refresh the page to unlock the form.");
+                alert(currentLang === 'ar' ? "تم إتمام عملية مشاركة الرابط! يرجى تحديث الصفحة (Refresh) لتفعيل النموذج بالكامل." : "Share action completed! Please refresh the page to unlock the form.");
                 location.reload();
             }
         }
@@ -630,7 +639,7 @@
         function unlockFormUI() {
             const badge = document.getElementById('refStatusBadge');
             if(badge) {
-                badge.innerText = currentLang === 'ar' ? "تم التوثيق والمشاركة" : "Verified & Shared";
+                badge.innerText = currentLang === 'ar' ? "تم توثيق المشاركة الحقيقية" : "Verified & Shared";
                 badge.className = "bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded text-[10px]";
             }
             const banner = document.getElementById('refCheckBanner');
@@ -659,11 +668,9 @@
             const bnbValue = amountInUsd / BNB_PRICE_USD;
 
             try {
-                // تحويل القيم إلى BigInt صريح ومضبوط لضمان عدم حدوث خطأ BigNumberish
                 const parsedAmount = ethers.parseEther(bnbValue.toFixed(4));
                 const parsedDuration = BigInt(duration);
 
-                // استدعاء دالة postBill بالشكل البرمجي النظيف والسليم تماماً
                 const tx = await contract.postBill(title, parsedAmount, parsedDuration);
                 triggerToast("Broadcasting encrypted transaction...");
                 await tx.wait();
@@ -700,10 +707,7 @@
         }
 
         function copyReferralLink() {
-            if (!userAccount) { alert('Connect wallet first.'); connectWallet(); return; }
-            const link = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-            navigator.clipboard.writeText(link);
-            triggerToast('Link copied to clipboard!');
+            justCopyLink();
         }
 
         function switchTab(tabName) {
