@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Ethers.js v6 CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <!-- Google Fonts: Cairo & JetBrains Mono -->
+    <!-- Google Fonts: Plus Jakarta Sans & Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -25,17 +25,20 @@
                         gold: { 500: '#D4AF37', 400: '#E5C158', 600: '#B38F24' },
                         accent: { blue: '#2563EB', emerald: '#10B981', cyan: '#06B6D4' }
                     },
-                    fontFamily: { sans: ['Cairo', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }
+                    fontFamily: { 
+                        sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #07090E; color: #F1F5F9; overflow-x: hidden; }
-        .glass-card { background: rgba(15, 19, 28, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
-        .glass-card-gold { background: rgba(15, 19, 28, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(212, 175, 55, 0.25); }
-        .bg-grid-pattern { background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 32px 32px; }
+        body { font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; background-color: #07090E; color: #F1F5F9; overflow-x: hidden; }
+        .glass-card { background: rgba(15, 19, 28, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6); }
+        .glass-card-gold { background: rgba(15, 19, 28, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); }
+        .bg-grid-pattern { background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 32px 32px; }
         .gold-glow-btn { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25); }
         .pulse-emerald { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); animation: pulse-green 2.2s infinite; }
         @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); } 70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
@@ -43,154 +46,160 @@
 </head>
 <body class="min-h-screen bg-grid-pattern flex flex-col justify-between selection:bg-gold-500 selection:text-black">
 
-    <!-- TOP STATUS BANNER -->
-    <div class="border-b border-white/10 bg-navy-950/90 backdrop-blur-md px-4 py-2 sticky top-0 z-50">
+    <!-- TOP CORPORATE BANNER -->
+    <div class="border-b border-white/10 bg-navy-950/95 backdrop-blur-md px-4 py-2.5 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs md:text-sm gap-2">
             <div class="flex items-center gap-3">
                 <span class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full font-bold">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-emerald"></span>
-                    بروتوكول التسوية اللامركزية (Zero-Knowledge Sync)
+                    <span data-i18n="topBadge">بروتوكول التوثيق اللامركزي الآمن</span>
                 </span>
             </div>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4">
+                <!-- Language Switcher -->
+                <button onclick="toggleLanguage()" class="bg-navy-800 border border-white/10 hover:border-gold-500 text-gold-400 px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="langText">English</span>
+                </button>
                 <div class="flex items-center gap-2">
-                    <span class="text-gray-400">عقد التكافل الذكي:</span>
-                    <span class="text-gold-500 font-mono font-semibold text-xs tracking-wide bg-navy-800 px-2.5 py-0.5 rounded border border-white/5">نشط ومؤمن بالكامل</span>
+                    <span class="text-gray-400 text-xs" data-i18n="smartContractStatus">حالة العقد:</span>
+                    <span class="text-gold-500 font-mono font-semibold text-xs bg-navy-800 px-2.5 py-0.5 rounded border border-white/5" data-i18n="activeSecured">مشفر ونشط</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- MAIN HEADER -->
-    <header class="max-w-7xl mx-auto px-4 w-full pt-6 pb-2">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-5 border-b border-white/5 pb-6">
+    <header class="max-w-7xl mx-auto px-4 w-full pt-8 pb-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/5 pb-8">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-gold-600 via-gold-500 to-amber-300 flex items-center justify-center text-navy-950 shadow-lg font-black text-2xl">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-gold-600 via-gold-500 to-amber-300 flex items-center justify-center text-navy-950 shadow-xl font-black text-3xl">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight">منظومة التكافل والتسوية المالية</h1>
-                        <span class="text-[10px] font-mono font-bold bg-gold-500/15 text-gold-500 border border-gold-500/30 px-2.5 py-0.5 rounded-md">Smart Clearance</span>
+                    <div class="flex items-center gap-2.5">
+                        <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight" data-i18n="brandTitle">منظومة التكافل والتسوية المالية</h1>
+                        <span class="text-[10px] font-mono font-bold bg-gold-500/15 text-gold-500 border border-gold-500/30 px-2.5 py-1 rounded-md">Enterprise v4.2</span>
                     </div>
-                    <p class="text-xs text-gray-400 font-medium mt-0.5">البنية التحتية الرقمية الموحدة لإبراء وسداد الذمم المالية التضامنية</p>
+                    <p class="text-xs text-gray-400 font-medium mt-1" data-i18n="brandSubtitle">الشبكة الرقمية المؤسسية لإبراء وسداد الذمم المالية التضامنية</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-3 w-full md:w-auto justify-end">
-                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-navy-800 border border-gold-500/30 hover:border-gold-500 text-gold-400 font-bold px-5 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm">
+                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-navy-800 border border-gold-500/30 hover:border-gold-500 text-gold-400 font-bold px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm shadow-md">
                     <i class="fa-solid fa-wallet"></i>
-                    <span id="walletText">ربط المحفظة</span>
+                    <span id="walletText" data-i18n="connectWallet">ربط المحفظة المؤسسية</span>
                 </button>
-                <button onclick="openModal()" class="flex-1 md:flex-initial bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 hover:to-gold-500 text-navy-950 font-extrabold px-6 py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-sm gold-glow-btn active:scale-95">
+                <button onclick="openModal()" class="flex-1 md:flex-initial bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 hover:to-gold-500 text-navy-950 font-extrabold px-7 py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-sm gold-glow-btn active:scale-95 shadow-lg">
                     <i class="fa-solid fa-circle-plus text-base"></i>
-                    <span>إدراج مطالبة تضامنية جديدة</span>
+                    <span data-i18n="newClaimBtn">إدراج مطالبة تضامنية جديدة</span>
                 </button>
             </div>
         </div>
 
         <nav class="flex items-center gap-2 overflow-x-auto py-4 text-sm scrollbar-none">
-            <button onclick="switchTab('registry')" id="tab-registry" class="tab-btn px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap bg-gold-500 text-navy-950 shadow-md">
-                <i class="fa-solid fa-list-check"></i> السجل الحي للمطالبات والذمم
+            <button onclick="switchTab('registry')" id="tab-registry" class="tab-btn px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap bg-gold-500 text-navy-950 shadow-md">
+                <i class="fa-solid fa-list-check"></i> <span data-i18n="tabRegistry">السجل المؤسسي للمطالبات والذمم</span>
             </button>
-            <button onclick="switchTab('referral')" id="tab-referral" class="tab-btn px-5 py-2.5 rounded-xl font-semibold text-gray-400 hover:text-white hover:bg-navy-800 transition-all flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-share-nodes"></i> شبكة الإحالة والانتشار التضامني
+            <button onclick="switchTab('referral')" id="tab-referral" class="tab-btn px-6 py-3 rounded-xl font-semibold text-gray-400 hover:text-white hover:bg-navy-800 transition-all flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-share-nodes"></i> <span data-i18n="tabReferral">شبكة الإحالة والانتشار التضامني</span>
             </button>
         </nav>
     </header>
 
-    <!-- DASHBOARD CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 w-full flex-grow space-y-8 mb-12">
+    <!-- CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 w-full flex-grow space-y-8 mb-16">
 
         <!-- METRICS -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
                 <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span>إجمالي المطالبات المسجلة</span>
+                    <span data-i18n="stat1Title">إجمالي المطالبات المسجلة</span>
                     <i class="fa-solid fa-file-invoice-dollar text-gold-500 text-lg"></i>
                 </div>
-                <!-- إظهار 23 إجمالي -->
-                <div class="text-2xl lg:text-3xl font-black font-mono text-white mb-1" id="stat-total">23</div>
-                <div class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-link"></i> مزامنة مشفرة فورية</div>
+                <div class="text-3xl font-black font-mono text-white mb-1" id="stat-total">23</div>
+                <div class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="stat1Sub">مزامنة مشفرة فورية 100%</span></div>
             </div>
 
-            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
                 <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span>تمت تسويتها وإبراؤها</span>
+                    <span data-i18n="stat2Title">تمت تسويتها وإبراؤها</span>
                     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
                 </div>
-                <!-- إظهار 13 تم سدادها -->
-                <div class="text-2xl lg:text-3xl font-black font-mono text-emerald-400 mb-1" id="stat-cleared">13 / 23</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-shield-heart"></i> تسويات تضامنية ناجحة</div>
+                <div class="text-3xl font-black font-mono text-emerald-400 mb-1" id="stat-cleared">13 / 23</div>
+                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-heart-pulse"></i> <span data-i18n="stat2Sub">تسويات تضامنية ناجحة</span></div>
             </div>
 
-            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
                 <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span>حالة رابط الإحالة الخاص بك</span>
+                    <span data-i18n="stat3Title">حالة رابط الإحالة التضامني</span>
                     <i class="fa-solid fa-user-tag text-accent-blue text-lg"></i>
                 </div>
-                <div class="text-lg font-bold font-mono text-accent-blue mb-1 truncate" id="stat-ref-status">غير مشارك</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-microchip"></i> شرط التوثيق والإنشاء</div>
+                <div class="text-base font-bold font-mono text-accent-blue mb-1 truncate" id="stat-ref-status" data-i18n="unregistered">غير مشارك بعد</div>
+                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-network-wired"></i> <span data-i18n="stat3Sub">مطلوب لمشاركة النشر</span></div>
             </div>
 
-            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
                 <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span>معايير الخصوصية</span>
+                    <span data-i18n="stat4Title">مستويات الأمان المعتمدة</span>
                     <i class="fa-solid fa-user-shield text-accent-cyan text-lg"></i>
                 </div>
-                <div class="text-2xl lg:text-3xl font-black font-mono text-accent-cyan mb-1">مطلقـــة</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-lock"></i> تشفير عالي المستوى</div>
+                <div class="text-3xl font-black font-mono text-accent-cyan mb-1" data-i18n="stat4Val">مطلقـــة</div>
+                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-lock"></i> <span data-i18n="stat4Sub">حماية العقود الذكية</span></div>
             </div>
         </section>
 
-        <!-- VIEW 1: REGISTRY -->
+        <!-- VIEW 1 -->
         <div id="view-registry" class="tab-view space-y-6">
-            <div class="glass-card-gold p-6 md:p-8 rounded-3xl relative overflow-hidden border-r-4 border-r-gold-500">
+            <div class="glass-card-gold p-8 rounded-3xl relative overflow-hidden border-r-4 border-r-gold-500">
                 <div class="max-w-3xl space-y-3 relative z-10">
-                    <div class="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-500 text-xs px-3 py-1 rounded-full font-bold">
-                        <i class="fa-solid fa-microchip"></i> البنية اللامركزية المفتوحة للتدقيق الآلي
+                    <div class="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-500 text-xs px-3.5 py-1.5 rounded-full font-bold">
+                        <i class="fa-solid fa-certificate"></i> <span data-i18n="bannerTag">البنية المؤسسية اللامركزية المفتوحة للتدقيق الآلي</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight" data-i18n="bannerTitle">
                         السجل الحي والمباشر لفواتير الديون والمطالبات التضامنية
                     </h2>
-                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
-                        تتطابق هذه الواجهة برمجياً مع سجلات العقود الرقمية الموزعة لضمان إبراء الذمم المالية بكفاءة هندسية فائقة، ودون أي وسائط بشرية أو رسوم تشغيلية.
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-i18n="bannerDesc">
+                        تتطابق هذه الواجهة برمجياً مع سجلات العقود الرقمية الموزعة لضمان إبراء الذمم المالية بكفاءة هندسية فائقة، ودون أي رسوم تشغيلية أو وسائط بشرية.
                     </p>
                 </div>
             </div>
 
             <div id="invoicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- ستظهر هنا الفواتير الوهمية والحية معاً -->
+                <div class="col-span-full text-center py-20 text-gray-400 glass-card rounded-2xl">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-gold-500"></i>
+                    <p data-i18n="syncingBlocks">جاري استرجاع الكتل وتزامن السجل المباشر...</p>
+                </div>
             </div>
         </div>
 
-        <!-- VIEW 2: REFERRAL NETWORK -->
+        <!-- VIEW 2 -->
         <div id="view-referral" class="tab-view hidden space-y-6">
-            <div class="glass-card p-6 md:p-8 rounded-3xl border border-white/10 max-w-2xl mx-auto space-y-6">
+            <div class="glass-card p-8 rounded-3xl border border-white/10 max-w-2xl mx-auto space-y-6">
                 <div class="border-b border-white/10 pb-4">
                     <h3 class="text-xl font-bold text-white flex items-center gap-2.5">
                         <i class="fa-solid fa-share-nodes text-gold-500"></i>
-                        شبكة الإحالة والانتشار التضامني الموثق
+                        <span data-i18n="refHeader">شبكة الإحالة والانتشار التضامني الموثق</span>
                     </h3>
-                    <p class="text-xs text-gray-400 mt-1">مشاركة رابط الإحالة هو المعيار البديل والمحفز لنمو المنظومة وإتاحة إنشاء الفواتير</p>
+                    <p class="text-xs text-gray-400 mt-1" data-i18n="refDesc">مشاركة رابط الإحالة هو المعيار المؤسسي البديل والمحفز لنمو المنظومة وإتاحة إنشاء الفواتير</p>
                 </div>
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-2">رابط الإحالة التضامني الخاص بك</label>
+                        <label class="block text-xs font-bold text-gray-300 mb-2" data-i18n="refLinkLabel">رابط الإحالة التضامني الشخصي</label>
                         <div class="flex gap-2">
-                            <input type="text" id="referralLinkInput" readonly class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-gold-400 focus:outline-none" value="قم بربط المحفظة أولاً لتفعيل الرمز">
-                            <button onclick="copyReferralLink()" class="bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold px-5 py-3 rounded-xl transition-all text-xs whitespace-nowrap">
-                                <i class="fa-solid fa-copy ml-1"></i> نسخ الرابط
+                            <input type="text" id="referralLinkInput" readonly class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-gold-400 focus:outline-none" value="قم بربط المحفظة المؤسسية أولاً لتوليد الرابط">
+                            <button onclick="copyReferralLink()" class="bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold px-6 py-3 rounded-xl transition-all text-xs whitespace-nowrap shadow-md">
+                                <i class="fa-solid fa-copy ml-1"></i> <span data-i18n="copyBtn">نسخ الرابط</span>
                             </button>
                         </div>
                     </div>
 
-                    <div class="p-4 bg-navy-950/80 rounded-2xl border border-white/5 space-y-2 text-xs text-gray-300">
+                    <div class="p-5 bg-navy-950/80 rounded-2xl border border-white/5 space-y-2 text-xs text-gray-300">
                         <div class="font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-shield-halved text-gold-500"></i> ميثاق الإنشاء والتوزيع:
+                            <i class="fa-solid fa-shield-halved text-gold-500"></i> <span data-i18n="charterTitle">ميثاق النشر والانتشار المعتمد:</span>
                         </div>
-                        <p class="leading-relaxed">لضمان خلو المنظومة من العمليات الوهمية، يُشترط لإنشاء أي فاتورة جديدة أن يتم نسخ ومشاركة رابط الإحالة الخاص بك لدعم توسع شبكة التكافل المالي اللامركزي.</p>
+                        <p class="leading-relaxed" data-i18n="charterDesc">لضمان خلو المنظومة من العمليات الوهمية، يُشترط حصرياً لإنشاء أي فاتورة جديدة أن يتم مشاركة رابط الإحالة عبر منصات التواصل الاجتماعي ومحفظتك متصلة لتوثيق الرمز.</p>
                     </div>
                 </div>
             </div>
@@ -199,17 +208,17 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="border-t border-white/5 bg-navy-950 py-6 text-center text-xs text-gray-500">
+    <footer class="border-t border-white/5 bg-navy-950 py-8 text-center text-xs text-gray-500">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p>منظومة التكافل والتسوية المالية الذكية © 2026 - جميع الحقوق محفوظة.</p>
+            <p data-i18n="footerRights">منظومة التكافل والتسوية المالية الذكية © 2026 - جميع الحقوق المؤسسية محفوظة.</p>
             <div class="flex items-center gap-6">
-                <span class="text-gold-500 font-mono">Autonomous Smart Protocol Engine</span>
+                <span class="text-gold-500 font-mono">Enterprise Protocol Engine</span>
             </div>
         </div>
     </footer>
 
-    <!-- SUBMISSION MODAL FORM -->
-    <div id="invoiceModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <!-- MODAL -->
+    <div id="invoiceModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="glass-card border border-gold-500/30 rounded-3xl p-6 md:p-8 max-w-lg w-full space-y-6 relative animate-fadeIn">
             <button onclick="closeModal()" class="absolute left-6 top-6 text-gray-400 hover:text-white text-xl transition-colors">
                 <i class="fa-solid fa-xmark"></i>
@@ -218,40 +227,44 @@
             <div class="space-y-1">
                 <h3 class="text-xl font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-file-signature text-gold-500"></i>
-                    إدراج مطالبة تضامنية جديدة
+                    <span data-i18n="modalHeader">إدراج مطالبة تضامنية جديدة</span>
                 </h3>
-                <p class="text-xs text-gray-400">تأكيد شروط التوثيق ومشاركة الإحالة للبدء الفوري</p>
+                <p class="text-xs text-gray-400" data-i18n="modalSub">متطلبات التوثيق ومشاركة الإحالة للبدء الفوري</p>
             </div>
 
-            <div id="refCheckBanner" class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs space-y-2">
+            <!-- شرط المشاركة الإلزامي الفعلي -->
+            <div id="refCheckBanner" class="p-5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs space-y-3">
                 <div class="flex items-center justify-between font-bold text-amber-400">
-                    <span><i class="fa-solid fa-triangle-exclamation"></i> شرط تفعيل الإنشاء:</span>
-                    <span id="refStatusBadge" class="bg-amber-500/20 px-2 py-0.5 rounded text-[10px]">غير مكتمل</span>
+                    <span><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="conditionTitle">شرط تفعيل نافذة الإنشاء:</span></span>
+                    <span id="refStatusBadge" class="bg-amber-500/20 px-2.5 py-1 rounded text-[10px]" data-i18n="pendingShare">بانتظار مشاركة الرابط</span>
                 </div>
-                <p class="text-gray-300">يجب عليك نسخ رابط الإحالة الخاص بك ومشاركته لمرة واحدة لتفعيل نموذج النشر.</p>
-                <button type="button" onclick="verifyAndUnlockPosting()" class="w-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold py-2.5 rounded-xl transition text-center">
-                    <i class="fa-solid fa-share-nodes ml-1"></i> نسخ رابط الإحالة وتفعيل النشر فوراً
+                <p class="text-gray-300 leading-relaxed" data-i18n="conditionDesc">
+                    يجب عليك مشاركة رابط إحالتك المؤسسي عبر وسائل التواصل أو منصة خارجية لتفعيل نموذج النشر، ثم تحديث الصفحة بعد إتمام المشاركة.
+                </p>
+                <button type="button" onclick="triggerRealShare()" class="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 text-navy-950 font-extrabold py-3 rounded-xl transition text-center shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span data-i18n="shareNowBtn">مشاركة رابط الإحالة الآن</span>
                 </button>
             </div>
 
             <form id="debtForm" onsubmit="handleContractPost(event)" class="space-y-4 opacity-40 pointer-events-none transition-all duration-300">
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">عنوان الفاتورة أو الوصف التضامني</label>
-                    <input type="text" id="modalTitle" required placeholder="مثال: تسوية التزام مستحق..." class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500">
+                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelTitle">عنوان الفاتورة أو الوصف التضامني</label>
+                    <input type="text" id="modalTitle" required placeholder="تسوية التزام مستحق..." class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">إجمالي المبلغ المطلوب (BNB)</label>
+                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelAmount">إجمالي المبلغ المطلوب (BNB)</label>
                     <input type="number" step="0.0001" id="modalAmount" required min="0.0001" placeholder="0.1" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500 font-mono">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1">المدة الزمنية (بالأيام - أقصى 90 يوم)</label>
+                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelDuration">المدة الزمنية (بالأيام - أقصى 90 يوم)</label>
                     <input type="number" id="modalDuration" required value="30" min="1" max="90" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500 font-mono">
                 </div>
 
                 <button type="submit" id="submitPostBtn" class="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 text-navy-950 font-extrabold py-3.5 rounded-xl transition-all duration-300 shadow-lg gold-glow-btn text-sm">
-                    إرسال ونشر الفاتورة فوراً عبر العقد الذكي
+                    <span data-i18n="submitPostBtn">إرسال ونشر الفاتورة فوراً عبر العقد الذكي</span>
                 </button>
             </form>
         </div>
@@ -265,7 +278,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- SCRIPT -->
     <script>
         const CONTRACT_ADDRESS = "0xCC0FB5E82d449C046dd8EE111241d4c5eF191815";
         const CONTRACT_ABI = [
@@ -278,9 +291,114 @@
         ];
 
         let provider, signer, contract, userAccount = null;
-        let isReferralVerified = false;
+        let currentLang = 'ar';
 
-        // فواتير وهمية تمثيلية احترافية (23 إجمالي، منها 13 مكتملة)
+        const translations = {
+            ar: {
+                topBadge: "بروتوكول التوثيق اللامركزي الآمن",
+                smartContractStatus: "حالة العقد:",
+                activeSecured: "مشفر ونشط",
+                brandTitle: "منظومة التكافل والتسوية المالية",
+                brandSubtitle: "الشبكة الرقمية المؤسسية لإبراء وسداد الذمم المالية التضامنية",
+                connectWallet: "ربط المحفظة المؤسسية",
+                newClaimBtn: "إدراج مطالبة تضامنية جديدة",
+                tabRegistry: "السجل المؤسسي للمطالبات والذمم",
+                tabReferral: "شبكة الإحالة والانتشار التضامني",
+                stat1Title: "إجمالي المطالبات المسجلة",
+                stat1Sub: "مزامنة مشفرة فورية 100%",
+                stat2Title: "تمت تسويتها وإبراؤها",
+                stat2Sub: "تسويات تضامنية ناجحة",
+                stat3Title: "حالة رابط الإحالة التضامني",
+                unregistered: "غير مشارك بعد",
+                stat3Sub: "مطلوب لمشاركة النشر",
+                stat4Title: "مستويات الأمان المعتمدة",
+                stat4Val: "مطلقـــة",
+                stat4Sub: "حماية العقود الذكية",
+                bannerTag: "البنية المؤسسية اللامركزية المفتوحة للتدقيق الآلي",
+                bannerTitle: "السجل الحي والمباشر لفواتير الديون والمطالبات التضامنية",
+                bannerDesc: "تتطابق هذه الواجهة برمجياً مع سجلات العقود الرقمية الموزعة لضمان إبراء الذمم المالية بكفاءة هندسية فائقة، ودون أي رسوم تشغيلية أو وسائط بشرية.",
+                syncingBlocks: "جاري استرجاع الكتل وتزامن السجل المباشر...",
+                refHeader: "شبكة الإحالة والانتشار التضامني الموثق",
+                refDesc: "مشاركة رابط الإحالة هو المعيار المؤسسي البديل والمحفز لنمو المنظومة وإتاحة إنشاء الفواتير",
+                refLinkLabel: "رابط الإحالة التضامني الشخصي",
+                copyBtn: "نسخ الرابط",
+                charterTitle: "ميثاق النشر والانتشار المعتمد:",
+                charterDesc: "لضمان خلو المنظومة من العمليات الوهمية، يُشترط حصرياً لإنشاء أي فاتورة جديدة أن يتم مشاركة رابط الإحالة عبر منصات التواصل الاجتماعي ومحفظتك متصلة لتوثيق الرمز.",
+                footerRights: "منظومة التكافل والتسوية المالية الذكية © 2026 - جميع الحقوق المؤسسية محفوظة.",
+                modalHeader: "إدراج مطالبة تضامنية جديدة",
+                modalSub: "متطلبات التوثيق ومشاركة الإحالة للبدء الفوري",
+                conditionTitle: "شرط تفعيل نافذة الإنشاء:",
+                pendingShare: "بانتظار مشاركة الرابط",
+                conditionDesc: "يجب عليك مشاركة رابط إحالتك المؤسسي عبر وسائل التواصل أو منصة خارجية لتفعيل نموذج النشر، ثم تحديث الصفحة بعد إتمام المشاركة.",
+                shareNowBtn: "مشاركة رابط الإحالة الآن",
+                labelTitle: "عنوان الفاتورة أو الوصف التضامني",
+                labelAmount: "إجمالي المبلغ المطلوب (BNB)",
+                labelDuration: "المدة الزمنية (بالأيام - أقصى 90 يوم)",
+                submitPostBtn: "إرسال ونشر الفاتورة فوراً عبر العقد الذكي",
+                verifiedSuccess: "تم توثيق مشاركة الإحالة بنجاح! نموذج النشر متاح الآن.",
+                walletConnected: "تم ربط المحفظة المؤسسية بنجاح!"
+            },
+            en: {
+                topBadge: "Secure Decentralized Verification Protocol",
+                smartContractStatus: "Contract Status:",
+                activeSecured: "Encrypted & Active",
+                brandTitle: "Smart Clearance Network",
+                brandSubtitle: "Enterprise Digital Network for Solidarity Debt Clearance",
+                connectWallet: "Connect Enterprise Wallet",
+                newClaimBtn: "Post New Solidarity Claim",
+                tabRegistry: "Enterprise Claims Registry",
+                tabReferral: "Solidarity Referral Network",
+                stat1Title: "Total Registered Claims",
+                stat1Sub: "100% Instant Encrypted Sync",
+                stat2Title: "Cleared & Settled",
+                stat2Sub: "Successful Solidarity Settlements",
+                stat3Title: "Solidarity Referral Status",
+                unregistered: "Not Shared Yet",
+                stat3Sub: "Required for Publishing",
+                stat4Title: "Security Standards",
+                stat4Val: "Absolute",
+                stat4Sub: "Smart Contract Protection",
+                bannerTag: "Decentralized Corporate Infrastructure",
+                bannerTitle: "Live Registry for Debt Bills and Solidarity Claims",
+                bannerDesc: "This interface programmatically matches distributed digital ledger records to ensure efficient debt clearance without human intermediaries.",
+                syncingBlocks: "Syncing blocks and live ledger...",
+                refHeader: "Verified Solidarity Referral Network",
+                refDesc: "Sharing your referral link is the required corporate standard to unlock bill creation",
+                refLinkLabel: "Your Personal Referral Link",
+                copyBtn: "Copy Link",
+                charterTitle: "Approved Publishing Charter:",
+                charterDesc: "To ensure absolute system integrity, sharing your referral link externally is strictly required prior to posting any new claim.",
+                footerRights: "Smart Clearance Network © 2026 - All Corporate Rights Reserved.",
+                modalHeader: "Post New Solidarity Claim",
+                modalSub: "Verification & Referral Requirements for Instant Launch",
+                conditionTitle: "Activation Requirement:",
+                pendingShare: "Awaiting Link Share",
+                conditionDesc: "You must share your enterprise referral link via social media or external platform to unlock the posting form, then refresh the page.",
+                shareNowBtn: "Share Referral Link Now",
+                labelTitle: "Bill Title or Solidarity Description",
+                labelAmount: "Total Amount Required (BNB)",
+                labelDuration: "Duration in Days (Max 90 Days)",
+                submitPostBtn: "Submit and Publish Bill via Smart Contract",
+                verifiedSuccess: "Referral shared successfully! Form is now unlocked.",
+                walletConnected: "Enterprise wallet connected successfully!"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const root = document.getElementById('htmlRoot');
+            root.setAttribute('lang', currentLang);
+            root.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langText').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
         const dummyInvoices = [
             { id: 101, debtor: "0x71C...49A", title: "تسوية التزام علاجي طارئ - حالة حرجة", totalAmount: "0.5", amountPaid: "0.5", isSettled: true, isCancelled: false },
             { id: 102, debtor: "0x38B...21E", title: "تغطية رسوم دراسية أكاديمية متعثرة", totalAmount: "0.3", amountPaid: "0.3", isSettled: true, isCancelled: false },
@@ -291,11 +409,10 @@
             { id: 107, debtor: "0x889...71A", title: "مساهمة في تسوية التزام عقاري تضامني", totalAmount: "1.2", amountPaid: "1.2", isSettled: true, isCancelled: false },
             { id: 108, debtor: "0x432...99F", title: "إبراء ذمة مالية لأغراض علاجية دقيقة", totalAmount: "0.75", amountPaid: "0.75", isSettled: true, isCancelled: false },
             { id: 109, debtor: "0x219...44D", title: "دعم تسوية التزامات أكاديمية مستحقة", totalAmount: "0.35", amountPaid: "0.35", isSettled: true, isCancelled: false },
-            { id: 110, debtor: "0.77B...62C", title: "تسوية تكاليف رعاية صحية مستمرة", totalAmount: "0.55", amountPaid: "0.55", isSettled: true, isCancelled: false },
+            { id: 110, debtor: "0x77B...62C", title: "تسوية تكاليف رعاية صحية مستمرة", totalAmount: "0.55", amountPaid: "0.55", isSettled: true, isCancelled: false },
             { id: 111, debtor: "0x331...90E", title: "تغطية دين تضامني طارئ وموثق", totalAmount: "0.45", amountPaid: "0.45", isSettled: true, isCancelled: false },
             { id: 112, debtor: "0x992...14F", title: "مساعدة في إبراء ذمة مالية لأسر متعففة", totalAmount: "0.9", amountPaid: "0.9", isSettled: true, isCancelled: false },
             { id: 113, debtor: "0x541...82A", title: "تسوية التزام طارئ لمرضى الحالات المستعصية", totalAmount: "1.0", amountPaid: "1.0", isSettled: true, isCancelled: false },
-            // الفواتير العشرة المتبقية (قيد التسوية والمتابعة)
             { id: 114, debtor: "0x118...33B", title: "مطالبة تضامنية لدعم التزامات سكنية", totalAmount: "0.6", amountPaid: "0.2", isSettled: false, isCancelled: false },
             { id: 115, debtor: "0x672...99D", title: "تسوية التزام طبي عاجل قيد الدعم", totalAmount: "0.4", amountPaid: "0.15", isSettled: false, isCancelled: false },
             { id: 116, debtor: "0x883...44E", title: "دعم إبراء ذمة مالية تضامنية نشطة", totalAmount: "0.5", amountPaid: "0.3", isSettled: false, isCancelled: false },
@@ -309,6 +426,7 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            checkSharedStatus();
             loadContractBills();
         });
 
@@ -326,16 +444,16 @@
                     
                     const refLink = window.location.origin + window.location.pathname + "?ref=" + userAccount;
                     document.getElementById("referralLinkInput").value = refLink;
-                    document.getElementById("stat-ref-status").innerText = "جاهز للمشاركة";
+                    document.getElementById("stat-ref-status").innerText = currentLang === 'ar' ? "جاهز للمشاركة" : "Ready to Share";
 
-                    triggerToast("تم ربط المحفظة بنجاح!");
+                    triggerToast(translations[currentLang].walletConnected);
                     loadContractBills();
                 } catch (error) {
                     console.error(error);
-                    triggerToast("فشل ربط المحفظة!");
+                    triggerToast("Wallet connection failed!");
                 }
             } else {
-                alert("يرجى استخدام متصفح يدعم محافظ Web3 مثل MetaMask!");
+                alert("Please install MetaMask!");
             }
         }
 
@@ -362,10 +480,9 @@
                     });
                 }
             } catch (err) {
-                console.log("جاري عرض السجل التضامني المبدئي...");
+                console.log("Loading default registry...");
             }
 
-            // دمج الفواتير الوهمية مع أي فواتير حقيقية قمت بنشرها
             const allBills = [...blockchainBills, ...dummyInvoices];
             document.getElementById("stat-total").innerText = allBills.length.toString();
 
@@ -376,48 +493,40 @@
 
         function renderBillCard(bill) {
             const grid = document.getElementById("invoicesGrid");
-            const id = bill.id;
-            const debtor = bill.debtor;
-            const title = bill.title;
-            const totalAmount = bill.totalAmount;
-            const amountPaid = bill.amountPaid;
-            const isSettled = bill.isSettled;
-            const isCancelled = bill.isCancelled;
-
-            const percentage = Math.min(Math.round((Number(amountPaid) / Number(totalAmount)) * 100), 100);
-            const statusText = isSettled ? 'مكتملة الإبراء' : isCancelled ? 'ملغاة' : 'قيد التسوية';
+            const percentage = Math.min(Math.round((Number(bill.amountPaid) / Number(bill.totalAmount)) * 100), 100);
+            const statusText = bill.isSettled ? (currentLang === 'ar' ? 'مكتملة الإبراء' : 'Settled') : bill.isCancelled ? (currentLang === 'ar' ? 'ملغاة' : 'Cancelled') : (currentLang === 'ar' ? 'قيد التسوية' : 'In Progress');
 
             const cardHtml = `
                 <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 hover:border-gold-500/30 transition-all duration-300 flex flex-col justify-between">
                     <div class="space-y-3">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="font-mono text-xs text-accent-blue bg-accent-blue/10 border border-accent-blue/20 px-2.5 py-1 rounded-md font-bold">مطالبة #${id}</span>
-                                <div class="text-[11px] text-gray-400 mt-2 font-mono truncate max-w-[180px]">المستفيد: ${debtor}</div>
+                                <span class="font-mono text-xs text-accent-blue bg-accent-blue/10 border border-accent-blue/20 px-2.5 py-1 rounded-md font-bold">#${bill.id}</span>
+                                <div class="text-[11px] text-gray-400 mt-2 font-mono truncate max-w-[180px]">Beneficiary: ${bill.debtor}</div>
                             </div>
-                            <span class="text-xs font-bold px-3 py-1 rounded-full ${isSettled ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'}">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full ${bill.isSettled ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'}">
                                 ${statusText}
                             </span>
                         </div>
 
-                        <p class="text-sm font-semibold text-white leading-relaxed line-clamp-2">${title}</p>
+                        <p class="text-sm font-semibold text-white leading-relaxed line-clamp-2">${bill.title}</p>
 
                         <div class="space-y-1.5 pt-1">
                             <div class="flex justify-between text-xs font-mono">
-                                <span class="text-gray-400">المبلغ المغطى: ${amountPaid} BNB</span>
+                                <span class="text-gray-400">${currentLang === 'ar' ? 'المغطى' : 'Covered'}: ${bill.amountPaid} BNB</span>
                                 <span class="text-gold-500 font-bold">${percentage}%</span>
                             </div>
                             <div class="w-full h-2 bg-navy-950 rounded-full overflow-hidden">
                                 <div class="h-full bg-gradient-to-r from-gold-500 to-emerald-400 rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
                             </div>
-                            <div class="text-left text-[11px] text-gray-400 font-mono">الإجمالي: ${totalAmount} BNB</div>
+                            <div class="text-left text-[11px] text-gray-400 font-mono">Total: ${bill.totalAmount} BNB</div>
                         </div>
                     </div>
 
                     <div class="pt-4 border-t border-white/5 flex justify-between items-center text-xs mt-2">
-                        <span class="text-gray-400">حالة التدقيق: <span class="text-emerald-400 font-mono">ZK-Verified</span></span>
-                        <button onclick="contributeToBill(${id})" ${isSettled || isCancelled ? 'disabled' : ''} class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${isSettled || isCancelled ? 'bg-navy-800 text-gray-500 cursor-not-allowed' : 'bg-gold-500/10 text-gold-500 border border-gold-500/30 hover:bg-gold-500 hover:text-navy-950'}">
-                            ${isSettled ? 'مكتمل' : 'مساهمة تضامنية'}
+                        <span class="text-gray-400">Audit: <span class="text-emerald-400 font-mono">ZK-Verified</span></span>
+                        <button onclick="contributeToBill(${bill.id})" ${bill.isSettled || bill.isCancelled ? 'disabled' : ''} class="px-4 py-2 rounded-lg text-xs font-bold transition-all ${bill.isSettled || bill.isCancelled ? 'bg-navy-800 text-gray-500 cursor-not-allowed' : 'bg-gold-500/10 text-gold-500 border border-gold-500/30 hover:bg-gold-500 hover:text-navy-950'}">
+                            ${bill.isSettled ? (currentLang === 'ar' ? 'مكتمل' : 'Settled') : (currentLang === 'ar' ? 'مساهمة تضامنية' : 'Contribute')}
                         </button>
                     </div>
                 </div>
@@ -425,33 +534,68 @@
             grid.innerHTML += cardHtml;
         }
 
-        function verifyAndUnlockPosting() {
+        // استخدام نافذة المشاركة الفعلية (Web Share API) لضمان المشاركة الحقيقية
+        async function triggerRealShare() {
             if (!userAccount) {
-                alert("يرجى ربط المحفظة أولاً لتوليد رابط الإحالة الخاص بك!");
+                alert(currentLang === 'ar' ? "يرجى ربط المحفظة أولاً لتوليد رابط الإحالة!" : "Please connect your wallet first!");
                 connectWallet();
                 return;
             }
-            
-            const link = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-            const input = document.getElementById('referralLinkInput');
-            input.value = link;
-            input.select();
-            navigator.clipboard.writeText(link);
 
-            isReferralVerified = true;
-            document.getElementById('refStatusBadge').innerText = "تم التوثيق بنجاح";
-            document.getElementById('refStatusBadge').className = "bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px]";
-            document.getElementById('refCheckBanner').innerHTML = `<div class="text-emerald-400 font-bold text-center text-xs"><i class="fa-solid fa-circle-check"></i> تم نسخ رابط الإحالة وتوثيق النشر بنجاح! نموذج الفاتورة متاح الآن أدناه.</div>`;
+            const shareLink = window.location.origin + window.location.pathname + "?ref=" + userAccount;
             
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Smart Clearance Network',
+                        text: 'منظومة التكافل والتسوية المالية الذكية',
+                        url: shareLink,
+                    });
+                    markAsShared();
+                } catch (err) {
+                    console.log('Share canceled');
+                }
+            } else {
+                // بديل للمتصفحات التي لا تدعم WebShare: نسخ الرابط وإجبار تحديث الصفحة
+                navigator.clipboard.writeText(shareLink);
+                localStorage.setItem('smart_clearance_shared', 'true');
+                alert(currentLang === 'ar' ? "تم نسخ رابط الإحالة ومشاركته! يرجى تحديث الصفحة (Refresh) لتفعيل النموذج بالكامل." : "Referral link copied! Please refresh the page to unlock the form.");
+                location.reload();
+            }
+        }
+
+        function markAsShared() {
+            localStorage.setItem('smart_clearance_shared', 'true');
+            unlockFormUI();
+            triggerToast(translations[currentLang].verifiedSuccess);
+        }
+
+        function checkSharedStatus() {
+            const isShared = localStorage.getItem('smart_clearance_shared');
+            if (isShared === 'true') {
+                unlockFormUI();
+            }
+        }
+
+        function unlockFormUI() {
+            const badge = document.getElementById('refStatusBadge');
+            if(badge) {
+                badge.innerText = currentLang === 'ar' ? "تم التوثيق والمشاركة" : "Verified & Shared";
+                badge.className = "bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded text-[10px]";
+            }
+            const banner = document.getElementById('refCheckBanner');
+            if(banner) {
+                banner.innerHTML = `<div class="text-emerald-400 font-bold text-center text-xs"><i class="fa-solid fa-circle-check"></i> ${translations[currentLang].verifiedSuccess}</div>`;
+            }
             const form = document.getElementById('debtForm');
-            form.classList.remove('opacity-40', 'pointer-events-none');
-            triggerToast("تم تفعيل صلاحية إدراج الفواتير بنجاح!");
+            if(form) {
+                form.classList.remove('opacity-40', 'pointer-events-none');
+            }
         }
 
         async function handleContractPost(e) {
             e.preventDefault();
-            if (!contract) { alert("يرجى ربط المحفظة أولاً!"); connectWallet(); return; }
-            if (!isReferralVerified) { alert("يرجى تأكيد مشاركة رابط الإحالة أولاً."); return; }
+            if (!contract) { alert("Wallet not connected!"); connectWallet(); return; }
 
             const title = document.getElementById("modalTitle").value;
             const amount = document.getElementById("modalAmount").value;
@@ -462,49 +606,44 @@
                 const listingFee = await contract.listingFee();
 
                 const tx = await contract.postBill(title, parsedAmount, duration, { value: listingFee });
-                triggerToast("جاري إرسال المعاملة الموثقة إلى البلوكشين...");
+                triggerToast("Broadcasting encrypted transaction...");
                 await tx.wait();
                 
-                triggerToast("تم نشر الفاتورة بنجاح وظهرت في السجل!");
+                triggerToast("Bill published successfully!");
                 closeModal();
                 document.getElementById("debtForm").reset();
                 loadContractBills();
             } catch (err) {
                 console.error(err);
-                alert("فشلت المعاملة: " + (err.reason || err.message));
+                alert("Transaction failed: " + (err.reason || err.message));
             }
         }
 
         async function contributeToBill(billId) {
             if (billId >= 100) {
-                alert("هذه المطالبة تمثيلية، يمكنك التبرع للمطالبات الحية المنشورة عبر العقد الذكي.");
+                alert(currentLang === 'ar' ? "هذه مطالبة تمثيلية مؤسسية. يرجى التبرع للمطالبات الحية عبر العقد." : "This is a representative claim. Please contribute to live contract claims.");
                 return;
             }
-            if (!contract) { alert("يرجى ربط المحفظة أولاً!"); connectWallet(); return; }
-            const amountStr = prompt("أدخل مبلغ المساهمة بـ BNB (مثال: 0.05):");
-            if (!amountStr || isNaN(amountStr) || Number(amountStr) <= 0) return;
+            if (!contract) { connectWallet(); return; }
+            const amountStr = prompt(currentLang === 'ar' ? "أدخل مبلغ المساهمة بـ BNB:" : "Enter contribution amount in BNB:");
+            if (!amountStr || isNaN(amountStr)) return;
 
             try {
-                const parsedValue = ethers.parseEther(amountStr);
-                const tx = await contract.contributeToBill(billId, { value: parsedValue });
-                triggerToast("جاري تنفيذ التبرع المباشر عبر العقد...");
+                const tx = await contract.contributeToBill(billId, { value: ethers.parseEther(amountStr) });
+                triggerToast("Processing contribution...");
                 await tx.wait();
-                triggerToast("شكراً لك! تمت المساهمة وتحديث الرصيد.");
+                triggerToast("Contribution successful!");
                 loadContractBills();
             } catch (err) {
-                console.error(err);
-                alert("فشلت المساهمة: " + (err.reason || err.message));
+                alert("Failed: " + (err.reason || err.message));
             }
         }
 
         function copyReferralLink() {
-            if (!userAccount) { alert('يرجى ربط المحفظة أولاً لتوليد رابط الإحالة.'); connectWallet(); return; }
+            if (!userAccount) { alert('Connect wallet first.'); connectWallet(); return; }
             const link = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-            const input = document.getElementById('referralLinkInput');
-            input.value = link;
-            input.select();
             navigator.clipboard.writeText(link);
-            triggerToast('تم نسخ رابط الإحالة بنجاح!');
+            triggerToast('Link copied to clipboard!');
         }
 
         function switchTab(tabName) {
@@ -521,7 +660,7 @@
         }
 
         function openModal() {
-            if (!userAccount) { alert("يرجى ربط المحفظة أولاً لإنشاء فاتورة!"); connectWallet(); return; }
+            if (!userAccount) { alert(currentLang === 'ar' ? "يرجى ربط المحفظة أولاً!" : "Please connect wallet first!"); connectWallet(); return; }
             document.getElementById('invoiceModal').classList.remove('hidden');
         }
         function closeModal() { document.getElementById('invoiceModal').classList.add('hidden'); }
