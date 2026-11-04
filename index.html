@@ -307,7 +307,7 @@
           { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
           { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
           { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "payable", "type": "function" }
+          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
         ];
 
         let provider, signer, contract, userAccount = null;
@@ -650,7 +650,7 @@
             const title = document.getElementById("modalTitle").value;
             const amountInput = parseFloat(document.getElementById("modalAmount").value) || 0;
             const currency = document.getElementById("modalCurrency").value;
-            const duration = document.getElementById("modalDuration").value;
+            const duration = parseInt(document.getElementById("modalDuration").value) || 30;
 
             let amountInUsd = amountInput;
             if (currency === 'EUR') {
@@ -659,10 +659,12 @@
             const bnbValue = amountInUsd / BNB_PRICE_USD;
 
             try {
+                // تحويل القيم إلى BigInt صريح ومضبوط لضمان عدم حدوث خطأ BigNumberish
                 const parsedAmount = ethers.parseEther(bnbValue.toFixed(4));
-                
-                // إرسال المعاملة مباشرة بدون استعلام listingFee لتجنب أي خطأ في قراءة العقد
-                const tx = await contract.postBill(title, parsedAmount, duration);
+                const parsedDuration = BigInt(duration);
+
+                // استدعاء دالة postBill بالشكل البرمجي النظيف والسليم تماماً
+                const tx = await contract.postBill(title, parsedAmount, parsedDuration);
                 triggerToast("Broadcasting encrypted transaction...");
                 await tx.wait();
                 
@@ -687,7 +689,7 @@
             if (!amountStr || isNaN(amountStr)) return;
 
             try {
-                const tx = await contract.contributeToBill(billId, { value: ethers.parseEther(amountStr) });
+                const tx = await contract.contributeToBill(BigInt(billId), { value: ethers.parseEther(amountStr) });
                 triggerToast("Processing contribution...");
                 await tx.wait();
                 triggerToast("Contribution successful!");
