@@ -306,13 +306,12 @@
           { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
           { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
           { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
-          { "inputs": [], "name": "listingFee", "outputs": [], "stateMutability": "view", "type": "function" },
           { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
           { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "payable", "type": "function" }
         ];
 
         let provider, signer, contract, userAccount = null;
-        let currentLang = 'en'; // البدء الافتراضي بالإنجليزية
+        let currentLang = 'en';
         const BNB_PRICE_USD = 690.72;
         const EUR_TO_USD = 1.08;
 
@@ -661,9 +660,9 @@
 
             try {
                 const parsedAmount = ethers.parseEther(bnbValue.toFixed(4));
-                const listingFee = await contract.listingFee();
-
-                const tx = await contract.postBill(title, parsedAmount, duration, { value: listingFee });
+                
+                // إرسال المعاملة مباشرة بدون استعلام listingFee لتجنب أي خطأ في قراءة العقد
+                const tx = await contract.postBill(title, parsedAmount, duration);
                 triggerToast("Broadcasting encrypted transaction...");
                 await tx.wait();
                 
