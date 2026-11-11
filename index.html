@@ -1,267 +1,96 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة التداول - عملة وهمية على BNB</title>
-  
-  <!-- استدعاء مكتبة الشارت ومكتبة Ethers.js -->
-  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      background-color: #131722;
-      color: #d1d4dc;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .header {
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 15px;
-      background: #1e222d;
-      border-radius: 8px;
-    }
-    .btn {
-      background-color: #f3ba2f;
-      color: #131722;
-      border: none;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn:hover { background-color: #d19d22; }
-    .btn-buy { background-color: #089981; color: white; width: 100%; margin-top: 10px; font-size: 16px; padding: 12px; }
-    .btn-buy:hover { background-color: #06705f; }
-    
-    .main-container {
-      display: flex;
-      gap: 20px;
-      width: 100%;
-      max-width: 900px;
-      flex-wrap: wrap;
-    }
-    .chart-box {
-      flex: 2;
-      min-width: 300px;
-      background: #1e222d;
-      padding: 15px;
-      border-radius: 8px;
-    }
-    .trade-box {
-      flex: 1;
-      min-width: 250px;
-      background: #1e222d;
-      padding: 20px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    #chart {
-      width: 100%;
-      height: 400px;
-    }
-    .price-display {
-      font-size: 24px;
-      font-weight: bold;
-      color: #089981;
-      margin-bottom: 10px;
-    }
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .input-group label { font-size: 12px; color: #787b86; }
-    .input-group input {
-      background: #2a2e39;
-      border: 1px solid #363a45;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-      outline: none;
-    }
-    .balance-info {
-      font-size: 13px;
-      color: #b2b5be;
-      background: #2a2e39;
-      padding: 10px;
-      border-radius: 4px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رجال اليمن - ملحمة الشجاعة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            background: linear-gradient(135deg, #1a1a1a, #2c1a0f, #0b0b0b);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 140, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #442200;
+        }
+        .epic-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #ffaa00;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(255, 170, 0, 0.5);
+            animation: fadeInDown 1.5s ease-in-out;
+        }
+        .epic-subtitle {
+            font-size: 1.3rem;
+            color: #cccccc;
+            max-width: 700px;
+            line-height: 1.8;
+            padding: 0 20px;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+        .mountains-bg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to top, #111, transparent);
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .pulse-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,100,0,0.15) 0%, transparent 70%);
+            animation: pulse 4s infinite alternate;
+            z-index: 0;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0.9; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- شريط العنوان وربط المحفظة -->
-  <div class="header">
-    <h2>العملة: <span style="color: #f3ba2f;">$MOCK (BNB)</span></h2>
-    <button id="connectBtn" class="btn" onclick="connectWallet()">ربط المحفظة</button>
-  </div>
-
-  <div class="main-container">
-    <!-- منطقة الشارت -->
-    <div class="chart-box">
-      <div id="price" class="price-display">0.00100 USD</div>
-      <div id="chart"></div>
+    <div class="hero-container">
+        <div class="pulse-glow"></div>
+        <div class="mountains-bg"></div>
+        <h1 class="epic-title">عزم الرجال.. وبأس الجبال</h1>
+        <p class="epic-subtitle">هنا تترنح الصخور وتصطف العזائم، رجال اليمن الأوفياء تاريخ ناطق وبطولات تفوق الوصف في ساحات العزة والكرامة.</p>
     </div>
 
-    <!-- منطقة الشراء -->
-    <div class="trade-box">
-      <h3>شراء العملة الوهمية</h3>
-      
-      <div class="input-group">
-        <label>المبلغ (BNB):</label>
-        <input type="number" id="payAmount" value="0.005" step="0.001" oninput="calculateTokens()">
-      </div>
-
-      <div class="input-group">
-        <label>ستحصل تقريباً على ($MOCK):</label>
-        <input type="text" id="tokenAmount" readonly>
-      </div>
-
-      <button class="btn btn-buy" onclick="buyTokens()">تأكيد الشراء الآن</button>
-
-      <div class="balance-info">
-        رصيدك الوهمي: <b id="userBalance">0</b> $MOCK
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // --- 1. إعداد شارت الشموع الوهمي ---
-    const chartContainer = document.getElementById('chart');
-    const chart = LightweightCharts.createChart(chartContainer, {
-      layout: { backgroundColor: '#1e222d', textColor: '#d1d4dc' },
-      grid: { vertLines: { color: '#2b2f3a' }, horzLines: { color: '#2b2f3a' } },
-      timeScale: { timeVisible: true, secondsVisible: true }
-    });
-
-    const candlestickSeries = chart.addCandlestickSeries({
-      upColor: '#089981', downColor: '#f23645',
-      borderUpColor: '#089981', borderDownColor: '#f23645',
-      wickUpColor: '#089981', wickDownColor: '#f23645',
-    });
-
-    let currentPrice = 0.00100;
-    let currentTime = Math.floor(Date.now() / 1000) - 300;
-    let data = [];
-
-    for (let i = 0; i < 50; i++) {
-      let open = currentPrice;
-      let close = open * (1 + (Math.random() * 0.04 - 0.012)); // اتجاه صاعد خفيف
-      let high = Math.max(open, close) * 1.01;
-      let low = Math.min(open, close) * 0.99;
-      data.push({ time: currentTime + (i * 5), open, high, low, close });
-      currentPrice = close;
-    }
-
-    candlestickSeries.setData(data);
-    document.getElementById('price').innerText = currentPrice.toFixed(5) + " USD";
-
-    // تحديث الشارت ورفع السعر وهمياً كل 3 ثوانٍ
-    setInterval(() => {
-      currentTime += 5;
-      let open = currentPrice;
-      let changePercent = (Math.random() * 0.03) - 0.007; 
-      let close = open * (1 + changePercent);
-      let high = Math.max(open, close) * (1 + Math.random() * 0.005);
-      let low = Math.min(open, close) * (1 - Math.random() * 0.005);
-
-      currentPrice = close;
-      candlestickSeries.update({ time: currentTime, open, high, low, close });
-      
-      const priceElement = document.getElementById('price');
-      priceElement.innerText = currentPrice.toFixed(5) + " USD";
-      priceElement.style.color = close >= open ? '#089981' : '#f23645';
-      
-      calculateTokens();
-    }, 3000);
-
-    // --- 2. حساب عدد العملات مقابل الـ BNB ---
-    function calculateTokens() {
-      const bnbAmount = parseFloat(document.getElementById('payAmount').value) || 0;
-      // لنفرض سعر BNB تقريباً 600 دولار
-      const usdValue = bnbAmount * 600;
-      const tokens = usdValue / currentPrice;
-      document.getElementById('tokenAmount').value = tokens.toFixed(2);
-    }
-    calculateTokens();
-
-    // --- 3. ربط المحفظة وتحويل BNB إلى العنوان المحدد ---
-    let userAddress = null;
-    let userMockBalance = 0;
-    
-    // العنوان الخاص بك الذي تم تعيينه لاستقبال المدفوعات
-    const RECEIVER_ADDRESS = "0x000f4ea4deea8bd91e1c05d6ef228e1993d58926"; 
-
-    async function connectWallet() {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const accounts = await provider.send("eth_requestAccounts", []);
-          userAddress = accounts[0];
-          document.getElementById('connectBtn').innerText = userAddress.substring(0, 6) + "..." + userAddress.slice(-4);
-        } catch (err) {
-          alert("فشل الربط مع المحفظة");
-        }
-      } else {
-        alert("يرجى تثبيت محفظة MetaMask!");
-      }
-    }
-
-    async function buyTokens() {
-      if (!userAddress) {
-        await connectWallet();
-        if (!userAddress) return;
-      }
-
-      const payAmount = document.getElementById('payAmount').value;
-      if (!payAmount || payAmount <= 0) {
-        alert("يرجى إدخال مبلغ صحيح");
-        return;
-      }
-
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-
-        // تنفيذ معاملة الإرسال إلى عنوانك
-        const tx = await signer.sendTransaction({
-          to: RECEIVER_ADDRESS,
-          value: ethers.parseEther(payAmount.toString())
-        });
-
-        alert("جاري تنفيذ المعاملة على شبكة BNB...");
-        await tx.wait(); // انتظار تأكيد المعاملة في MetaMask
-
-        // إضافة الرصيد الوهمي في واجهة المستخدم بعد النجاح
-        const tokensBought = parseFloat(document.getElementById('tokenAmount').value);
-        userMockBalance += tokensBought;
-        document.getElementById('userBalance').innerText = userMockBalance.toFixed(2);
-
-        alert("تمت عملية الشراء بنجاح وإضافة العملات لرصيدك!");
-      } catch (error) {
-        console.error(error);
-        alert("تم رفض المعاملة أو حدث خطأ أثناء الدفع.");
-      }
-    }
-  </script>
 </body>
 </html>
