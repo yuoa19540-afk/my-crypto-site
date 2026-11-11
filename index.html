@@ -1,791 +1,267 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" id="htmlRoot">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Clearance Network | منظومة التكافل والتسوية المالية</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ethers.js v6 CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <!-- Google Fonts: Plus Jakarta Sans & Cairo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: { 950: '#07090E', 900: '#0F131C', 800: '#171E2C', 700: '#222C3D' },
-                        gold: { 500: '#D4AF37', 400: '#E5C158', 600: '#B38F24' },
-                        accent: { blue: '#2563EB', emerald: '#10B981', cyan: '#06B6D4' }
-                    },
-                    fontFamily: { 
-                        sans: ['Plus Jakarta Sans', 'Cairo', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'] 
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة التداول - عملة وهمية على BNB</title>
+  
+  <!-- استدعاء مكتبة الشارت ومكتبة Ethers.js -->
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 
-    <style>
-        body { font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif; background-color: #07090E; color: #F1F5F9; overflow-x: hidden; }
-        .glass-card { background: rgba(15, 19, 28, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6); }
-        .glass-card-gold { background: rgba(15, 19, 28, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); }
-        .bg-grid-pattern { background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 32px 32px; }
-        .gold-glow-btn { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25); }
-        .pulse-emerald { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); animation: pulse-green 2.2s infinite; }
-        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); } 70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
-    </style>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #131722;
+      color: #d1d4dc;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #1e222d;
+      border-radius: 8px;
+    }
+    .btn {
+      background-color: #f3ba2f;
+      color: #131722;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover { background-color: #d19d22; }
+    .btn-buy { background-color: #089981; color: white; width: 100%; margin-top: 10px; font-size: 16px; padding: 12px; }
+    .btn-buy:hover { background-color: #06705f; }
+    
+    .main-container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+      flex-wrap: wrap;
+    }
+    .chart-box {
+      flex: 2;
+      min-width: 300px;
+      background: #1e222d;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .trade-box {
+      flex: 1;
+      min-width: 250px;
+      background: #1e222d;
+      padding: 20px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #chart {
+      width: 100%;
+      height: 400px;
+    }
+    .price-display {
+      font-size: 24px;
+      font-weight: bold;
+      color: #089981;
+      margin-bottom: 10px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .input-group label { font-size: 12px; color: #787b86; }
+    .input-group input {
+      background: #2a2e39;
+      border: 1px solid #363a45;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      outline: none;
+    }
+    .balance-info {
+      font-size: 13px;
+      color: #b2b5be;
+      background: #2a2e39;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-grid-pattern flex flex-col justify-between selection:bg-gold-500 selection:text-black">
+<body>
 
-    <!-- TOP CORPORATE BANNER -->
-    <div class="border-b border-white/10 bg-navy-950/95 backdrop-blur-md px-4 py-2.5 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs md:text-sm gap-2">
-            <div class="flex items-center gap-3">
-                <span class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full font-bold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-emerald"></span>
-                    <span data-i18n="topBadge">Secure Decentralized Verification Protocol</span>
-                </span>
-            </div>
-            <div class="flex items-center gap-4">
-                <button onclick="toggleLanguage()" class="bg-navy-800 border border-white/10 hover:border-gold-500 text-gold-400 px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-globe"></i>
-                    <span id="langText">العربية</span>
-                </button>
-                <div class="flex items-center gap-2">
-                    <span class="text-gray-400 text-xs" data-i18n="smartContractStatus">Contract Status:</span>
-                    <span class="text-gold-500 font-mono font-semibold text-xs bg-navy-800 px-2.5 py-0.5 rounded border border-white/5" data-i18n="activeSecured">Encrypted & Active</span>
-                </div>
-            </div>
-        </div>
+  <!-- شريط العنوان وربط المحفظة -->
+  <div class="header">
+    <h2>العملة: <span style="color: #f3ba2f;">$MOCK (BNB)</span></h2>
+    <button id="connectBtn" class="btn" onclick="connectWallet()">ربط المحفظة</button>
+  </div>
+
+  <div class="main-container">
+    <!-- منطقة الشارت -->
+    <div class="chart-box">
+      <div id="price" class="price-display">0.00100 USD</div>
+      <div id="chart"></div>
     </div>
 
-    <!-- MAIN HEADER -->
-    <header class="max-w-7xl mx-auto px-4 w-full pt-8 pb-4">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/5 pb-8">
-            <div class="flex items-center gap-4">
-                <!-- الزر المخفي: اضغط 5 مرات متتالية هنا لعرض عداد الزوار الحقيقي -->
-                <div onclick="handleSecretClick()" id="secretLogoTrigger" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-gold-600 via-gold-500 to-amber-300 flex items-center justify-center text-navy-950 shadow-xl font-black text-3xl cursor-pointer select-none active:scale-90 transition-transform" title="Enterprise Node">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2.5">
-                        <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight" data-i18n="brandTitle">Smart Clearance Network</h1>
-                        <span class="text-[10px] font-mono font-bold bg-gold-500/15 text-gold-500 border border-gold-500/30 px-2.5 py-1 rounded-md">Enterprise v4.2</span>
-                    </div>
-                    <p class="text-xs text-gray-400 font-medium mt-1" data-i18n="brandSubtitle">Enterprise Digital Network for Solidarity Debt Clearance</p>
-                </div>
-            </div>
+    <!-- منطقة الشراء -->
+    <div class="trade-box">
+      <h3>شراء العملة الوهمية</h3>
+      
+      <div class="input-group">
+        <label>المبلغ (BNB):</label>
+        <input type="number" id="payAmount" value="0.005" step="0.001" oninput="calculateTokens()">
+      </div>
 
-            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
-                <button id="connectWalletBtn" onclick="connectWallet()" class="bg-navy-800 border border-gold-500/30 hover:border-gold-500 text-gold-400 font-bold px-6 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm shadow-md">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span id="walletText" data-i18n="connectWallet">Connect Enterprise Wallet</span>
-                </button>
-                <button onclick="openModal()" class="flex-1 md:flex-initial bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 hover:to-gold-500 text-navy-950 font-extrabold px-7 py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2.5 text-sm gold-glow-btn active:scale-95 shadow-lg">
-                    <i class="fa-solid fa-circle-plus text-base"></i>
-                    <span data-i18n="newClaimBtn">Post New Solidarity Claim</span>
-                </button>
-            </div>
-        </div>
+      <div class="input-group">
+        <label>ستحصل تقريباً على ($MOCK):</label>
+        <input type="text" id="tokenAmount" readonly>
+      </div>
 
-        <nav class="flex items-center gap-2 overflow-x-auto py-4 text-sm scrollbar-none">
-            <button onclick="switchTab('registry')" id="tab-registry" class="tab-btn px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap bg-gold-500 text-navy-950 shadow-md">
-                <i class="fa-solid fa-list-check"></i> <span data-i18n="tabRegistry">Enterprise Claims Registry</span>
-            </button>
-            <button onclick="switchTab('referral')" id="tab-referral" class="tab-btn px-6 py-3 rounded-xl font-semibold text-gray-400 hover:text-white hover:bg-navy-800 transition-all flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-share-nodes"></i> <span data-i18n="tabReferral">Solidarity Referral Network</span>
-            </button>
-        </nav>
-    </header>
+      <button class="btn btn-buy" onclick="buyTokens()">تأكيد الشراء الآن</button>
 
-    <!-- CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 w-full flex-grow space-y-8 mb-16">
-
-        <!-- METRICS -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
-                <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span data-i18n="stat1Title">Total Registered Claims</span>
-                    <i class="fa-solid fa-file-invoice-dollar text-gold-500 text-lg"></i>
-                </div>
-                <div class="text-3xl font-black font-mono text-white mb-1" id="stat-total">23</div>
-                <div class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="stat1Sub">100% Instant Encrypted Sync</span></div>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
-                <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span data-i18n="stat2Title">Cleared & Settled</span>
-                    <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-                </div>
-                <div class="text-3xl font-black font-mono text-emerald-400 mb-1" id="stat-cleared">19 / 23</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-heart-pulse"></i> <span data-i18n="stat2Sub">Successful Solidarity Settlements</span></div>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
-                <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span data-i18n="stat3Title">Solidarity Referral Status</span>
-                    <i class="fa-solid fa-user-tag text-accent-blue text-lg"></i>
-                </div>
-                <div class="text-base font-bold font-mono text-accent-blue mb-1 truncate" id="stat-ref-status" data-i18n="unregistered">Not Shared Yet</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-network-wired"></i> <span data-i18n="stat3Sub">Required for Publishing</span></div>
-            </div>
-
-            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group">
-                <div class="flex justify-between items-start text-gray-400 text-xs font-bold mb-3">
-                    <span data-i18n="stat4Title">Security Standards</span>
-                    <i class="fa-solid fa-user-shield text-accent-cyan text-lg"></i>
-                </div>
-                <div class="text-3xl font-black font-mono text-accent-cyan mb-1" data-i18n="stat4Val">Absolute</div>
-                <div class="text-xs text-gray-400 font-medium"><i class="fa-solid fa-lock"></i> <span data-i18n="stat4Sub">Smart Contract Protection</span></div>
-            </div>
-        </section>
-
-        <!-- VIEW 1 -->
-        <div id="view-registry" class="tab-view space-y-6">
-            <div class="glass-card-gold p-8 rounded-3xl relative overflow-hidden border-r-4 border-r-gold-500">
-                <div class="max-w-3xl space-y-3 relative z-10">
-                    <div class="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-500 text-xs px-3.5 py-1.5 rounded-full font-bold">
-                        <i class="fa-solid fa-certificate"></i> <span data-i18n="bannerTag">Decentralized Corporate Infrastructure</span>
-                    </div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight" data-i18n="bannerTitle">
-                        Live Registry for Debt Bills and Solidarity Claims
-                    </h2>
-                    <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-i18n="bannerDesc">
-                        This interface programmatically matches distributed digital ledger records to ensure efficient debt clearance without human intermediaries.
-                    </p>
-                </div>
-            </div>
-
-            <div id="invoicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-20 text-gray-400 glass-card rounded-2xl">
-                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-gold-500"></i>
-                    <p data-i18n="syncingBlocks">Syncing blocks and live ledger...</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 2 -->
-        <div id="view-referral" class="tab-view hidden space-y-6">
-            <div class="glass-card p-8 rounded-3xl border border-white/10 max-w-2xl mx-auto space-y-6">
-                <div class="border-b border-white/10 pb-4">
-                    <h3 class="text-xl font-bold text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-share-nodes text-gold-500"></i>
-                        <span data-i18n="refHeader">Verified Solidarity Referral Network</span>
-                    </h3>
-                    <p class="text-xs text-gray-400 mt-1" data-i18n="refDesc">Sharing your referral link is the required corporate standard to unlock bill creation</p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-2" data-i18n="refLinkLabel">Your Personal Referral Link</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="referralLinkInput" readonly class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-gold-400 focus:outline-none" value="Connect wallet first to generate link">
-                            <button onclick="justCopyLink()" class="bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold px-6 py-3 rounded-xl transition-all text-xs whitespace-nowrap shadow-md">
-                                <i class="fa-solid fa-copy ml-1"></i> <span data-i18n="copyBtn">Copy Link</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="p-5 bg-navy-950/80 rounded-2xl border border-white/5 space-y-2 text-xs text-gray-300">
-                        <div class="font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-shield-halved text-gold-500"></i> <span data-i18n="charterTitle">Approved Publishing Charter:</span>
-                        </div>
-                        <p class="leading-relaxed" data-i18n="charterDesc">To ensure absolute system integrity, sharing your referral link externally via the share button is strictly required prior to posting any new claim.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-white/5 bg-navy-950 py-8 text-center text-xs text-gray-500">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p data-i18n="footerRights">Smart Clearance Network © 2026 - All Corporate Rights Reserved.</p>
-            <div class="flex items-center gap-6">
-                <span class="text-gold-500 font-mono">Enterprise Protocol Engine</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- MODAL -->
-    <div id="invoiceModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card border border-gold-500/30 rounded-3xl p-6 md:p-8 max-w-lg w-full space-y-6 relative animate-fadeIn max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal()" class="absolute left-6 top-6 text-gray-400 hover:text-white text-xl transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="space-y-1">
-                <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-file-signature text-gold-500"></i>
-                    <span data-i18n="modalHeader">Post New Solidarity Claim</span>
-                </h3>
-                <p class="text-xs text-gray-400" data-i18n="modalSub">Verification & Referral Requirements for Instant Launch</p>
-            </div>
-
-            <!-- شرط المشاركة الحقيقية الإلزامي -->
-            <div id="refCheckBanner" class="p-5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-xs space-y-3">
-                <div class="flex items-center justify-between font-bold text-amber-400">
-                    <span><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="conditionTitle">Activation Requirement:</span></span>
-                    <span id="refStatusBadge" class="bg-amber-500/20 px-2.5 py-1 rounded text-[10px]" data-i18n="pendingShare">Awaiting Real Share</span>
-                </div>
-                <p class="text-gray-300 leading-relaxed" data-i18n="conditionDesc">
-                    Copying the link does NOT unlock the form. You must click the button below to execute a real share via social media or external platform.
-                </p>
-                <button type="button" onclick="triggerRealShare()" class="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 text-navy-950 font-extrabold py-3 rounded-xl transition text-center shadow-md flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-share-nodes"></i>
-                    <span data-i18n="shareNowBtn">Share Referral Link Now</span>
-                </button>
-            </div>
-
-            <form id="debtForm" onsubmit="handleContractPost(event)" class="space-y-4 opacity-40 pointer-events-none transition-all duration-300">
-                <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelTitle">Bill Title or Solidarity Description</label>
-                    <input type="text" id="modalTitle" required placeholder="Medical or debt clearance..." class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500">
-                </div>
-
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2">
-                        <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelAmount">Amount Required</label>
-                        <input type="number" step="0.01" id="modalAmount" required min="1" placeholder="500" oninput="calculateBnbValue()" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500 font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelCurrency">Currency</label>
-                        <select id="modalCurrency" onchange="calculateBnbValue()" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-3 text-sm text-gold-400 font-bold focus:outline-none focus:border-gold-500">
-                            <option value="USD">USD ($)</option>
-                            <option value="EUR">EUR (€)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="p-3 bg-navy-950/90 border border-white/5 rounded-xl text-xs flex justify-between items-center text-gray-300 font-mono">
-                    <span data-i18n="convertedBnb">Contract Value Equivalent (BNB):</span>
-                    <span id="bnbEquivalentPreview" class="text-gold-400 font-bold">0.0000 BNB</span>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelDuration">Duration in Days (Max 90 Days)</label>
-                    <input type="number" id="modalDuration" required value="30" min="1" max="90" class="w-full bg-navy-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-gold-500 font-mono">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-300 mb-1" data-i18n="labelImage">Upload Claim Proof Image or Document (Optional)</label>
-                    <input type="file" id="modalImageFile" accept="image/*" onchange="previewImage(event)" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-gray-300 file:ml-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-gold-500 file:text-navy-950 hover:file:bg-amber-400 cursor-pointer">
-                    <div id="imagePreviewContainer" class="mt-2 hidden">
-                        <img id="imagePreview" src="" alt="Preview" class="w-20 h-20 object-cover rounded-xl border border-white/10">
-                    </div>
-                </div>
-
-                <button type="submit" id="submitPostBtn" class="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-amber-400 text-navy-950 font-extrabold py-3.5 rounded-xl transition-all duration-300 shadow-lg gold-glow-btn text-sm">
-                    <span data-i18n="submitPostBtn">Submit and Publish Bill via Smart Contract</span>
-                </button>
-            </form>
-        </div>
+      <div class="balance-info">
+        رصيدك الوهمي: <b id="userBalance">0</b> $MOCK
+      </div>
     </div>
+  </div>
 
-    <!-- SECRET VISITORS MODAL (النافذة الخاصة بالزر المخفي) -->
-    <div id="secretVisitorsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="glass-card border border-gold-500/55 rounded-3xl p-6 md:p-8 max-w-sm w-full space-y-5 text-center relative animate-fadeIn">
-            <button onclick="closeSecretModal()" class="absolute left-5 top-5 text-gray-400 hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-12 h-12 mx-auto rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center text-xl font-bold">
-                <i class="fa-solid fa-chart-line"></i>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold text-white">Verified Visitors Analytics</h4>
-                <p class="text-xs text-gray-400 mt-1">العداد الحقيقي والدقيق المعتمد من العقد</p>
-            </div>
-            <div class="p-4 bg-navy-950 rounded-2xl border border-white/10">
-                <div class="text-3xl font-black font-mono text-gold-400" id="exactVisitorsCount">1,482</div>
-                <div class="text-[11px] text-emerald-400 mt-1"><i class="fa-solid fa-circle-check"></i> Active Unique Visitors</div>
-            </div>
-            <button onclick="closeSecretModal()" class="w-full bg-gold-500 hover:bg-amber-400 text-navy-950 font-bold py-2.5 rounded-xl text-xs">
-                إغلاق
-            </button>
-        </div>
-    </div>
+  <script>
+    // --- 1. إعداد شارت الشموع الوهمي ---
+    const chartContainer = document.getElementById('chart');
+    const chart = LightweightCharts.createChart(chartContainer, {
+      layout: { backgroundColor: '#1e222d', textColor: '#d1d4dc' },
+      grid: { vertLines: { color: '#2b2f3a' }, horzLines: { color: '#2b2f3a' } },
+      timeScale: { timeVisible: true, secondsVisible: true }
+    });
 
-    <!-- TOAST -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-        <div class="bg-navy-800 border border-gold-500/50 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-semibold">
-            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-            <span id="toastMsg">Action completed successfully!</span>
-        </div>
-    </div>
+    const candlestickSeries = chart.addCandlestickSeries({
+      upColor: '#089981', downColor: '#f23645',
+      borderUpColor: '#089981', borderDownColor: '#f23645',
+      wickUpColor: '#089981', wickDownColor: '#f23645',
+    });
 
-    <!-- SCRIPT -->
-    <script>
-        const CONTRACT_ADDRESS = "0xCC0FB5E82d449C046dd8EE111241d4c5eF191815";
-        const CONTRACT_ABI = [
-          { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
-          { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "bills", "outputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "address payable", "name": "debtor", "type": "address" }, { "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "amountPaid", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "bool", "name": "isSettled", "type": "bool" }, { "internalType": "bool", "name": "isVerified", "type": "bool" }, { "internalType": "bool", "name": "isCancelled", "type": "bool" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "uint256", "name": "billId", "type": "uint256" }], "name": "contributeToBill", "outputs": [], "stateMutability": "payable", "type": "function" },
-          { "inputs": [], "name": "nextBillId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
-          { "inputs": [{ "internalType": "string", "name": "title", "type": "string" }, { "internalType": "uint256", "name": "totalAmount", "type": "uint256" }, { "internalType": "uint256", "name": "durationInDays", "type": "uint256" }], "name": "postBill", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
-        ];
+    let currentPrice = 0.00100;
+    let currentTime = Math.floor(Date.now() / 1000) - 300;
+    let data = [];
 
-        let provider, signer, contract, userAccount = null;
-        let currentLang = 'en';
-        const BNB_PRICE_USD = 690.72;
-        const EUR_TO_USD = 1.08;
+    for (let i = 0; i < 50; i++) {
+      let open = currentPrice;
+      let close = open * (1 + (Math.random() * 0.04 - 0.012)); // اتجاه صاعد خفيف
+      let high = Math.max(open, close) * 1.01;
+      let low = Math.min(open, close) * 0.99;
+      data.push({ time: currentTime + (i * 5), open, high, low, close });
+      currentPrice = close;
+    }
 
-        // متغيرات الزر المخفي (5 ضغطات متتالية)
-        let secretClicks = 0;
-        let secretTimer = null;
+    candlestickSeries.setData(data);
+    document.getElementById('price').innerText = currentPrice.toFixed(5) + " USD";
 
-        function handleSecretClick() {
-            secretClicks++;
-            clearTimeout(secretTimer);
-            if (secretClicks >= 5) {
-                secretClicks = 0;
-                showSecretVisitorsModal();
-            } else {
-                secretTimer = setTimeout(() => { secretClicks = 0; }, 1500);
-            }
+    // تحديث الشارت ورفع السعر وهمياً كل 3 ثوانٍ
+    setInterval(() => {
+      currentTime += 5;
+      let open = currentPrice;
+      let changePercent = (Math.random() * 0.03) - 0.007; 
+      let close = open * (1 + changePercent);
+      let high = Math.max(open, close) * (1 + Math.random() * 0.005);
+      let low = Math.min(open, close) * (1 - Math.random() * 0.005);
+
+      currentPrice = close;
+      candlestickSeries.update({ time: currentTime, open, high, low, close });
+      
+      const priceElement = document.getElementById('price');
+      priceElement.innerText = currentPrice.toFixed(5) + " USD";
+      priceElement.style.color = close >= open ? '#089981' : '#f23645';
+      
+      calculateTokens();
+    }, 3000);
+
+    // --- 2. حساب عدد العملات مقابل الـ BNB ---
+    function calculateTokens() {
+      const bnbAmount = parseFloat(document.getElementById('payAmount').value) || 0;
+      // لنفرض سعر BNB تقريباً 600 دولار
+      const usdValue = bnbAmount * 600;
+      const tokens = usdValue / currentPrice;
+      document.getElementById('tokenAmount').value = tokens.toFixed(2);
+    }
+    calculateTokens();
+
+    // --- 3. ربط المحفظة وتحويل BNB إلى العنوان المحدد ---
+    let userAddress = null;
+    let userMockBalance = 0;
+    
+    // العنوان الخاص بك الذي تم تعيينه لاستقبال المدفوعات
+    const RECEIVER_ADDRESS = "0x000f4ea4deea8bd91e1c05d6ef228e1993d58926"; 
+
+    async function connectWallet() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await provider.send("eth_requestAccounts", []);
+          userAddress = accounts[0];
+          document.getElementById('connectBtn').innerText = userAddress.substring(0, 6) + "..." + userAddress.slice(-4);
+        } catch (err) {
+          alert("فشل الربط مع المحفظة");
         }
+      } else {
+        alert("يرجى تثبيت محفظة MetaMask!");
+      }
+    }
 
-        function showSecretVisitorsModal() {
-            // حساب دقيق يعتمد على تتبع الزيارات والوقت الحالي
-            const baseCount = 1420;
-            const timeOffset = Math.floor(Date.now() / 3600000) % 65;
-            const exactTotal = baseCount + timeOffset;
-            document.getElementById('exactVisitorsCount').innerText = exactTotal.toLocaleString();
-            document.getElementById('secretVisitorsModal').classList.remove('hidden');
-        }
+    async function buyTokens() {
+      if (!userAddress) {
+        await connectWallet();
+        if (!userAddress) return;
+      }
 
-        function closeSecretModal() {
-            document.getElementById('secretVisitorsModal').classList.add('hidden');
-        }
+      const payAmount = document.getElementById('payAmount').value;
+      if (!payAmount || payAmount <= 0) {
+        alert("يرجى إدخال مبلغ صحيح");
+        return;
+      }
 
-        const translations = {
-            en: {
-                topBadge: "Secure Decentralized Verification Protocol",
-                smartContractStatus: "Contract Status:",
-                activeSecured: "Encrypted & Active",
-                brandTitle: "Smart Clearance Network",
-                brandSubtitle: "Enterprise Digital Network for Solidarity Debt Clearance",
-                connectWallet: "Connect Enterprise Wallet",
-                newClaimBtn: "Post New Solidarity Claim",
-                tabRegistry: "Enterprise Claims Registry",
-                tabReferral: "Solidarity Referral Network",
-                stat1Title: "Total Registered Claims",
-                stat1Sub: "100% Instant Encrypted Sync",
-                stat2Title: "Cleared & Settled",
-                stat2Sub: "Successful Solidarity Settlements",
-                stat3Title: "Solidarity Referral Status",
-                unregistered: "Not Shared Yet",
-                stat3Sub: "Required for Publishing",
-                stat4Title: "Security Standards",
-                stat4Val: "Absolute",
-                stat4Sub: "Smart Contract Protection",
-                bannerTag: "Decentralized Corporate Infrastructure",
-                bannerTitle: "Live Registry for Debt Bills and Solidarity Claims",
-                bannerDesc: "This interface programmatically matches distributed digital ledger records to ensure efficient debt clearance without human intermediaries.",
-                syncingBlocks: "Syncing blocks and live ledger...",
-                refHeader: "Verified Solidarity Referral Network",
-                refDesc: "Sharing your referral link is the required corporate standard to unlock bill creation",
-                refLinkLabel: "Your Personal Referral Link",
-                copyBtn: "Copy Link",
-                charterTitle: "Approved Publishing Charter:",
-                charterDesc: "To ensure absolute system integrity, sharing your referral link externally via the share button is strictly required prior to posting any new claim.",
-                footerRights: "Smart Clearance Network © 2026 - All Corporate Rights Reserved.",
-                modalHeader: "Post New Solidarity Claim",
-                modalSub: "Verification & Referral Requirements for Instant Launch",
-                conditionTitle: "Activation Requirement:",
-                pendingShare: "Awaiting Real Share",
-                conditionDesc: "Copying the link does not unlock the form. You must use the share button below to distribute your link and unlock the posting form.",
-                shareNowBtn: "Share Referral Link Now",
-                labelTitle: "Bill Title or Solidarity Description",
-                labelAmount: "Amount Required",
-                labelCurrency: "Currency",
-                labelDuration: "Duration in Days (Max 90 Days)",
-                labelImage: "Upload Claim Proof Image or Document (Optional)",
-                convertedBnb: "Contract Value Equivalent (BNB):",
-                submitPostBtn: "Submit and Publish Bill via Smart Contract",
-                verifiedSuccess: "Real share verified successfully! Form is now unlocked.",
-                walletConnected: "Enterprise wallet connected successfully!"
-            },
-            ar: {
-                topBadge: "بروتوكول التوثيق اللامركزي الآمن",
-                smartContractStatus: "حالة العقد:",
-                activeSecured: "مشفر ونشط",
-                brandTitle: "منظومة التكافل والتسوية المالية",
-                brandSubtitle: "الشبكة الرقمية المؤسسية لإبراء وسداد الذمم المالية التضامنية",
-                connectWallet: "ربط المحفظة المؤسسية",
-                newClaimBtn: "إدراج مطالبة تضامنية جديدة",
-                tabRegistry: "السجل المؤسسي للمطالبات والذمم",
-                tabReferral: "شبكة الإحالة والانتشار التضامني",
-                stat1Title: "إجمالي المطالبات المسجلة",
-                stat1Sub: "مزامنة مشفرة فورية 100%",
-                stat2Title: "تمت تسويتها وإبراؤها",
-                stat2Sub: "تسويات تضامنية ناجحة",
-                stat3Title: "حالة رابط الإحالة التضامني",
-                unregistered: "غير مشارك بعد",
-                stat3Sub: "مطلوب لمشاركة النشر",
-                stat4Title: "مستويات الأمان المعتمدة",
-                stat4Val: "مطلقـــة",
-                stat4Sub: "حماية العقود الذكية",
-                bannerTag: "البنية المؤسسية اللامركزية المفتوحة للتدقيق الآلي",
-                bannerTitle: "السجل الحي والمباشر لفواتير الديون والمطالبات التضامنية",
-                bannerDesc: "تتطابق هذه الواجهة برمجياً مع سجلات العقود الرقمية الموزعة لضمان إبراء الذمم المالية بكفاءة هندسية فائقة، ودون أي رسوم تشغيلية أو وسائط بشرية.",
-                syncingBlocks: "جاري استرجاع الكتل وتزامن السجل المباشر...",
-                refHeader: "شبكة الإحالة والانتشار التضامني الموثق",
-                refDesc: "مشاركة رابط الإحالة هو المعيار المؤسسي البديل والمحفز لنمو المنظومة وإتاحة إنشاء الفواتير",
-                refLinkLabel: "رابط الإحالة التضامني الشخصي",
-                copyBtn: "نسخ الرابط",
-                charterTitle: "ميثاق النشر والانتشار المعتمد:",
-                charterDesc: "لضمان خلو المنظومة من العمليات الوهمية، يُشترط حصرياً لإنشاء أي فاتورة جديدة أن يتم مشاركة رابط الإحالة عبر زر المشاركة الفعلي.",
-                footerRights: "منظومة التكافل والتسوية المالية الذكية © 2026 - جميع الحقوق المؤسسية محفوظة.",
-                modalHeader: "إدراج مطالبة تضامنية جديدة",
-                modalSub: "متطلبات التوثيق ومشاركة الإحالة للبدء الفوري",
-                conditionTitle: "شرط تفعيل نافذة الإنشاء:",
-                pendingShare: "بانتظار المشاركة الحقيقية",
-                conditionDesc: "نسخ الرابط وحدّه لا يفتح النموذج. يجب عليك النضغط على زر 'مشاركة رابط الإحالة الآن' أدناه وإتمام المشاركة الخارجية لتفعيل نموذج النشر.",
-                shareNowBtn: "مشاركة رابط الإحالة الآن",
-                labelTitle: "عنوان الفاتورة أو الوصف التضامني",
-                labelAmount: "المبلغ المطلوب",
-                labelCurrency: "العملة",
-                labelDuration: "المدة الزمنية (بالأيام - أقصى 90 يوم)",
-                labelImage: "تحميل صورة إثبات المطالبة أو المستند (اختياري)",
-                convertedBnb: "ما يقابله للتدوين بالعقد (BNB):",
-                submitPostBtn: "إرسال ونشر الفاتورة فوراً عبر العقد الذكي",
-                verifiedSuccess: "تم توثيق المشاركة الحقيقية بنجاح! نموذج النشر متاح الآن.",
-                walletConnected: "تم ربط المحفظة المؤسسية بنجاح!"
-            }
-        };
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'ar' : 'en';
-            const root = document.getElementById('htmlRoot');
-            root.setAttribute('lang', currentLang);
-            root.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-            document.getElementById('langText').innerText = currentLang === 'en' ? 'العربية' : 'English';
-
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[currentLang][key]) {
-                    el.innerText = translations[currentLang][key];
-                }
-            });
-            loadContractBills();
-        }
-
-        function calculateBnbValue() {
-            const amount = parseFloat(document.getElementById('modalAmount').value) || 0;
-            const currency = document.getElementById('modalCurrency').value;
-            let amountInUsd = amount;
-            if (currency === 'EUR') {
-                amountInUsd = amount * EUR_TO_USD;
-            }
-            const bnbVal = amountInUsd / BNB_PRICE_USD;
-            document.getElementById('bnbEquivalentPreview').innerText = bnbVal.toFixed(4) + " BNB";
-        }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').src = e.target.result;
-                    document.getElementById('imagePreviewContainer').classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // 19 معاملة مسددة من إجمالي 23 مطالبة[span_0](start_span)[span_0](end_span)
-        const dummyInvoices = [
-            { id: 101, debtor: "0x71C...49A", title: "تسوية التزام علاجي طارئ - حالة حرجة", totalAmount: "0.5", amountPaid: "0.5", isSettled: true, isCancelled: false },
-            { id: 102, debtor: "0x38B...21E", title: "تغطية رسوم دراسية أكاديمية متعثرة", totalAmount: "0.3", amountPaid: "0.3", isSettled: true, isCancelled: false },
-            { id: 103, debtor: "0x94F...88C", title: "مساعدات تسوية التزامات سكنية عاجلة", totalAmount: "0.8", amountPaid: "0.8", isSettled: true, isCancelled: false },
-            { id: 104, debtor: "0x12D...55F", title: "دعم إبراء ذمة مالية تضامنية معتمدة", totalAmount: "0.4", amountPaid: "0.4", isSettled: true, isCancelled: false },
-            { id: 105, debtor: "0x66A...10B", title: "تسوية مستحقات طبية تخصصية للمستفيدين", totalAmount: "0.6", amountPaid: "0.6", isSettled: true, isCancelled: false },
-            { id: 106, debtor: "0x55E...339", title: "دعم مالى لإبراء التزام معيشي طارئ", totalAmount: "0.25", amountPaid: "0.25", isSettled: true, isCancelled: false },
-            { id: 107, debtor: "0x889...71A", title: "مساهمة في تسوية التزام عقاري تضامني", totalAmount: "1.2", amountPaid: "1.2", isSettled: true, isCancelled: false },
-            { id: 108, debtor: "0x432...99F", title: "إبراء ذمة مالية لأغراض علاجية دقيقة", totalAmount: "0.75", amountPaid: "0.75", isSettled: true, isCancelled: false },
-            { id: 109, debtor: "0x219...44D", title: "دعم تسوية التزامات أكاديمية مستحقة", totalAmount: "0.35", amountPaid: "0.35", isSettled: true, isCancelled: false },
-            { id: 110, debtor: "0x77B...62C", title: "تسوية تكاليف رعاية صحية مستمرة", totalAmount: "0.55", amountPaid: "0.55", isSettled: true, isCancelled: false },
-            { id: 111, debtor: "0x331...90E", title: "تغطية دين تضامني طارئ وموثق", totalAmount: "0.45", amountPaid: "0.45", isSettled: true, isCancelled: false },
-            { id: 112, debtor: "0x992...14F", title: "مساعدة في إبراء ذمة مالية لأسر متعففة", totalAmount: "0.9", amountPaid: "0.9", isSettled: true, isCancelled: false },
-            { id: 113, debtor: "0x541...82A", title: "تسوية التزام طارئ لمرضى الحالات المستعصية", totalAmount: "1.0", amountPaid: "1.0", isSettled: true, isCancelled: false },
-            { id: 114, debtor: "0x118...33B", title: "مطالبة تضامنية لدعم التزامات سكنية", totalAmount: "0.6", amountPaid: "0.6", isSettled: true, isCancelled: false },
-            { id: 115, debtor: "0x672...99D", title: "تسوية التزام طبي عاجل قيد الدعم", totalAmount: "0.4", amountPaid: "0.4", isSettled: true, isCancelled: false },
-            { id: 116, debtor: "0x883...44E", title: "دعم إبراء ذمة مالية تضامنية نشطة", totalAmount: "0.5", amountPaid: "0.5", isSettled: true, isCancelled: false },
-            { id: 117, debtor: "0x442...11C", title: "مطالبة تسوية التزامات تعليمية", totalAmount: "0.3", amountPaid: "0.3", isSettled: true, isCancelled: false },
-            { id: 118, debtor: "0x995...77F", title: "إبراء ذمة مالية تضامنية - قيد التكفل", totalAmount: "0.8", amountPaid: "0.8", isSettled: true, isCancelled: false },
-            { id: 119, debtor: "0x221...66A", title: "تسوية التزام معيشي طارئ ومباشر", totalAmount: "0.35", amountPaid: "0.35", isSettled: true, isCancelled: false },
-            { id: 120, debtor: "0x776...22E", title: "مساعدة تضامنية لتغطية مصاريف صحية", totalAmount: "0.7", amountPaid: "0.25", isSettled: false, isCancelled: false },
-            { id: 121, debtor: "0x554...88B", title: "مطالبة تسوية التزام عقاري مؤقت", totalAmount: "1.5", amountPaid: "0.6", isSettled: false, isCancelled: false },
-            { id: 122, debtor: "0x338...99C", title: "دعم ذمة مالية تضامنية للمستفيدين", totalAmount: "0.45", amountPaid: "0.2", isSettled: false, isCancelled: false },
-            { id: 123, debtor: "0x669...44F", title: "تسوية التزام طارئ قيد الدعم المباشر", totalAmount: "0.5", amountPaid: "0.1", isSettled: false, isCancelled: false }
-        ];
-
-        window.addEventListener('DOMContentLoaded', () => {
-            checkSharedStatus();
-            loadContractBills();
+        // تنفيذ معاملة الإرسال إلى عنوانك
+        const tx = await signer.sendTransaction({
+          to: RECEIVER_ADDRESS,
+          value: ethers.parseEther(payAmount.toString())
         });
 
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    provider = new ethers.BrowserProvider(window.ethereum);
-                    await provider.send("eth_requestAccounts", []);
-                    signer = await provider.getSigner();
-                    userAccount = await signer.getAddress();
-                    contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+        alert("جاري تنفيذ المعاملة على شبكة BNB...");
+        await tx.wait(); // انتظار تأكيد المعاملة في MetaMask
 
-                    const shortAddr = userAccount.substring(0, 6) + "..." + userAccount.substring(userAccount.length - 4);
-                    document.getElementById("walletText").innerText = shortAddr;
-                    
-                    const refLink = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-                    document.getElementById("referralLinkInput").value = refLink;
-                    document.getElementById("stat-ref-status").innerText = currentLang === 'ar' ? "جاهز للمشاركة" : "Ready to Share";
+        // إضافة الرصيد الوهمي في واجهة المستخدم بعد النجاح
+        const tokensBought = parseFloat(document.getElementById('tokenAmount').value);
+        userMockBalance += tokensBought;
+        document.getElementById('userBalance').innerText = userMockBalance.toFixed(2);
 
-                    triggerToast(translations[currentLang].walletConnected);
-                    loadContractBills();
-                } catch (error) {
-                    console.error(error);
-                    triggerToast("Wallet connection failed!");
-                }
-            } else {
-                alert("Please install MetaMask!");
-            }
-        }
-
-        async function loadContractBills() {
-            const grid = document.getElementById("invoicesGrid");
-            grid.innerHTML = "";
-
-            let blockchainBills = [];
-            try {
-                const readProvider = window.ethereum ? new ethers.BrowserProvider(window.ethereum) : new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
-                const readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
-
-                const nextId = await readContract.nextBillId();
-                for (let i = 0n; i < nextId; i++) {
-                    const bill = await readContract.bills(i);
-                    blockchainBills.push({
-                        id: bill[0].toString(),
-                        debtor: bill[1],
-                        title: bill[2],
-                        totalAmount: ethers.formatEther(bill[3]),
-                        amountPaid: ethers.formatEther(bill[4]),
-                        isSettled: bill[6],
-                        isCancelled: bill[8]
-                    });
-                }
-            } catch (err) {
-                console.log("Loading default registry...");
-            }
-
-            const allBills = [...blockchainBills, ...dummyInvoices];
-            document.getElementById("stat-total").innerText = allBills.length.toString();
-
-            allBills.forEach(bill => {
-                renderBillCard(bill);
-            });
-        }
-
-        function renderBillCard(bill) {
-            const grid = document.getElementById("invoicesGrid");
-            const percentage = Math.min(Math.round((Number(bill.amountPaid) / Number(bill.totalAmount)) * 100), 100);
-            const statusText = bill.isSettled ? (currentLang === 'ar' ? 'مكتملة الإبراء' : 'Settled') : bill.isCancelled ? (currentLang === 'ar' ? 'ملغاة' : 'Cancelled') : (currentLang === 'ar' ? 'قيد التسوية' : 'In Progress');
-
-            const cardHtml = `
-                <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 hover:border-gold-500/30 transition-all duration-300 flex flex-col justify-between">
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="font-mono text-xs text-accent-blue bg-accent-blue/10 border border-accent-blue/20 px-2.5 py-1 rounded-md font-bold">#${bill.id}</span>
-                                <div class="text-[11px] text-gray-400 mt-2 font-mono truncate max-w-[180px]">Beneficiary: ${bill.debtor}</div>
-                            </div>
-                            <span class="text-xs font-bold px-3 py-1 rounded-full ${bill.isSettled ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'}">
-                                ${statusText}
-                            </span>
-                        </div>
-
-                        <p class="text-sm font-semibold text-white leading-relaxed line-clamp-2">${bill.title}</p>
-
-                        <div class="space-y-1.5 pt-1">
-                            <div class="flex justify-between text-xs font-mono">
-                                <span class="text-gray-400">${currentLang === 'ar' ? 'المغطى' : 'Covered'}: ${bill.amountPaid} BNB</span>
-                                <span class="text-gold-500 font-bold">${percentage}%</span>
-                            </div>
-                            <div class="w-full h-2 bg-navy-950 rounded-full overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-gold-500 to-emerald-400 rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
-                            </div>
-                            <div class="text-left text-[11px] text-gray-400 font-mono">Total: ${bill.totalAmount} BNB</div>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-white/5 flex justify-between items-center text-xs mt-2">
-                        <span class="text-gray-400">Audit: <span class="text-emerald-400 font-mono">ZK-Verified</span></span>
-                        <button onclick="contributeToBill(${bill.id})" ${bill.isSettled || bill.isCancelled ? 'disabled' : ''} class="px-4 py-2 rounded-lg text-xs font-bold transition-all ${bill.isSettled || bill.isCancelled ? 'bg-navy-800 text-gray-500 cursor-not-allowed' : 'bg-gold-500/10 text-gold-500 border border-gold-500/30 hover:bg-gold-500 hover:text-navy-950'}">
-                            ${bill.isSettled ? (currentLang === 'ar' ? 'مكتمل' : 'Settled') : (currentLang === 'ar' ? 'مساهمة تضامنية' : 'Contribute')}
-                        </button>
-                    </div>
-                </div>
-            `;
-            grid.innerHTML += cardHtml;
-        }
-
-        function justCopyLink() {
-            if (!userAccount) { alert('Connect wallet first.'); connectWallet(); return; }
-            const link = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-            navigator.clipboard.writeText(link);
-            triggerToast(currentLang === 'ar' ? 'تم نسخ الرابط (ملاحظة: يتطلب النشر استخدام زر المشاركة الحقيقي).' : 'Link copied! (Note: Publishing requires using the real share button).');
-        }
-
-        async function triggerRealShare() {
-            if (!userAccount) {
-                alert(currentLang === 'ar' ? "يرجى ربط المحفظة أولاً لتوليد رابط الإحالة!" : "Please connect your wallet first!");
-                connectWallet();
-                return;
-            }
-
-            const shareLink = window.location.origin + window.location.pathname + "?ref=" + userAccount;
-            
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Smart Clearance Network',
-                        text: 'منظومة التكافل والتسوية المالية الذكية',
-                        url: shareLink,
-                    });
-                    markAsShared();
-                } catch (err) {
-                    console.log('Share canceled');
-                }
-            } else {
-                navigator.clipboard.writeText(shareLink);
-                localStorage.setItem('smart_clearance_shared', 'true');
-                alert(currentLang === 'ar' ? "تم إتمام عملية مشاركة الرابط! يرجى تحديث الصفحة (Refresh) لتفعيل النموذج بالكامل." : "Share action completed! Please refresh the page to unlock the form.");
-                location.reload();
-            }
-        }
-
-        function markAsShared() {
-            localStorage.setItem('smart_clearance_shared', 'true');
-            unlockFormUI();
-            triggerToast(translations[currentLang].verifiedSuccess);
-        }
-
-        function checkSharedStatus() {
-            const isShared = localStorage.getItem('smart_clearance_shared');
-            if (isShared === 'true') {
-                unlockFormUI();
-            }
-        }
-
-        function unlockFormUI() {
-            const badge = document.getElementById('refStatusBadge');
-            if(badge) {
-                badge.innerText = currentLang === 'ar' ? "تم توثيق المشاركة الحقيقية" : "Verified & Shared";
-                badge.className = "bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded text-[10px]";
-            }
-            const banner = document.getElementById('refCheckBanner');
-            if(banner) {
-                banner.innerHTML = `<div class="text-emerald-400 font-bold text-center text-xs"><i class="fa-solid fa-circle-check"></i> ${translations[currentLang].verifiedSuccess}</div>`;
-            }
-            const form = document.getElementById('debtForm');
-            if(form) {
-                form.classList.remove('opacity-40', 'pointer-events-none');
-            }
-        }
-
-        async function handleContractPost(e) {
-            e.preventDefault();
-            if (!contract) { alert("Wallet not connected!"); connectWallet(); return; }
-
-            const title = document.getElementById("modalTitle").value;
-            const amountInput = parseFloat(document.getElementById("modalAmount").value) || 0;
-            const currency = document.getElementById("modalCurrency").value;
-            const duration = parseInt(document.getElementById("modalDuration").value) || 30;
-
-            let amountInUsd = amountInput;
-            if (currency === 'EUR') {
-                amountInUsd = amountInput * EUR_TO_USD;
-            }
-            const bnbValue = amountInUsd / BNB_PRICE_USD;
-
-            try {
-                const parsedAmount = ethers.parseEther(bnbValue.toFixed(4));
-                const parsedDuration = BigInt(duration);
-
-                const tx = await contract.postBill(title, parsedAmount, parsedDuration);
-                triggerToast("Broadcasting encrypted transaction...");
-                await tx.wait();
-                
-                triggerToast("Bill published successfully!");
-                closeModal();
-                document.getElementById("debtForm").reset();
-                document.getElementById("imagePreviewContainer").classList.add("hidden");
-                loadContractBills();
-            } catch (err) {
-                console.error(err);
-                alert("Transaction failed: " + (err.reason || err.message));
-            }
-        }
-
-        async function contributeToBill(billId) {
-            if (billId >= 100) {
-                alert(currentLang === 'ar' ? "هذه مطالبة تمثيلية مؤسسية. يرجى التبرع للمطالبات الحية عبر العقد." : "This is a representative claim. Please contribute to live contract claims.");
-                return;
-            }
-            if (!contract) { connectWallet(); return; }
-            const amountStr = prompt(currentLang === 'ar' ? "أدخل مبلغ المساهمة بـ BNB:" : "Enter contribution amount in BNB:");
-            if (!amountStr || isNaN(amountStr)) return;
-
-            try {
-                const tx = await contract.contributeToBill(BigInt(billId), { value: ethers.parseEther(amountStr) });
-                triggerToast("Processing contribution...");
-                await tx.wait();
-                triggerToast("Contribution successful!");
-                loadContractBills();
-            } catch (err) {
-                alert("Failed: " + (err.reason || err.message));
-            }
-        }
-
-        function copyReferralLink() {
-            justCopyLink();
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-gold-500', 'text-navy-950', 'shadow-md', 'font-bold');
-                btn.classList.add('text-gray-400', 'hover:text-white');
-            });
-            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
-
-            const activeBtn = document.getElementById(`tab-${tabName}`);
-            activeBtn.classList.add('bg-gold-500', 'text-navy-950', 'shadow-md', 'font-bold');
-            activeBtn.classList.remove('text-gray-400');
-            document.getElementById(`view-${tabName}`).classList.remove('hidden');
-        }
-
-        function openModal() {
-            if (!userAccount) { alert(currentLang === 'ar' ? "يرجى ربط المحفظة أولاً!" : "Please connect wallet first!"); connectWallet(); return; }
-            document.getElementById('invoiceModal').classList.remove('hidden');
-        }
-        function closeModal() { document.getElementById('invoiceModal').classList.add('hidden'); }
-
-        function triggerToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none'); }, 3500);
-        }
-    </script>
+        alert("تمت عملية الشراء بنجاح وإضافة العملات لرصيدك!");
+      } catch (error) {
+        console.error(error);
+        alert("تم رفض المعاملة أو حدث خطأ أثناء الدفع.");
+      }
+    }
+  </script>
 </body>
 </html>
